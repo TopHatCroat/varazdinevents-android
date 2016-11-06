@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.ui.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import butterknife.Unbinder;
 import hr.foi.varazdinevents.MainApplication;
@@ -24,6 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
     }
+
+
 
     protected abstract int getLayout();
 

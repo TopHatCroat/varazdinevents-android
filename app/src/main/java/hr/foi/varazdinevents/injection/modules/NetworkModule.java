@@ -1,11 +1,58 @@
 package hr.foi.varazdinevents.injection.modules;
 
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
+import dagger.Provides;
+import hr.foi.varazdinevents.MainApplication;
+import hr.foi.varazdinevents.api.EventManager;
+import hr.foi.varazdinevents.api.RestService;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
+import retrofit2.RxJavaCallAdapterFactory;
 
 
 @Module
 public class NetworkModule {
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient() {
+        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(httpLoggingInterceptor);
+
+        builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS).readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    public Retrofit provideRestAdapter(MainApplication mainApplication, OkHttpClient okHttpClient) {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.client(okHttpClient).baseUrl("http://cms.varazdinevents.cf")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create());
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    public RestService provideRestService(Retrofit restAdapter) {
+        return restAdapter.create(RestService.class);
+    }
+
+    @Provides
+    @Singleton
+    public EventManager provideEventManager(RestService restService){
+        return new EventManager(restService);
+    }
 
 //    @Provides
 //    @NonNull

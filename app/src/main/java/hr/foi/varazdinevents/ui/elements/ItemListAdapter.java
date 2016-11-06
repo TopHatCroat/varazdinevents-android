@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
 /**
@@ -64,7 +67,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> implem
         return ((Listable) items).getType();
     }
 
-    public void setItems(List<Object> items){
+    public void setItems(ImmutableList<Event> items){
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();

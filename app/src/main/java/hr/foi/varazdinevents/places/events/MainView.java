@@ -5,6 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ProgressBar;
+
+import com.google.common.collect.ImmutableList;
 
 import javax.inject.Inject;
 
@@ -12,6 +16,7 @@ import butterknife.BindView;
 import dagger.multibindings.IntKey;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseView;
 import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
@@ -31,6 +36,8 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
     ItemListAdapter itemListAdapter;
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
+    @BindView(R.id.progresBar)
+    ProgressBar progressBar;
 
 
     ItemTouchHelper itemTouchHelper;
@@ -52,9 +59,8 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
     protected void onFinishInflate() {
         super.onFinishInflate();
         presenter.attachView(this);
+        showLoading(true);
         presenter.loadEvents();
-        showEvents();
-
     }
 
     @Override
@@ -63,14 +69,17 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
         super.onDetachedFromWindow();
     }
 
-    @Override
-    public void showEvents() {
+    public void showLoading(boolean loading) {
+        recyclerView.setVisibility(loading ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+    }
+
+    public void showEvents(ImmutableList<Event> events) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-//        ItemListAdapter<String, ItemViewHolder> itemListAdapter = new ItemListAdapter(this);
         recyclerView.setAdapter(itemListAdapter);
-
+        itemListAdapter.setItems(events);
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(itemListAdapter);
         itemTouchHelper = new ItemTouchHelper(callback);

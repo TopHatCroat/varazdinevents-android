@@ -11,6 +11,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,6 +26,13 @@ dependencies {
     final SUPPORT_LIB_VERSION = "24.2.0"
     final DAGGER_VERSION = '2.7'
     final BUTTERKNIFE_VERSION = "8.2.1"
+    final AUTOFACTORY_VERSION = "1.0-beta3"
+    final RXANDROID_VERSION = "1.2.0"
+    final RXJAVA_VERSION = "1.1.5"
+    final RXBINDING_VERSION = "0.3.0"
+    final RETROFIT_VERSION = "2.0.0-beta3"
+    final OKHTTP_VERSION = "3.0.1"
+
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
     apt daggerCompiler
@@ -40,7 +48,15 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIB_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
-    compile 'com.google.auto.factory:auto-factory:1.0-beta3'
+    compile "com.google.auto.factory:auto-factory:$AUTOFACTORY_VERSION"
+    compile "io.reactivex:rxandroid:$RXANDROID_VERSION"
+    compile "io.reactivex:rxjava:$RXJAVA_VERSION"
+    compile "com.jakewharton.rxbinding:rxbinding:$RXBINDING_VERSION"
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
+    compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
 
 
