@@ -26,8 +26,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayout());
     }
 
-
-
     protected abstract int getLayout();
 
     public abstract ActivityComponent getActivityComponent();

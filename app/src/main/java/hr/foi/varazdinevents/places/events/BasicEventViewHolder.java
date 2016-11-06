@@ -35,14 +35,14 @@ public class BasicEventViewHolder extends ItemViewHolder {
 
     public BasicEventViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(ITEM_LAYOUT, parent, false));
-        unbinder = ButterKnife.bind(itemView);
+        unbinder = ButterKnife.bind(this, itemView);
     }
 
     @Override
     public void bind(Object item) {
         event = (Event) item;
         this.title.setText(event.getTitle());
-        this.date.setText(event.getDate());
+        this.date.setText(event.getDate().toString());
     }
 
     @Override

@@ -18,23 +18,24 @@ import java.util.Map;
 
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.ui.base.PresenterLayer;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
 /**
  * Created by Antonio Martinović on 14.10.16.
  */
 public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> implements ItemTouchHelperAdapter {
-    protected ViewLayer viewLayer;
+    protected PresenterLayer viewLayer;
     protected Map<Integer, ItemViewHolderFactory> viewHolderFactoryMap;
     protected List<Object> items;
 
-    public ItemListAdapter(ViewLayer viewLayer, List<Object> items, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
+    public ItemListAdapter(PresenterLayer viewLayer, List<Object> items, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
         this.viewLayer = viewLayer;
         this.viewHolderFactoryMap = itemViewHolderFactoryMap;
         this.items = items;
     }
 
-    public ItemListAdapter(ViewLayer viewLayer, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
+    public ItemListAdapter(PresenterLayer viewLayer, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
         this.viewLayer = viewLayer;
         this.viewHolderFactoryMap = itemViewHolderFactoryMap;
         this.items = new ArrayList<>();
@@ -64,7 +65,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> implem
 
     @Override
     public int getItemViewType(int position) {
-        return ((Listable) items).getType();
+        return ((Listable) items.get(position)).getType();
     }
 
     public void setItems(ImmutableList<Event> items){
@@ -75,7 +76,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> implem
 
     @Override
     public void onItemClicked(int adapterPosition) {
-        viewLayer.onItemClicked(adapterPosition);
+        viewLayer.itemClicked(items.get(adapterPosition));
     }
 
     @Override

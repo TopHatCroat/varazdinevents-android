@@ -23,11 +23,11 @@ public class EventManager {
 
     public Observable<ImmutableList<Event>> getEvents() {
         return restService.getEvents()
-                .map(new Func1<List<EventResponse>, ImmutableList<Event>>() {
+                .map(new Func1<EventResponseComplete, ImmutableList<Event>>() {
                     @Override
-                    public ImmutableList<Event> call(List<EventResponse> eventResponses) {
+                    public ImmutableList<Event> call(EventResponseComplete eventResponses) {
                         final ImmutableList.Builder<Event> eventBuilder = ImmutableList.builder();
-                        for(EventResponse eventResponse : eventResponses){
+                        for(EventResponse eventResponse : eventResponses.events){
                             Event event = new Event();
                             event.setId(eventResponse.id);
                             event.setVisible(eventResponse.visible);

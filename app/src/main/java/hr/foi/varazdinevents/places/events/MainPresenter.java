@@ -2,8 +2,6 @@ package hr.foi.varazdinevents.places.events;
 
 import com.google.common.collect.ImmutableList;
 
-import javax.inject.Inject;
-
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
@@ -14,12 +12,16 @@ import rx.Observer;
  */
 
 public class MainPresenter extends BasePresenter<MainView> {
-    @Inject
-    EventManager eventManager;
+    private EventManager eventManager;
+
+    public MainPresenter(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 
 
     public void loadEvents(){
         checkViewAttached();
+        getViewLayer().showLoading(true);
 
         eventManager.getEvents().subscribe(new Observer<ImmutableList<Event>>() {
             @Override
@@ -38,5 +40,10 @@ public class MainPresenter extends BasePresenter<MainView> {
                 getViewLayer().showBasicError("ne radi");
             }
         });
+    }
+
+    @Override
+    public void itemClicked(Object item) {
+        getViewLayer().onItemClicked(item);
     }
 }

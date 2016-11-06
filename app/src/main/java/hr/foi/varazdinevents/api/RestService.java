@@ -11,5 +11,5 @@ import retrofit2.http.GET;
 
 public interface RestService {
     @GET("content/index/jfeed?appname=testapp&appkey=60a34f8a0f85197282cee38a889c549a")
-    Observable<List<EventResponse>> getEvents();
+    Observable<EventResponseComplete> getEvents();
 }

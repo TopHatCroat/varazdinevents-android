@@ -1,12 +1,17 @@
 package hr.foi.varazdinevents.models;
 
+import android.provider.SyncStateContract;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import hr.foi.varazdinevents.ui.elements.Listable;
+import hr.foi.varazdinevents.util.Constants;
 
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
-public class Event {
+public class Event implements Listable{
     private Integer id;
     private Integer visible;
     private Integer dateAdded;
@@ -150,5 +155,10 @@ public class Event {
 
     public void setAuthor(Integer author) {
         this.author = author;
+    }
+
+    @Override
+    public int getType() {
+        return Constants.EVENTS_SIMPLE_CARD;
     }
 }

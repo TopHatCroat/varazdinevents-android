@@ -10,11 +10,13 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntKey;
 import dagger.multibindings.IntoMap;
+import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.places.events.BasicEventViewHolderFactory;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.events.MainPresenter;
 import hr.foi.varazdinevents.places.events.MainView;
+import hr.foi.varazdinevents.ui.base.PresenterLayer;
 import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
@@ -25,7 +27,7 @@ import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 public class ActivityModule {
 
     private Activity activity;
-    private MainView mainView;
+    private MainPresenter presenterLayer;
 
     public ActivityModule(Activity activity) {
         this.activity = activity;
@@ -43,21 +45,21 @@ public class ActivityModule {
     }
 
     @Provides
-    MainPresenter provideMainPresenter(){
-        return new MainPresenter();
+    MainPresenter provideMainPresenter(EventManager eventManager){
+        this.presenterLayer = new MainPresenter(eventManager);
+        return this.presenterLayer;
     }
 
     @Provides
     @ActivityScope
     MainView provideMainView() {
-        mainView = new MainView(activity);
-        return mainView;
+        return new MainView(activity);
     }
 
     @Provides
     @ActivityScope
     ItemListAdapter provideEventListAdapter(Map<Integer, ItemViewHolderFactory> viewHolderFactoryMap) {
-        return new ItemListAdapter(this.mainView, viewHolderFactoryMap);
+        return new ItemListAdapter(this.presenterLayer, viewHolderFactoryMap);
     }
 
     @Provides

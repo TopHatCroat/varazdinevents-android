@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import dagger.Provides;
 import dagger.Module;
+import hr.foi.varazdinevents.MainApplication;
 
 import javax.inject.Singleton;
 
@@ -12,15 +13,15 @@ import javax.inject.Singleton;
  */
 @Module
 public class ApplicationModule {
-    protected final Application application;
+    protected final MainApplication application;
 
-    public ApplicationModule(Application application) {
+    public ApplicationModule(MainApplication application) {
         this.application = application;
     }
 
     @Provides
     @Singleton
-    Application provideApplication() {
+    MainApplication provideApplication() {
         return application;
     }
 

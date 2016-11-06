@@ -17,9 +17,8 @@ import hr.foi.varazdinevents.ui.elements.ItemViewHolder;
 @ActivityScope
 public interface ActivityComponent {
 
-    void inject(MainActivity mainActivity);
-    void inject(ItemRecyclerView itemRecyclerView);
     void inject(MainView mainView);
+
 //    void inject(ItemViewHolder itemViewHolder);
 
 }

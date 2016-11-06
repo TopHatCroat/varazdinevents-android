@@ -16,4 +16,6 @@ public interface PresenterLayer<V extends ViewLayer> {
      * Detaches the view from the presenter
      */
     void detachView();
+
+    void itemClicked(Object item);
 }
