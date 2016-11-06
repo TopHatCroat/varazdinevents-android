@@ -13,22 +13,22 @@ import hr.foi.varazdinevents.util.BundleService;
 
 @Module
 public class BundleModule {
-
-    @Provides
-    public Bundle provideBundle(Activity context) {
-        return context.getIntent().getExtras() == null ? new Bundle() : context.getIntent().getExtras();
-    }
-
-    @Provides
-    public Intent provideIntent(Activity context) {
-        return context.getIntent() == null ? new Intent() : context.getIntent();
-    }
-
-    @Provides
-    @ActivityScope
-    public BundleService provideBundleService(Activity context) {
-        return ((BaseActivity) context).getBundleService();
-    }
+//
+//    @Provides
+//    public Bundle provideBundle(Activity context) {
+//        return context.getIntent().getExtras() == null ? new Bundle() : context.getIntent().getExtras();
+//    }
+//
+//    @Provides
+//    public Intent provideIntent(Activity context) {
+//        return context.getIntent() == null ? new Intent() : context.getIntent();
+//    }
+//
+//    @Provides
+//    @ActivityScope
+//    public BundleService provideBundleService(Activity context) {
+//        return ((BaseActivity) context).getBundleService();
+//    }
 
 //    @RouteId
 //    @ActivityScope

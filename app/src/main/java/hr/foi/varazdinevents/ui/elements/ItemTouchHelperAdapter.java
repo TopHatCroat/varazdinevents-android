@@ -5,6 +5,7 @@ package hr.foi.varazdinevents.ui.elements;
  */
 
 public interface ItemTouchHelperAdapter {
+    void onItemClicked(int adapterPosition);
 
     boolean onItemMove(int fromPosition, int toPosition);
 

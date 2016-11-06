@@ -9,6 +9,6 @@ import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
 
 public class NavigationItemListAdapter extends ItemListAdapter {
     public NavigationItemListAdapter(OnStartDragListener startDragListener) {
-        super(startDragListener);
+        super(null, null);
     }
 }

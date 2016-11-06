@@ -3,8 +3,8 @@ package hr.foi.varazdinevents.injection;
 import dagger.Subcomponent;
 import hr.foi.varazdinevents.injection.modules.ActivityModule;
 import hr.foi.varazdinevents.injection.modules.BundleModule;
-import hr.foi.varazdinevents.ui.MainActivity;
-import hr.foi.varazdinevents.ui.MainView;
+import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.events.MainView;
 import hr.foi.varazdinevents.ui.elements.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolder;
 
@@ -17,9 +17,9 @@ import hr.foi.varazdinevents.ui.elements.ItemViewHolder;
 @ActivityScope
 public interface ActivityComponent {
 
-    void inject(MainActivity activity);
-    void inject(ItemRecyclerView recyclerView);
-    void inject(MainView view);
-    void inject(ItemViewHolder holder);
+    void inject(MainActivity mainActivity);
+    void inject(ItemRecyclerView itemRecyclerView);
+    void inject(MainView mainView);
+//    void inject(ItemViewHolder itemViewHolder);
 
 }

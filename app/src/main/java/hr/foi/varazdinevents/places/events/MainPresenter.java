@@ -1,4 +1,4 @@
-package hr.foi.varazdinevents.ui;
+package hr.foi.varazdinevents.places.events;
 
 import javax.inject.Inject;
 
@@ -9,11 +9,6 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
  */
 
 public class MainPresenter extends BasePresenter<MainView> {
-
-    @Inject
-    public MainPresenter(){
-
-    }
 
     public void loadEvents(){
         checkViewAttached();

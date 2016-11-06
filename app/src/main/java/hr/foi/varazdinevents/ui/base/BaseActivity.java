@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.Unbinder;
+import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.injection.ActivityComponent;
 import hr.foi.varazdinevents.injection.ActivityComponentFactory;
 import hr.foi.varazdinevents.injection.ApplicationComponent;
+import hr.foi.varazdinevents.injection.modules.ActivityModule;
 import hr.foi.varazdinevents.util.BundleService;
 
 /**
@@ -25,12 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayout();
 
-    public ActivityComponent getActivityComponent() {
-        if (activityComponent == null) {
-            activityComponent = ActivityComponentFactory.create(this);
-        }
-        return activityComponent;
-    }
+    public abstract ActivityComponent getActivityComponent();
 
     public BundleService getBundleService() {
         return bundleService;

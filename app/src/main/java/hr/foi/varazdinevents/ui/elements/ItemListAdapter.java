@@ -12,51 +12,67 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.ui.base.ViewLayer;
 
 /**
  * Created by Antonio Martinović on 14.10.16.
  */
-public class ItemListAdapter<T, H extends ItemViewHolder> extends RecyclerView.Adapter<H> implements ItemTouchHelperAdapter {
-    private static final String[] STRINGS = new String[]{
-            "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
-    };
+public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> implements ItemTouchHelperAdapter {
+    protected ViewLayer viewLayer;
+    protected Map<Integer, ItemViewHolderFactory> viewHolderFactoryMap;
+    protected List<Object> items;
 
-    private final List<T> items = new ArrayList<>();
-    private final OnStartDragListener startDragListener;
-    public ItemListAdapter(OnStartDragListener startDragListener) {
-        this.items.addAll((Collection<? extends T>) Arrays.asList(STRINGS));
-        this.startDragListener = startDragListener;
+    public ItemListAdapter(ViewLayer viewLayer, List<Object> items, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
+        this.viewLayer = viewLayer;
+        this.viewHolderFactoryMap = itemViewHolderFactoryMap;
+        this.items = items;
+    }
+
+    public ItemListAdapter(ViewLayer viewLayer, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
+        this.viewLayer = viewLayer;
+        this.viewHolderFactoryMap = itemViewHolderFactoryMap;
+        this.items = new ArrayList<>();
     }
 
     @Override
-    public H onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(getItemLayout(), parent, false);
-        return (H) new ItemViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final H holder, int position) {
-        holder.bind();
-        holder.textView.setText((String) items.get(position));
-        //TODO: make generic, call this method to set the data
-
-        holder.handle.setOnTouchListener(new View.OnTouchListener() {
+    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final ItemViewHolder itemViewHolder = viewHolderFactoryMap.get(viewType).createViewHolder(parent);
+        itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (MotionEventCompat.getActionMasked(event) ==
-                        MotionEvent.ACTION_DOWN) {
-                    startDragListener.onStartDrag(holder);
-                }
-                return false;
+            public void onClick(View view) {
+                onItemClicked(itemViewHolder.getAdapterPosition());
             }
         });
+        return itemViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(final ItemViewHolder holder, int position) {
+        holder.bind(items.get(position));
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return ((Listable) items).getType();
+    }
+
+    public void setItems(List<Object> items){
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClicked(int adapterPosition) {
+        viewLayer.onItemClicked(adapterPosition);
     }
 
     @Override
@@ -81,7 +97,4 @@ public class ItemListAdapter<T, H extends ItemViewHolder> extends RecyclerView.A
         notifyItemRemoved(position);
     }
 
-    public int getItemLayout() {
-        return R.layout.item_main;
-    }
 }

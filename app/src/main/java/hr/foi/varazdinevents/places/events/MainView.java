@@ -1,4 +1,4 @@
-package hr.foi.varazdinevents.ui;
+package hr.foi.varazdinevents.places.events;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import dagger.multibindings.IntKey;
+import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseView;
@@ -25,10 +27,10 @@ import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 public class MainView extends BaseView implements MainViewLayer, OnStartDragListener {
     @Inject
     MainPresenter presenter;
+    @Inject
+    ItemListAdapter itemListAdapter;
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
-
-    ItemListAdapter itemListAdapter;
 
 
     ItemTouchHelper itemTouchHelper;
@@ -43,7 +45,7 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
 
     public MainView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        ((BaseActivity) context).getActivityComponent().inject(this);
+        ((MainActivity) context).getActivityComponent().inject(this);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ItemListAdapter<String, ItemViewHolder> itemListAdapter = new ItemListAdapter(this);
+//        ItemListAdapter<String, ItemViewHolder> itemListAdapter = new ItemListAdapter(this);
         recyclerView.setAdapter(itemListAdapter);
 
         ItemTouchHelper.Callback callback =

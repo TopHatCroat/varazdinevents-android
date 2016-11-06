@@ -19,28 +19,16 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import hr.foi.varazdinevents.R;
 
-public class ItemViewHolder extends RecyclerView.ViewHolder {
-
-    public final FrameLayout frameLayout;
-    @BindView(R.id.item_text)
-    public TextView textView;
-    @BindView(R.id.item_handle)
-    public ImageView handle;
-
-    private Unbinder unbinder;
+public abstract class ItemViewHolder extends RecyclerView.ViewHolder implements Listable {
+    protected Unbinder unbinder;
 
     public ItemViewHolder(View itemView) {
         super(itemView);
-        this.frameLayout = (FrameLayout) itemView;
-        unbinder = ButterKnife.bind(itemView);
     }
 
+    public abstract void bind(Object item);
 
-    public void unbind() {
-        unbinder.unbind();
-    }
+    public abstract void unbind();
 
-    public void bind() {
-
-    }
 }
+

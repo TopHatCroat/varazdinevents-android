@@ -5,13 +5,13 @@ import android.content.Context;
 
 import hr.foi.varazdinevents.injection.ApplicationComponent;
 import hr.foi.varazdinevents.injection.DaggerApplicationComponent;
+import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 
 
 /**
  * Created by Antonio Martinović on 15.10.16.
  */
 public class MainApplication extends Application {
-
     ApplicationComponent applicationComponent;
 
     @Override
@@ -29,11 +29,11 @@ public class MainApplication extends Application {
 
     public ApplicationComponent getComponent() {
         if (applicationComponent == null) {
-            applicationComponent = DaggerApplicationComponent.create();
+//            applicationComponent = DaggerApplicationComponent.create();
 
-//            applicationComponent = DaggerApplicationComponent.builder()
-//                                .applicationModule(new ApplicationModule(this))
-//                                .build();
+            applicationComponent = DaggerApplicationComponent.builder()
+                                .applicationModule(new ApplicationModule(this))
+                                .build();
         }
         return applicationComponent;
     }

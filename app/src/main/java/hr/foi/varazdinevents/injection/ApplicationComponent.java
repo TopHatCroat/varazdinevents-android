@@ -22,5 +22,5 @@ public interface ApplicationComponent {
     @NonNull
     ActivityComponent plus(@NonNull ActivityModule activityModule);
 
-    void inject(@NonNull MainApplication mainApplication);
+//    void inject(@NonNull MainApplication mainApplication);
 }

@@ -1,4 +1,4 @@
-package hr.foi.varazdinevents.ui;
+package hr.foi.varazdinevents.places.events;
 
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
