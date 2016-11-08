@@ -3,7 +3,7 @@ package hr.foi.varazdinevents.injection;
 import dagger.Subcomponent;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.injection.modules.BundleModule;
-import hr.foi.varazdinevents.places.events.MainView;
+import hr.foi.varazdinevents.places.events.MainActivity;
 
 /**
  * Created by Antonio Martinović on 15.10.16.
@@ -14,7 +14,7 @@ import hr.foi.varazdinevents.places.events.MainView;
 @ActivityScope
 public interface MainActivityComponent {
 
-    void inject(MainView mainView);
+    MainActivity inject(MainActivity mainActivity);
 
 //    void inject(ItemViewHolder itemViewHolder);
 

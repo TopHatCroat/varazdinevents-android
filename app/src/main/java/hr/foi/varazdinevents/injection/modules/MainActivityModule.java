@@ -15,8 +15,6 @@ import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.places.events.BasicEventViewHolderFactory;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.events.MainPresenter;
-import hr.foi.varazdinevents.places.events.MainView;
-import hr.foi.varazdinevents.ui.base.PresenterLayer;
 import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
@@ -48,12 +46,6 @@ public class MainActivityModule {
     MainPresenter provideMainPresenter(EventManager eventManager){
         this.presenterLayer = new MainPresenter(eventManager);
         return this.presenterLayer;
-    }
-
-    @Provides
-    @ActivityScope
-    MainView provideMainView() {
-        return new MainView(activity);
     }
 
     @Provides

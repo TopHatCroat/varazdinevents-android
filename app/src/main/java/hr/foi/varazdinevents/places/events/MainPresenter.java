@@ -11,7 +11,7 @@ import rx.Observer;
  * Created by Antonio Martinović on 12.10.16.
  */
 
-public class MainPresenter extends BasePresenter<MainView> {
+public class MainPresenter extends BasePresenter<MainActivity> {
     private EventManager eventManager;
 
     public MainPresenter(EventManager eventManager) {

@@ -3,6 +3,8 @@ package hr.foi.varazdinevents.places.eventDetails;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
@@ -25,6 +27,11 @@ public class EventDetailsActivity extends BaseActivity {
         return R.layout.activity_event_details;
     }
 
+    @Override
+    protected void setupActivityComponent() {
+
+    }
+
     public static void startWithRepository(Event event, Context startingActivity) {
         Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
         intent.putExtra(ARG_EVENT, event);
@@ -38,4 +45,5 @@ public class EventDetailsActivity extends BaseActivity {
         }
         return eventDetailsActivityComponent;
     }
+
 }

@@ -17,12 +17,9 @@ public class EventDetailsActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    //    @Override
-    public MainActivityComponent getMainActivityComponent() {
-        if (mainActivityComponent == null) {
-            mainActivityComponent = MainApplication.get(this).getComponent()
-                    .plus(new MainActivityModule(this));
-        }
-        return mainActivityComponent;
+    @Override
+    protected void setupActivityComponent() {
+
     }
+
 }
