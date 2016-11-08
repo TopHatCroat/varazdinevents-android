@@ -13,15 +13,12 @@ import com.google.common.collect.ImmutableList;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import dagger.multibindings.IntKey;
-import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
-import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseView;
 import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.ItemRecyclerView;
-import hr.foi.varazdinevents.ui.elements.ItemViewHolder;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
@@ -39,6 +36,7 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
     @BindView(R.id.progresBar)
     ProgressBar progressBar;
 
+    Context context;
 
     ItemTouchHelper itemTouchHelper;
 
@@ -52,7 +50,8 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
 
     public MainView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        ((MainActivity) context).getActivityComponent().inject(this);
+        this.context = context;
+        ((MainActivity) context).getMainActivityComponent().inject(this);
     }
 
     @Override
@@ -93,6 +92,6 @@ public class MainView extends BaseView implements MainViewLayer, OnStartDragList
 
     @Override
     public void onItemClicked(Object item) {
-        //TODO: do something
+        EventDetailsActivity.startWithRepository((Event)item, this.context);
     }
 }

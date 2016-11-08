@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import hr.foi.varazdinevents.MainApplication;
-import hr.foi.varazdinevents.injection.modules.ActivityModule;
+import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
+import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.NetworkModule;
 
@@ -20,7 +20,10 @@ import hr.foi.varazdinevents.injection.modules.NetworkModule;
 })
 public interface ApplicationComponent {
     @NonNull
-    ActivityComponent plus(@NonNull ActivityModule activityModule);
+    MainActivityComponent plus(@NonNull MainActivityModule mainActivityModule);
+
+    @NonNull
+    EventDetailsActivityComponent plus(@NonNull EventDetailsActivityModule eventDetailsActivityModule);
 
 //    void inject(@NonNull MainApplication mainApplication);
 }

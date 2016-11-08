@@ -8,4 +8,8 @@ public class Constants {
     public static final Integer SETTING_TITLE_TYPE = 1;
     public static final Integer SETTING_YES_NO_TYPE = 2;
     public static final Integer EVENTS_SIMPLE_CARD = 100;
+
+
+    private static final String ARG_EVENT = "arg_event";
+
 }

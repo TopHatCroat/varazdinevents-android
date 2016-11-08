@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.SyncStateContract;
 
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import hr.foi.varazdinevents.util.Constants;
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
-public class Event implements Listable{
+public class Event implements Listable, Parcelable{
     private Integer id;
     private Integer visible;
     private Integer dateAdded;
@@ -28,6 +30,31 @@ public class Event implements Listable{
     private Object offers;
     private Integer fbId;
     private Integer author;
+
+    public Event(){}
+
+    protected Event(Parcel in) {
+        title = in.readString();
+        text = in.readString();
+        time = in.readString();
+        timeTo = in.readString();
+        host = in.readString();
+        officialLink = in.readString();
+        image = in.readString();
+        facebook = in.readString();
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -160,5 +187,22 @@ public class Event implements Listable{
     @Override
     public int getType() {
         return Constants.EVENTS_SIMPLE_CARD;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(text);
+        parcel.writeString(time);
+        parcel.writeString(timeTo);
+        parcel.writeString(host);
+        parcel.writeString(officialLink);
+        parcel.writeString(image);
+        parcel.writeString(facebook);
     }
 }

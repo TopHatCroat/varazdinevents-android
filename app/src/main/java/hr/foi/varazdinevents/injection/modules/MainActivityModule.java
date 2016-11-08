@@ -24,12 +24,12 @@ import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
  * Created by Antonio Martinović on 15.10.16.
  */
 @Module
-public class ActivityModule {
+public class MainActivityModule {
 
     private Activity activity;
     private MainPresenter presenterLayer;
 
-    public ActivityModule(Activity activity) {
+    public MainActivityModule(Activity activity) {
         this.activity = activity;
     }
 
