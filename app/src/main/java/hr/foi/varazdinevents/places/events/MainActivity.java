@@ -19,6 +19,7 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.injection.MainActivityComponent;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
@@ -33,6 +34,9 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     MainPresenter presenter;
     @Inject
     ItemListAdapter itemListAdapter;
+    @Inject
+    User user;
+
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
     @BindView(R.id.progresBar)
@@ -93,8 +97,10 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     @Override
     public void setupActivityComponent() {
-        MainApplication.get(this).getComponent()
+        MainApplication.get(this).getApplicationComponent();
+        MainApplication.get(this).getUserComponent()
                     .plus(new MainActivityModule(this)).inject(this);
+
     }
 
 }

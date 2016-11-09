@@ -40,7 +40,7 @@ public class EventDetailsActivity extends BaseActivity {
 
     public EventDetailsActivityComponent getMainActivityComponent() {
         if (eventDetailsActivityComponent == null) {
-            eventDetailsActivityComponent = MainApplication.get(this).getComponent()
+            eventDetailsActivityComponent = MainApplication.get(this).getUserComponent()
                     .plus(new EventDetailsActivityModule(this));
         }
         return eventDetailsActivityComponent;

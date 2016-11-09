@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.models.User;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -15,10 +16,13 @@ import rx.schedulers.Schedulers;
  */
 public class EventManager {
 
+    private User user;
+
     private RestService restService;
 
-    public EventManager(RestService restService) {
+    public EventManager(User user, RestService restService) {
         this.restService = restService;
+        this.user = user;
     }
 
     public Observable<ImmutableList<Event>> getEvents() {

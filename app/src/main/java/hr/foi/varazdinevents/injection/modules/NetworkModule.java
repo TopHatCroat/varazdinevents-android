@@ -7,8 +7,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import hr.foi.varazdinevents.MainApplication;
-import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.RestService;
+import hr.foi.varazdinevents.api.UserManager;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
@@ -50,8 +50,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public EventManager provideEventManager(RestService restService){
-        return new EventManager(restService);
+    public UserManager provideUserManager(RestService restService){
+        return new UserManager(restService);
     }
 
 //    @Provides

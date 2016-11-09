@@ -3,9 +3,13 @@ package hr.foi.varazdinevents;
 import android.app.Application;
 import android.content.Context;
 
+import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.ApplicationComponent;
 import hr.foi.varazdinevents.injection.DaggerApplicationComponent;
+import hr.foi.varazdinevents.injection.UserComponent;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
+import hr.foi.varazdinevents.injection.modules.UserModule;
+import hr.foi.varazdinevents.models.User;
 
 
 /**
@@ -13,6 +17,7 @@ import hr.foi.varazdinevents.injection.modules.ApplicationModule;
  */
 public class MainApplication extends Application {
     ApplicationComponent applicationComponent;
+    UserComponent userComponent;
 
     @Override
     public void onCreate() {
@@ -27,7 +32,7 @@ public class MainApplication extends Application {
         return (MainApplication) context.getApplicationContext();
     }
 
-    public ApplicationComponent getComponent() {
+    public ApplicationComponent getApplicationComponent() {
         if (applicationComponent == null) {
 //            applicationComponent = DaggerApplicationComponent.create();
 
@@ -38,8 +43,23 @@ public class MainApplication extends Application {
         return applicationComponent;
     }
 
-    // Needed to replace the component with a test specific one
-    public void setComponent(ApplicationComponent applicationComponent) {
+    public UserComponent createUserComponent(User user) {
+        userComponent = applicationComponent.plus(new UserModule(user));
+        return userComponent;
+    }
+
+
+    public void setApplicationComponent(ApplicationComponent applicationComponent) {
         this.applicationComponent = applicationComponent;
     }
+
+    public UserComponent getUserComponent() {
+        if (userComponent == null) createUserComponent(UserManager.getStubUser("test"));
+        return userComponent;
+    }
+
+    public void setUserComponent(UserComponent userComponent) {
+        this.userComponent = userComponent;
+    }
+
 }
