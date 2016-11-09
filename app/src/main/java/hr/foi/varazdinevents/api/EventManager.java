@@ -31,24 +31,19 @@ public class EventManager {
                     @Override
                     public ImmutableList<Event> call(EventResponseComplete eventResponses) {
                         final ImmutableList.Builder<Event> eventBuilder = ImmutableList.builder();
-                        for(EventResponse eventResponse : eventResponses.events){
+                        for(EventResponse eventResponse : eventResponses.items){
                             Event event = new Event();
                             event.setId(eventResponse.id);
-                            event.setVisible(eventResponse.visible);
-                            event.setDateAdded(eventResponse.dateAdded);
                             event.setTitle(eventResponse.title);
                             event.setText(eventResponse.text);
                             event.setDate(eventResponse.date);
-                            event.setTime(eventResponse.time);
                             event.setDateTo(eventResponse.dateTo);
-                            event.setTimeTo(eventResponse.timeTo);
                             event.setHost(eventResponse.host);
                             event.setOfficialLink(eventResponse.officialLink);
                             event.setImage(eventResponse.image);
                             event.setFacebook(eventResponse.facebook);
                             event.setOffers(eventResponse.offers);
-                            event.setFbId(eventResponse.fbId);
-                            event.setAuthor(eventResponse.author);
+                            event.setCategory(eventResponse.category);
                             eventBuilder.add(event);
                         }
                         return eventBuilder.build();

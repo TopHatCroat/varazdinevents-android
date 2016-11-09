@@ -36,7 +36,7 @@ public class NetworkModule {
     @Singleton
     public Retrofit provideRestAdapter(MainApplication mainApplication, OkHttpClient okHttpClient) {
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.client(okHttpClient).baseUrl("http://cms.varazdinevents.cf")
+        builder.client(okHttpClient).baseUrl("http://varazdinevents.cf/api/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
         return builder.build();
