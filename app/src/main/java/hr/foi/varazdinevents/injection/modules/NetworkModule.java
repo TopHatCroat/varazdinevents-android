@@ -7,8 +7,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import hr.foi.varazdinevents.MainApplication;
-import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.RestService;
+import hr.foi.varazdinevents.api.UserManager;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
@@ -36,7 +36,7 @@ public class NetworkModule {
     @Singleton
     public Retrofit provideRestAdapter(MainApplication mainApplication, OkHttpClient okHttpClient) {
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.client(okHttpClient).baseUrl("http://cms.varazdinevents.cf")
+        builder.client(okHttpClient).baseUrl("http://varazdinevents.cf/api/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
         return builder.build();
@@ -50,8 +50,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public EventManager provideEventManager(RestService restService){
-        return new EventManager(restService);
+    public UserManager provideUserManager(RestService restService){
+        return new UserManager(restService);
     }
 
 //    @Provides

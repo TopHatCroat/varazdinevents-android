@@ -1,5 +1,6 @@
 package hr.foi.varazdinevents.api;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,5 +9,9 @@ import java.util.List;
  */
 
 public class EventResponseComplete {
-    public List<EventResponse> events;
+    public List<EventResponse> items = new ArrayList<EventResponse>();
+    public LinksResonse links;
+    public MetaResponse meta;
+
+
 }

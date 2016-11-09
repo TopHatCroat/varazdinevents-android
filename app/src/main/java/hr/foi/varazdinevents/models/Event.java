@@ -14,34 +14,31 @@ import hr.foi.varazdinevents.util.Constants;
  * Created by Antonio Martinović on 30.10.16.
  */
 public class Event implements Listable, Parcelable{
-    private Integer id;
-    private Integer visible;
-    private Integer dateAdded;
-    private String title;
-    private String text;
-    private Integer date;
-    private String time;
-    private Integer dateTo;
-    private String timeTo;
-    private String host;
-    private String officialLink;
-    private String image;
-    private String facebook;
-    private Object offers;
-    private Integer fbId;
-    private Integer author;
+    public Integer id;
+    public String title;
+    public String text;
+    public Integer date;
+    public Integer dateTo;
+    public String host;
+    public String officialLink;
+    public String image;
+    public String facebook;
+    public String offers;
+    public String category;
 
     public Event(){}
 
     protected Event(Parcel in) {
         title = in.readString();
         text = in.readString();
-        time = in.readString();
-        timeTo = in.readString();
+        date = in.readInt();
+        dateTo = in.readInt();
         host = in.readString();
         officialLink = in.readString();
         image = in.readString();
         facebook = in.readString();
+        offers = in.readString();
+        category = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -56,28 +53,36 @@ public class Event implements Listable, Parcelable{
         }
     };
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(text);
+        parcel.writeInt(date);
+        parcel.writeInt(dateTo);
+        parcel.writeString(host);
+        parcel.writeString(officialLink);
+        parcel.writeString(image);
+        parcel.writeString(facebook);
+        parcel.writeString(offers);
+        parcel.writeString(category);
+    }
+
+    @Override
+    public int getType() {
+        return Constants.EVENTS_SIMPLE_CARD;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getVisible() {
-        return visible;
-    }
-
-    public void setVisible(Integer visible) {
-        this.visible = visible;
-    }
-
-    public Integer getDateAdded() {
-        return dateAdded;
-    }
-
-    public void setDateAdded(Integer dateAdded) {
-        this.dateAdded = dateAdded;
     }
 
     public String getTitle() {
@@ -104,28 +109,12 @@ public class Event implements Listable, Parcelable{
         this.date = date;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public Integer getDateTo() {
         return dateTo;
     }
 
     public void setDateTo(Integer dateTo) {
         this.dateTo = dateTo;
-    }
-
-    public String getTimeTo() {
-        return timeTo;
-    }
-
-    public void setTimeTo(String timeTo) {
-        this.timeTo = timeTo;
     }
 
     public String getHost() {
@@ -160,49 +149,19 @@ public class Event implements Listable, Parcelable{
         this.facebook = facebook;
     }
 
-    public Object getOffers() {
+    public String getOffers() {
         return offers;
     }
 
-    public void setOffers(Object offers) {
+    public void setOffers(String offers) {
         this.offers = offers;
     }
 
-    public Integer getFbId() {
-        return fbId;
+    public String getCategory() {
+        return category;
     }
 
-    public void setFbId(Integer fbId) {
-        this.fbId = fbId;
-    }
-
-    public Integer getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Integer author) {
-        this.author = author;
-    }
-
-    @Override
-    public int getType() {
-        return Constants.EVENTS_SIMPLE_CARD;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(title);
-        parcel.writeString(text);
-        parcel.writeString(time);
-        parcel.writeString(timeTo);
-        parcel.writeString(host);
-        parcel.writeString(officialLink);
-        parcel.writeString(image);
-        parcel.writeString(facebook);
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

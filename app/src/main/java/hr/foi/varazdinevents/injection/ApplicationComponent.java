@@ -9,6 +9,7 @@ import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.NetworkModule;
+import hr.foi.varazdinevents.injection.modules.UserModule;
 
 /**
  * Created by Antonio Martinović on 15.10.16.
@@ -19,11 +20,11 @@ import hr.foi.varazdinevents.injection.modules.NetworkModule;
         NetworkModule.class,
 })
 public interface ApplicationComponent {
-    @NonNull
-    MainActivityComponent plus(@NonNull MainActivityModule mainActivityModule);
+
 
     @NonNull
-    EventDetailsActivityComponent plus(@NonNull EventDetailsActivityModule eventDetailsActivityModule);
+    UserComponent plus(UserModule userModule);
+
 
 //    void inject(@NonNull MainApplication mainApplication);
 }
