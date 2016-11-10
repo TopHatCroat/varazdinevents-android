@@ -1,5 +1,6 @@
 package hr.foi.varazdinevents.places.events;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,24 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     ItemTouchHelper itemTouchHelper;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        /*User user = new User(1, "brumihali@foi.hr", "123");
+        user.save();
+
+        User user1 = User.findById(User.class, 1);
+        user1.id = 2;
+        user1.email = "bruno@foi.hr";
+        user1.password = "456";
+        user1.save();
+
+        User user2 = User.findById(User.class, 2);
+        user2.delete();**/
+
+    }
 
     @Override
     protected void onStart() {

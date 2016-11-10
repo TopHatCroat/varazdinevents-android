@@ -3,10 +3,12 @@ package hr.foi.varazdinevents.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Antonio Martinović on 09.11.16.
  */
-public class User implements Parcelable{
+public class User extends SugarRecord implements Parcelable{
     public long id;
     public String email;
     public String password;
