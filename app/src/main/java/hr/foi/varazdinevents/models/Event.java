@@ -31,8 +31,8 @@ public class Event implements Listable, Parcelable{
     protected Event(Parcel in) {
         title = in.readString();
         text = in.readString();
-        date = in.readInt();
-        dateTo = in.readInt();
+        date = in.readInt(); //getDate() != null ? in.readInt() : 0;
+        dateTo = in.readInt(); //getDateTo() != null ? in.readInt() : 0;
         host = in.readString();
         officialLink = in.readString();
         image = in.readString();
@@ -62,8 +62,10 @@ public class Event implements Listable, Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
         parcel.writeString(text);
-        parcel.writeInt(date);
-        parcel.writeInt(dateTo);
+        //parcel.writeInt(date);
+        //parcel.writeInt(dateTo);
+        parcel.writeInt(date != null ? date : 0);
+        parcel.writeInt(dateTo != null ? dateTo : 0);
         parcel.writeString(host);
         parcel.writeString(officialLink);
         parcel.writeString(image);

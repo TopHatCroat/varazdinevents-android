@@ -1,11 +1,8 @@
 package hr.foi.varazdinevents.places.events;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -16,7 +13,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
-import hr.foi.varazdinevents.injection.MainActivityComponent;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
@@ -88,7 +84,7 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     @Override
     public void onItemClicked(Object item) {
-        EventDetailsActivity.startWithRepository((Event)item, this);
+        EventDetailsActivity.startWithEvent((Event)item, this);
     }
 
     protected int getLayout() {

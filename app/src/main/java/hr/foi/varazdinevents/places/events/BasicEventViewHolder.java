@@ -32,8 +32,8 @@ public class BasicEventViewHolder extends ItemViewHolder {
     @BindView(R.id.basic_item_date)
     TextView date;
 
-    @BindView(R.id.basic_item_time)
-    TextView time;
+    //@BindView(R.id.basic_item_time)
+    //TextView time;
 
     @BindView(R.id.basic_item_host)
     TextView host;
@@ -50,7 +50,7 @@ public class BasicEventViewHolder extends ItemViewHolder {
         event = (Event) item;
         this.title.setText(event.getTitle());
         this.date.setText(event.getDate().toString());
-        this.time.setText(event.getTime());
+        //this.time.setText(event.getTime());
         this.host.setText(event.getHost());
         Picasso.with(itemView.getContext()).load(event.getImage()).into(image);
         //Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
