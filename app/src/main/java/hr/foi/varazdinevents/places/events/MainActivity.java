@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.events;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +29,7 @@ import hr.foi.varazdinevents.ui.elements.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
-public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener {
+public class MainActivity extends BaseActivity implements OnStartDragListener {
 //    protected MainActivityComponent mainActivityComponent;
 
     @Inject
@@ -82,11 +84,6 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     }
 
     @Override
-    public void showBasicError(String message) {
-//        Snackbar.make(this, message, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
     public void onItemClicked(Object item) {
         EventDetailsActivity.startWithRepository((Event)item, this);
     }
@@ -97,10 +94,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     @Override
     public void setupActivityComponent() {
-        MainApplication.get(this).getApplicationComponent();
         MainApplication.get(this).getUserComponent()
-                    .plus(new MainActivityModule(this)).inject(this);
+                    .plus(new MainActivityModule(this))
+                    .inject(this);
 
+    }
+
+    public static void start(Context startingActivity) {
+        Intent intent = new Intent(startingActivity, MainActivity.class);
+        startingActivity.startActivity(intent);
     }
 
 }
