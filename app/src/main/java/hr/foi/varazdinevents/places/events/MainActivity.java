@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.events;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -50,9 +52,9 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*User user = new User(1, "brumihali@foi.hr", "123");
+        User user = new User(1, "brumihali@foi.hr", "123");
         user.save();
-
+/*
         User user1 = User.findById(User.class, 1);
         user1.id = 2;
         user1.email = "bruno@foi.hr";
@@ -101,11 +103,6 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     }
 
     @Override
-    public void showBasicError(String message) {
-//        Snackbar.make(this, message, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
     public void onItemClicked(Object item) {
         EventDetailsActivity.startWithRepository((Event)item, this);
     }
@@ -116,10 +113,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     @Override
     public void setupActivityComponent() {
-        MainApplication.get(this).getApplicationComponent();
         MainApplication.get(this).getUserComponent()
-                    .plus(new MainActivityModule(this)).inject(this);
+                    .plus(new MainActivityModule(this))
+                    .inject(this);
 
+    }
+
+    public static void start(Context startingActivity) {
+        Intent intent = new Intent(startingActivity, MainActivity.class);
+        startingActivity.startActivity(intent);
     }
 
 }

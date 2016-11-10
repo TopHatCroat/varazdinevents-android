@@ -1,5 +1,6 @@
 package hr.foi.varazdinevents.places.login;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
@@ -8,6 +9,7 @@ import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.injection.modules.LoginActivityModule;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
@@ -19,6 +21,13 @@ import hr.foi.varazdinevents.ui.base.ViewLayer;
 public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @BindView(R.id.login_button)
     Button loginButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+            User user = new User(1, "brumihali@foi.hr", "123");
+            user.save();
+    }
 
     @Override
     protected int getLayout() {
