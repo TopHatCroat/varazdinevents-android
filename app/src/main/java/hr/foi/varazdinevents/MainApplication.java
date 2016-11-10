@@ -43,7 +43,7 @@ public class MainApplication extends Application {
         return applicationComponent;
     }
 
-    public UserComponent getUserComponent(User user) {
+    public UserComponent createUserComponent(User user) {
         userComponent = applicationComponent.plus(new UserModule(user));
         return userComponent;
     }
@@ -54,7 +54,7 @@ public class MainApplication extends Application {
     }
 
     public UserComponent getUserComponent() {
-        if (userComponent == null) getUserComponent(UserManager.getStubUser("test"));
+        if (userComponent == null) createUserComponent(UserManager.getStubUser("test"));
         return userComponent;
     }
 

@@ -46,8 +46,4 @@ public class EventDetailsActivity extends BaseActivity {
         return eventDetailsActivityComponent;
     }
 
-    @Override
-    public void onItemClicked(Object item) {
-
-    }
 }

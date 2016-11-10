@@ -2,10 +2,7 @@ package hr.foi.varazdinevents.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,23 +21,18 @@ import hr.foi.varazdinevents.util.BundleService;
  * Created by Antonio Martinović on 12.10.16.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements ViewLayer, NavigationView.OnNavigationItemSelectedListener  {
+public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 //    protected MainActivityComponent mainActivityComponent;
     private BundleService bundleService;
     protected Unbinder unbinder;
 
-    @Nullable
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Nullable
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @Nullable
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
-
-    @BindView(R.id.coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +42,16 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
 
-        if(isWithNavigation()) {
-            setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawerLayout.addDrawerListener(toggle);
-            toggle.syncState();
-            drawerLayout.openDrawer(Gravity.LEFT);
-            navigationView.setNavigationItemSelectedListener(this);
-        }
+        drawerLayout.openDrawer(Gravity.LEFT);
 
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -74,11 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
 
     protected abstract void setupActivityComponent();
 
-    @Override
-    public void showBasicError(String message) {
-        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).show();
-    }
-
     public BundleService getBundleService() {
         return bundleService;
     }
@@ -86,9 +71,5 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
-    }
-
-    public boolean isWithNavigation() {
-        return true;
     }
 }
