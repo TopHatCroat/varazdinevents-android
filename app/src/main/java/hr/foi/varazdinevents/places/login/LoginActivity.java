@@ -59,4 +59,11 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     public void onFailure(String message) {
         showBasicError(message);
     }
+
+    @OnClick(R.id.login_button)
+    public void onLoginButtonClicked(){
+        MainActivity.start(this);
+    }
+
+
 }

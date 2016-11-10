@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.events;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -118,6 +120,11 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         MainApplication.get(this).getUserComponent()
                     .plus(new MainActivityModule(this)).inject(this);
 
+    }
+
+    public static void start(Context startingActivity){
+        Intent intent = new Intent(startingActivity, MainActivity.class);
+        startingActivity.startActivity(intent);
     }
 
 }
