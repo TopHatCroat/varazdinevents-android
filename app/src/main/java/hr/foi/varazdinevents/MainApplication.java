@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.orm.SugarContext;
+
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.ApplicationComponent;
 import hr.foi.varazdinevents.injection.DaggerApplicationComponent;
@@ -23,10 +25,17 @@ public class MainApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        SugarContext.init(this);
 //
 //        if (BuildConfig.DEBUG) {
 //            Timber.plant(new Timber.DebugTree());
 //        }
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SugarContext.terminate();
     }
 
     public static MainApplication get(Context context) {
