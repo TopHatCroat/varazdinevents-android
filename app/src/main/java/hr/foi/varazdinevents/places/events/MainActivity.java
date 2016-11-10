@@ -49,19 +49,6 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        User user = new User(1, "brumihali@foi.hr", "123");
-        user.save();
-/*
-        User user1 = User.findById(User.class, 1);
-        user1.id = 2;
-        user1.email = "bruno@foi.hr";
-        user1.password = "456";
-        user1.save();
-
-        User user2 = User.findById(User.class, 2);
-        user2.delete();**/
-
     }
 
     @Override
