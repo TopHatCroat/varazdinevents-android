@@ -11,6 +11,7 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.injection.modules.LoginActivityModule;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.register.RegisterActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
@@ -28,6 +29,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
            /* User user = new User(1, "brumihali@foi.hr", "123");
             user.save();
             */
+        RegisterActivity.start(this);
     }
 
     @Override
@@ -62,7 +64,8 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
 
     @Override
     public void onSuccess() {
-
+        showLoading(false);
+        MainActivity.start(this);
     }
 
     @Override
