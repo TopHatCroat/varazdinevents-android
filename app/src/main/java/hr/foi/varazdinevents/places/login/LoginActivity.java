@@ -25,8 +25,9 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            User user = new User(1, "brumihali@foi.hr", "123");
+           /* User user = new User(1, "brumihali@foi.hr", "123");
             user.save();
+            */
     }
 
     @Override
@@ -68,4 +69,10 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     public void onFailure(String message) {
         showBasicError(message);
     }
+
+    @OnClick(R.id.login_button)
+    public void onLoginButtonClicked() {
+        MainActivity.start(this);
+    }
+
 }
