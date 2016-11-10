@@ -2,6 +2,7 @@ package hr.foi.varazdinevents;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.ApplicationComponent;
@@ -15,7 +16,7 @@ import hr.foi.varazdinevents.models.User;
 /**
  * Created by Antonio Martinović on 15.10.16.
  */
-public class MainApplication extends Application {
+public class MainApplication extends MultiDexApplication {
     ApplicationComponent applicationComponent;
     UserComponent userComponent;
 
@@ -43,7 +44,7 @@ public class MainApplication extends Application {
         return applicationComponent;
     }
 
-    public UserComponent createUserComponent(User user) {
+    public UserComponent getUserComponent(User user) {
         userComponent = applicationComponent.plus(new UserModule(user));
         return userComponent;
     }
@@ -54,7 +55,7 @@ public class MainApplication extends Application {
     }
 
     public UserComponent getUserComponent() {
-        if (userComponent == null) createUserComponent(UserManager.getStubUser("test"));
+        if (userComponent == null) getUserComponent(UserManager.getStubUser("test"));
         return userComponent;
     }
 
