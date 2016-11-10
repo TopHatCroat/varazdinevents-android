@@ -19,7 +19,7 @@
         tools:context="com.example.bruno.airprojekt.MainActivity">
 
         <TextView
-            android:text="Username"
+            android:text="Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -27,34 +27,15 @@
             android:layout_marginTop="33dp"
             android:id="@+id/textView2" />
 
-        <TextView
-            android:text="Password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/TFusername"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginTop="23dp"
-            android:id="@+id/textView3" />
-
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:layout_marginTop="12dp"
-            android:id="@+id/TFusername"
+            android:id="@+id/TFemail"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:layout_below="@+id/textView3"
-            android:layout_alignEnd="@+id/TFusername"
-            android:layout_marginTop="17dp"
-            android:id="@+id/TFpassword" />
 
         <Button
             android:text="Log in"
@@ -73,5 +54,25 @@
             android:id="@+id/signup_button"
             android:layout_below="@+id/login_button"
             android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/TFemail"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_marginTop="13dp"
+            android:id="@+id/TFpassword"
+            android:layout_below="@+id/textView3"
+            android:layout_alignLeft="@+id/TFemail"
+            android:layout_alignStart="@+id/TFemail" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

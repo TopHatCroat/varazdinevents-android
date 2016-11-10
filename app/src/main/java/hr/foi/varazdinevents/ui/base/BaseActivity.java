@@ -40,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
     NavigationView navigationView;
 
     @BindView(R.id.coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
+    protected CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
