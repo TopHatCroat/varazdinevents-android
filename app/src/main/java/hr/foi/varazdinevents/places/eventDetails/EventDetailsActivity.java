@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -79,7 +81,7 @@ public class EventDetailsActivity extends BaseActivity {
         super.onStart();
         presenter.attachView(this);
         showLoading(true);
-        //image.setText(event.getImage());
+        //Picasso.with(itemView.getContext()).load(event.getImage()).into(image);
         this.title.setText(event.getTitle());
         this.date.setText(event.getDate() != null ? event.getDate().toString() : "");
         this.dateTo.setText(event.getDateTo() != null ? event.getDateTo().toString() : "");
