@@ -1,6 +1,10 @@
 package hr.foi.varazdinevents.places.login;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hr.foi.varazdinevents.api.UserManager;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 
 /**
@@ -19,11 +23,19 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
 
     }
 
-    public void tryLogin(String username, String password){
-        getViewLayer().showLoading(true);
-        if (username != "" )
-            getViewLayer().onSuccess();
-        else
-            getViewLayer().onFailure("Username treba biti unesen");
+    public void tryLogin(String username, String password) {
+        List<User> user_list = new ArrayList<>();
+        long count = User.count(User.class);
+        if (count > 0) {
+            user_list = User.find(User.class, "email= ? and password= ? ", username, password);
+            if (user_list.size() == 0) {
+                getViewLayer().showBasicError("Pokusajte ponovo");
+            } else {
+                getViewLayer().onSuccess();
+            }
+        } else {
+            getViewLayer().showBasicError("Nema zapisa u bazi");
+        }
     }
+
 }
