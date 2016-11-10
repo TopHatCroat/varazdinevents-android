@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
 
     @Override
     public void onSuccess() {
-        MainActivity.start(this);
+
     }
 
     @Override

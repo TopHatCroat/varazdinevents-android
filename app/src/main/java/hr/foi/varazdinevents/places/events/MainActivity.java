@@ -109,9 +109,4 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         startingActivity.startActivity(intent);
     }
 
-    public static void start(Context startingActivity){
-        Intent intent = new Intent(startingActivity, MainActivity.class);
-        startingActivity.startActivity(intent);
-    }
-
 }
