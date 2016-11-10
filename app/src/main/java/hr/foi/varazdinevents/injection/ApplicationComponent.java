@@ -8,6 +8,7 @@ import dagger.Component;
 import hr.foi.varazdinevents.injection.modules.LoginActivityModule;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.NetworkModule;
+import hr.foi.varazdinevents.injection.modules.RegisterActivityModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 
 /**
@@ -21,7 +22,10 @@ import hr.foi.varazdinevents.injection.modules.UserModule;
 public interface ApplicationComponent {
 
     @NonNull
-    LoginActivityComponent plus(LoginActivityModule loginActivity);
+    LoginActivityComponent plus(LoginActivityModule loginActivityModule);
+
+    @NonNull
+    RegisterActivityComponent plus(RegisterActivityModule registerActivityComponent);
 
     @NonNull
     UserComponent plus(UserModule userModule);
