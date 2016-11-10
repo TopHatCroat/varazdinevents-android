@@ -1,21 +1,18 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 
 /**
  * Created by Antonio Martinović on 08.11.16.
  */
-public class EventDetailsPresenter extends BasePresenter<EventDetailsView>{
+public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity>{
 
-    private final Event event;
+    private User user;
 
-    public EventDetailsPresenter(Event event) {
-        this.event = event;
-    }
-
-    public Event getEvent() {
-        return this.event;
+    public EventDetailsPresenter(User user) {
+        this.user = user;
     }
 
     @Override

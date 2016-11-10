@@ -7,8 +7,8 @@ import dagger.Module;
 import dagger.Provides;
 import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsPresenter;
-import hr.foi.varazdinevents.places.eventDetails.EventDetailsView;
 
 /**
  * Created by Antonio Martinović on 08.11.16.
@@ -34,14 +34,9 @@ public class EventDetailsActivityModule {
     }
 
     @Provides
-    EventDetailsPresenter provideMainPresenter(){ /*Event event*/
-        this.presenterLayer = new EventDetailsPresenter(new Event());
+    EventDetailsPresenter provideEventDetailsPresenter(User user){
+        this.presenterLayer = new EventDetailsPresenter(user);
         return this.presenterLayer;
     }
 
-    @Provides
-    @ActivityScope
-    EventDetailsView provideMainView() {
-        return new EventDetailsView(activity);
-    }
 }
