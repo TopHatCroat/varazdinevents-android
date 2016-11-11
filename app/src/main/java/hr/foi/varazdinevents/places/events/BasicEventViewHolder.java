@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.google.auto.factory.AutoFactory;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.foi.varazdinevents.R;
@@ -49,7 +51,10 @@ public class BasicEventViewHolder extends ItemViewHolder {
     public void bind(Object item) {
         event = (Event) item;
         this.title.setText(event.getTitle());
-        this.date.setText(event.getDate().toString());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        this.date.setText(dateFormat.format(event.date));
+
         //this.time.setText(event.getTime());
         this.host.setText(event.getHost());
         Picasso.with(itemView.getContext()).load(event.getImage()).into(image);

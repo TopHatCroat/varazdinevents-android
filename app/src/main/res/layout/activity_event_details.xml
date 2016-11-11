@@ -33,9 +33,64 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.widget.RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/details_content_holder">
+            android:id="@+id/details_content_holder"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_host"
+                style="@style/TextDesign"/>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_category"
+                style="@style/TextDesign"/>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_offers"
+                style="@style/TextDesign"/>
+
+
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_text"
+                style="@style/TextDesign"/>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_officialLink"
+                style="@style/TextDesign" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_facebook"
+                style="@style/TextDesign" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_details_title"
+                style="@style/TextDesign"
+                android:textSize="20dp"
+                android:layout_alignBottom="@+id/event_details_image"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <ImageView
                 android:padding="40dp"
@@ -43,115 +98,34 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:id="@+id/event_details_image"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="50dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_below="@+id/event_details_host"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:layout_margin="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_title"/>
-
-            <android.support.design.widget.FloatingActionButton
-                android:visibility="gone"
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_email"/>
+                android:layout_marginTop="69dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/event_details_date"
-                android:layout_below="@+id/event_details_image"
+                style="@style/TextDesign"
+                android:layout_alignTop="@+id/event_details_title"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/event_details_dateTo"
-                android:layout_alignEnd="@+id/event_details_dateTo" />
+                android:layout_marginTop="25dp" />
 
             <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_image"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="21dp"
                 android:id="@+id/event_details_dateTo"
-                android:layout_alignRight="@+id/event_details_title"
-                android:layout_alignEnd="@+id/event_details_title" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_dateTo"
+                style="@style/TextDesign"
+                android:layout_below="@+id/event_details_date"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/event_details_host"
-                android:layout_alignRight="@+id/event_details_dateTo"
-                android:layout_alignEnd="@+id/event_details_dateTo" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_host"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/event_details_category"
-                android:layout_alignRight="@+id/event_details_host"
-                android:layout_alignEnd="@+id/event_details_host" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_category"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/event_details_offers"
-                android:layout_alignRight="@+id/event_details_category"
-                android:layout_alignEnd="@+id/event_details_category" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_offers"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/event_details_facebook"
-                android:layout_alignRight="@+id/event_details_offers"
-                android:layout_alignEnd="@+id/event_details_offers" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_facebook"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/event_details_officialLink"
-                android:layout_alignRight="@+id/event_details_facebook"
-                android:layout_alignEnd="@+id/event_details_facebook" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/event_details_officialLink"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/event_details_text"
-                android:layout_alignRight="@+id/event_details_officialLink"
-                android:layout_alignEnd="@+id/event_details_officialLink" />
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </android.widget.RelativeLayout>
 
