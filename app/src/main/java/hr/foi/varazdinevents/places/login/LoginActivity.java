@@ -32,9 +32,11 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (User.count(User.class) < 1) {
+        if (User.count(User.class) < 2) {
             User user = new User(2, "test", "test");
             user.save();
+            User user2 = new User(3, "", "");
+            user2.save();
         }
 
     }

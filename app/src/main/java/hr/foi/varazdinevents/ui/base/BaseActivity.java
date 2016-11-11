@@ -58,7 +58,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
-            drawerLayout.openDrawer(Gravity.LEFT);
+
+
             navigationView.setNavigationItemSelectedListener(this);
         }
 
