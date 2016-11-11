@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.injection.modules.LoginActivityModule;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.register.RegisterActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 
 /**
@@ -64,11 +67,11 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
 
     @Override
     public void onItemClicked(Object item) {
-        // !!!!!!!!!!!!!!
+        // !!!!!!
     }
 
     public void showLoading(boolean loading) {
-
+        // !!!!!!
     }
 
     @Override
@@ -91,6 +94,11 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         presenter.tryLogin(user_email, user_pass);
     }
 
+    @OnClick(R.id.signup_button)
+    public void onSignUpButtonClicked() {
+        RegisterActivity.start(this);
+    }
+
 
     @Override
     protected void onStart() {
@@ -102,6 +110,11 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     protected void onStop(){
         super.onStop();
         presenter.detachView();
+    }
+
+    public static void start(Context startingActivity) {
+        Intent intent = new Intent(startingActivity, LoginActivity.class);
+        startingActivity.startActivity(intent);
     }
 
 }

@@ -29,7 +29,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         if (count > 0) {
             user_list = User.find(User.class, "email= ? and password= ? ", username, password);
             if (user_list.size() == 0) {
-                getViewLayer().showBasicError("Pokusajte ponovo");
+                getViewLayer().showBasicError("Krivi email ili lozinka");
             } else {
                 getViewLayer().onSuccess();
             }
