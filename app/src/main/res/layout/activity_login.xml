@@ -9,70 +9,106 @@
     android:id="@+id/coordinator_layout">
 
     <RelativeLayout
-        android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="#f0ad4e"
+        android:orientation="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         tools:context="com.example.bruno.airprojekt.MainActivity">
 
         <TextView
-            android:text="Email"
-            android:layout_width="wrap_content"
+            android:id="@+id/login_title"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="22dp"
+            android:gravity="center_horizontal"
+            android:text="Prijava u aplikaciju"
+            android:textColor="#fff"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/white_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_title"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="70dp"
+            android:background="#fff"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="30dp">
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/user_icon"
+                        android:hint="Korisničko ime"
+                        android:fontFamily="sans-serif"
+                        android:inputType="textEmailAddress"
+                        android:id="@+id/TFusername"/>
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:drawableLeft="@drawable/password_icon"
+                        android:hint="Lozinka"
+                        android:fontFamily="sans-serif"
+                        android:inputType="textPassword"
+                        android:id="@+id/TFpassword"/>
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#f0ad4e"
+                    android:text="Prijava"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:id="@+id/login_button"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="50dp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="#f0ad4e"
+                    android:text="Registriraj se"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:id="@+id/signup_button" />
+            </LinearLayout>
+        </RelativeLayout>
+        <View
+            android:id="@+id/shadow"
+            android:layout_height="4dp"
+            android:layout_below="@+id/white_layout"
+            android:background="@drawable/horizontal_shadow"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="31dp"
+            android:layout_marginRight="30dp">
+        </View>
+
+        <ImageButton
+            android:id="@+id/user_profile_photo"
+            android:layout_width="103dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/login_title"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp"
-            android:id="@+id/textView2" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_marginTop="12dp"
-            android:id="@+id/TFemail"
-            android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            android:text="Log in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/login_button"
-            android:layout_marginTop="47dp"
-            android:layout_below="@+id/TFpassword"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            android:text="Sign up here"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:id="@+id/signup_button"
-            android:layout_below="@+id/login_button"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:text="Password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/TFemail"
-            android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:layout_marginTop="13dp"
-            android:id="@+id/TFpassword"
-            android:layout_below="@+id/textView3"
-            android:layout_alignLeft="@+id/TFemail"
-            android:layout_alignStart="@+id/TFemail" />
+            android:layout_marginTop="16dp"
+            android:background="@drawable/logo"
+            android:elevation="10dp" />
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>

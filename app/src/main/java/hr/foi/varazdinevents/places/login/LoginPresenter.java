@@ -30,9 +30,10 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         List<User> user_list = new ArrayList<>();
         long count = User.count(User.class);
         if (count > 0) {
-            user_list = User.find(User.class, "email= ? and password= ? ", username, password);
+            user_list = User.find(User.class, "username= ? and password= ? ", username, password);
             if (user_list.size() == 0) {
-                getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.loginError));
+                getViewLayer().showBasicError(getViewLayer().getResources().getString(R
+                        .string.loginError));
             } else {
                 getViewLayer().onSuccess(user_list.get(0));
             }
