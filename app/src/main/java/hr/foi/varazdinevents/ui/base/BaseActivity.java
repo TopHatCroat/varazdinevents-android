@@ -99,11 +99,16 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        if(isWithNavigation()) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
         } else {
             super.onBackPressed();
         }
+
     }
 
     public boolean isWithNavigation() {
