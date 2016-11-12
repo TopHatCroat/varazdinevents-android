@@ -14,6 +14,6 @@ public class UserManager {
     }
 
     public static User getStubUser(String username) {
-        return new User(0, username, username + "@foi.hr");
+        return new User(0, username, username, username + "@foi.hr");
     }
 }

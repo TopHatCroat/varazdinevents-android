@@ -19,16 +19,18 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity>{
 
     }
 
-    public void tryRegister (String email, String password, String password2) {
+    public void tryRegister (String username, String email, String password, String password2) {
 
-        if (!password.equals(password2)) {
+        if (!email.matches("[a-zA-Z][a-zA-Z0-9.]{1,}[a-zA-Z0-9]{1}[@]{1}[a-zA-Z]{1}[a-zA-Z.-]{2,}[a-zA-Z]")) {
+            getViewLayer().showBasicError("Neispravan email");
+        } else if (!password.equals(password2)) {
             getViewLayer().showBasicError("Lozinke se ne podudaraju");
-        } else if (email.length()==0 || password.length()==0 || password2.length()==0) {
+        } else if (username.length() ==0 || email.length()==0 || password.length()==0 || password2.length()==0) {
             getViewLayer().showBasicError("Obavezno popunite sva polja");
         }
         else{
             long id = User.count(User.class) + 1;
-            User user = new User(id, email,  password);
+            User user = new User(id, username, email,  password);
             user.save();
             //getViewLayer().showBasicError("Registracija uspješna. Prijavite se!");
             getViewLayer().onSuccess();

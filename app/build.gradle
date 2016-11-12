@@ -62,7 +62,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.github.satyan:sugar:1.4'
 
-
+    //xml layout login
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
 
     provided 'javax.annotation:jsr250-api:1.0'
     testCompile "junit:junit:4.12"

@@ -27,9 +27,9 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         List<User> user_list = new ArrayList<>();
         long count = User.count(User.class);
         if (count > 0) {
-            user_list = User.find(User.class, "email= ? and password= ? ", username, password);
+            user_list = User.find(User.class, "username= ? and password= ? ", username, password);
             if (user_list.size() == 0) {
-                getViewLayer().showBasicError("Krivi email ili lozinka");
+                getViewLayer().showBasicError("Krivo korisničko ime ili lozinka");
             } else {
                 getViewLayer().onSuccess();
             }

@@ -10,6 +10,7 @@ import com.orm.SugarRecord;
  */
 public class User extends SugarRecord implements Parcelable{
     public long id;
+    public String username;
     public String email;
     public String password;
 
@@ -26,14 +27,16 @@ public class User extends SugarRecord implements Parcelable{
     public User() {
     }
 
-    public User(long id, String email, String password) {
+    public User(long id, String username, String email, String password) {
         this.id = id;
+        this.username = username;
         this.email = email;
         this.password = password;
     }
 
     protected User(Parcel in) {
         this.id = in.readLong();
+        this.username = in.readString();
         this.email = in.readString();
         this.password = in.readString();
     }
@@ -46,6 +49,7 @@ public class User extends SugarRecord implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
+        dest.writeString(this.username);
         dest.writeString(this.email);
         dest.writeString(this.password);
     }

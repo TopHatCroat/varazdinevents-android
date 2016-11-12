@@ -21,6 +21,9 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
  * Created by Bruno on 10.11.16.
  */
 public class RegisterActivity extends BaseActivity implements LoginViewLayer {
+    @BindView(R.id.TFusername_register)
+    TextView username;
+
     @BindView(R.id.TFemail_register)
     TextView email;
 
@@ -96,11 +99,12 @@ public class RegisterActivity extends BaseActivity implements LoginViewLayer {
 
     @OnClick(R.id.register_button)
     public void onRegisterButtonClicked() {
+        String user_username = username.getText().toString();
         String user_email = email.getText().toString();
         String user_pass = pass1.getText().toString();
         String user_pass2 = pass2.getText().toString();
         showLoading(true);
-        presenter.tryRegister(user_email, user_pass, user_pass2);
+        presenter.tryRegister(user_username, user_email, user_pass, user_pass2);
     }
 
 }

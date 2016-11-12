@@ -25,8 +25,8 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
 public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @BindView(R.id.login_button)
     Button loginButton;
-    @BindView(R.id.TFemail)
-    TextView email;
+    @BindView(R.id.TFusername)
+    TextView username;
     @BindView(R.id.TFpassword)
     TextView password;
     @Inject
@@ -36,10 +36,10 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (User.count(User.class) < 2) {
-            User user = new User(2, "test", "test");
+            User user = new User(1,"a", "a", "a");
             user.save();
-            User user2 = new User(3, "", "");
-            user2.save();
+            /*User user2 = new User(2, "", "");
+            user2.save();*/
         }
 
     }
@@ -88,10 +88,10 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
-        String user_email = email.getText().toString();
+        String user_username = username.getText().toString();
         String user_pass = password.getText().toString();
         showLoading(true);
-        presenter.tryLogin(user_email, user_pass);
+        presenter.tryLogin(user_username, user_pass);
     }
 
     @OnClick(R.id.signup_button)
