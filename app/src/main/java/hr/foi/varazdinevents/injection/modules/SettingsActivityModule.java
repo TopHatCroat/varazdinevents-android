@@ -7,6 +7,7 @@ import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.places.register.RegisterActivity;
 import hr.foi.varazdinevents.places.register.RegisterPresenter;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
+import hr.foi.varazdinevents.places.settings.SettingsFragment;
 import hr.foi.varazdinevents.places.settings.SettingsPresenter;
 
 /**
@@ -31,5 +32,11 @@ public class SettingsActivityModule {
     SettingsPresenter
     provideSettingsPresenter() {
         return new SettingsPresenter();
+    }
+
+    @Provides
+    @ActivityScope
+    SettingsFragment provideSettingsFragment(){
+        return new SettingsFragment();
     }
 }
