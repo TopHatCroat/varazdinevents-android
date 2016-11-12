@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.places.eventDetails;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.util.FontManager;
 
 /**
  * Created by Antonio Martinović on 08.11.16.
@@ -48,12 +50,10 @@ public class EventDetailsActivity extends BaseActivity {
     LinearLayout contentHolder;
     @BindView(R.id.event_details_image)
     ImageView image;
-    @BindView(R.id.event_details_title)
-    TextView title;
     @BindView(R.id.event_details_date)
     TextView date;
-//    @BindView(R.id.event_details_dateTo)
-//    TextView dateTo;
+    @BindView(R.id.event_details_time)
+    TextView time;
     @BindView(R.id.event_details_host)
     TextView host;
     @BindView(R.id.event_details_category)
@@ -69,6 +69,17 @@ public class EventDetailsActivity extends BaseActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
+    @BindView(R.id.awesome_calendar)
+    TextView awesomeCalendar;
+    @BindView(R.id.awesome_clock)
+    TextView awesomeClock;
+    @BindView(R.id.awesome_facebook)
+    TextView awesomeFaceboot;
+    @BindView(R.id.awesome_host)
+    TextView awesomeHost;
+    @BindView(R.id.awesome_rocket)
+    TextView awesomeRocket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +89,13 @@ public class EventDetailsActivity extends BaseActivity {
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         toolbar.setTitle(event.getTitle());
         Picasso.with(this).load(event.getImage()).into(image);
+
+        Typeface iconFont = FontManager.getFontAwesome(getApplicationContext());
+        FontManager.markAsIconContainer(awesomeCalendar, iconFont);
+        FontManager.markAsIconContainer(awesomeClock, iconFont);
+        FontManager.markAsIconContainer(awesomeFaceboot, iconFont);
+        FontManager.markAsIconContainer(awesomeHost, iconFont);
+        FontManager.markAsIconContainer(awesomeRocket, iconFont);
 
 //        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
 //        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
@@ -98,13 +116,13 @@ public class EventDetailsActivity extends BaseActivity {
         super.onStart();
         presenter.attachView(this);
         showLoading(true);
-        this.title.setText(event.getTitle());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         this.date.setText(dateFormat.format(event.date*1000L));
 
-//        this.date.setText(event.getDate() != null ? event.getDate().toString() : "");
-//        this.dateTo.setText(event.getDateTo() != null ? event.getDateTo().toString() : "");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        this.time.setText(timeFormat.format(event.date*1000L));
+
         this.host.setText(event.getHost());
         this.category.setText(event.getCategory());
         this.facebook.setText(event.getFacebook());

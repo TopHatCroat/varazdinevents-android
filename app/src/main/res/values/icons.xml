@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fa_calendar">&#xf073;</string>
+    <string name="fa_clock">&#xf017;</string>
+    <string name="fa_facebook">&#xf230;</string>
+    <string name="fa_host">&#xf1ad;</string>
+    <string name="fa_rocket">&#xf135;</string>
+</resources>
