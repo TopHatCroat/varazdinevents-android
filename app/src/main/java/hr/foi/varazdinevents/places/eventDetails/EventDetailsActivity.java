@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,6 +41,7 @@ public class EventDetailsActivity extends BaseActivity {
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
+    @Nullable
     @BindView(R.id.progresBar)
     ProgressBar progressBar;
     @BindView(R.id.details_content_holder)
@@ -63,6 +66,8 @@ public class EventDetailsActivity extends BaseActivity {
 //    TextView officialLink;
     @BindView(R.id.event_details_text)
     TextView text;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +75,14 @@ public class EventDetailsActivity extends BaseActivity {
         this.event = getIntent().getParcelableExtra(ARG_EVENT);
 
         collapsingToolbarLayout.setTitle(event.getTitle());
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         toolbar.setTitle(event.getTitle());
         Picasso.with(this).load(event.getImage()).into(image);
+
+//        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
+//        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
+//        fab.setRippleColor(lightVibrantColor);
+//        fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -136,4 +147,5 @@ public class EventDetailsActivity extends BaseActivity {
     public void onItemClicked(Object item) {
 
     }
+
 }

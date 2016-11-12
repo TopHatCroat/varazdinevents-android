@@ -38,8 +38,8 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         if (User.count(User.class) < 2) {
             User user = new User(1,"a", "a", "a");
             user.save();
-            /*User user2 = new User(2, "", "");
-            user2.save();*/
+            User user2 = new User(2, "", "", "");
+            user2.save();
         }
 
     }
