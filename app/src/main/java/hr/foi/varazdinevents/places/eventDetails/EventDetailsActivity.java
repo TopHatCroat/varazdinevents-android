@@ -1,15 +1,15 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.MenuItem;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -21,9 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
-import hr.foi.varazdinevents.injection.EventDetailsActivityComponent;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
-import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 
@@ -34,17 +32,17 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
 public class EventDetailsActivity extends BaseActivity {
     private static final String ARG_EVENT = "arg_event";
 
-    EventDetailsActivityComponent eventDetailsActivityComponent;
-
     private Event event;
 
     @Inject
     EventDetailsPresenter presenter;
 
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.progresBar)
     ProgressBar progressBar;
     @BindView(R.id.details_content_holder)
-    RelativeLayout relativeLayout;
+    LinearLayout contentHolder;
     @BindView(R.id.event_details_image)
     ImageView image;
     @BindView(R.id.event_details_title)
@@ -71,6 +69,12 @@ public class EventDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.event = getIntent().getParcelableExtra(ARG_EVENT);
 
+        collapsingToolbarLayout.setTitle(event.getTitle());
+        toolbar.setTitle(event.getTitle());
+        Picasso.with(this).load(event.getImage()).into(image);
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
@@ -83,11 +87,10 @@ public class EventDetailsActivity extends BaseActivity {
         super.onStart();
         presenter.attachView(this);
         showLoading(true);
-        //Picasso.with(itemView.getContext()).load(event.getImage()).into(image);
         this.title.setText(event.getTitle());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        this.date.setText(dateFormat.format(event.date));
+        this.date.setText(dateFormat.format(event.date*1000L));
 
 //        this.date.setText(event.getDate() != null ? event.getDate().toString() : "");
 //        this.dateTo.setText(event.getDateTo() != null ? event.getDateTo().toString() : "");
@@ -96,7 +99,11 @@ public class EventDetailsActivity extends BaseActivity {
         this.facebook.setText(event.getFacebook());
         this.offers.setText(event.getOffers());
 //        this.officialLink.setText(event.getOfficialLink());
-        this.text.setText(event.getText());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.text.setText(Html.fromHtml(event.getText(), Html.FROM_HTML_MODE_LEGACY).toString());
+        } else {
+            this.text.setText(Html.fromHtml(event.getText()).toString());
+        }
         showLoading(false);
 
     }
@@ -109,7 +116,7 @@ public class EventDetailsActivity extends BaseActivity {
 
     public void showLoading(boolean loading) {
         progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-        relativeLayout.setVisibility(loading ? View.GONE :View.VISIBLE);
+        contentHolder.setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
     public static void startWithEvent(Event event, Context startingActivity) {

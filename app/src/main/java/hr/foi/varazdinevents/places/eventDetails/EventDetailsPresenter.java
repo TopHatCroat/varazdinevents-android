@@ -1,6 +1,5 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
-import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 

@@ -25,19 +25,18 @@ import hr.foi.varazdinevents.util.BundleService;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements ViewLayer, NavigationView.OnNavigationItemSelectedListener  {
-//    protected MainActivityComponent mainActivityComponent;
     private BundleService bundleService;
     protected Unbinder unbinder;
 
     @Nullable
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    protected Toolbar toolbar;
     @Nullable
     @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
+    protected DrawerLayout drawerLayout;
     @Nullable
     @BindView(R.id.navigation_view)
-    NavigationView navigationView;
+    protected NavigationView navigationView;
 
     @BindView(R.id.coordinator_layout)
     protected CoordinatorLayout coordinatorLayout;

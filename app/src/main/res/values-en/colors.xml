@@ -6,4 +6,5 @@
     <color name="colorEventDetailsGeneral">#F0AD4E</color>
     <color name="colorEventDetailsDescription">#D9534F</color>
     <color name="colorEventDetailsOffers">#A6E1EC</color>
+    <color name="white">#FFFFFF</color>
 </resources>
