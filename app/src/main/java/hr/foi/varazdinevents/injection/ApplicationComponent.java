@@ -29,9 +29,6 @@ public interface ApplicationComponent {
     RegisterActivityComponent plus(RegisterActivityModule registerActivityComponent);
 
     @NonNull
-    SettingsActivityComponent plus(SettingsActivityModule settingsActivityModule);
-
-    @NonNull
     UserComponent plus(UserModule userModule);
 
 

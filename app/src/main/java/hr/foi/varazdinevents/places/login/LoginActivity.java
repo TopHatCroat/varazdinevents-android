@@ -75,8 +75,9 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(User user) {
         showLoading(false);
+        MainApplication.get(this).createUserComponent(user);
         MainActivity.start(this);
     }
 

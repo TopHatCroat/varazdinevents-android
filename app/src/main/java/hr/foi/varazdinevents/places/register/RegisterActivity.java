@@ -20,7 +20,7 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
 /**
  * Created by Bruno on 10.11.16.
  */
-public class RegisterActivity extends BaseActivity implements LoginViewLayer {
+public class RegisterActivity extends BaseActivity implements RegisterViewLayer {
     @BindView(R.id.TFemail_register)
     TextView email;
 
