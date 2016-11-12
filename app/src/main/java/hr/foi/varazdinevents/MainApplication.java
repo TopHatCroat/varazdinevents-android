@@ -53,8 +53,7 @@ public class MainApplication extends MultiDexApplication {
         return applicationComponent;
     }
 
-    public UserComponent getUserComponent(User user) {
-        userComponent = applicationComponent.plus(new UserModule(user));
+    public UserComponent getUserComponent() {
         return userComponent;
     }
 
@@ -63,9 +62,13 @@ public class MainApplication extends MultiDexApplication {
         this.applicationComponent = applicationComponent;
     }
 
-    public UserComponent getUserComponent() {
-        if (userComponent == null) getUserComponent(UserManager.getStubUser("test"));
+    public UserComponent createUserComponent() { //for testing only
+        if (userComponent == null) createUserComponent(UserManager.getStubUser("test"));
         return userComponent;
+    }
+
+    public void createUserComponent(User user) {
+        this.userComponent = applicationComponent.plus(new UserModule(user));
     }
 
     public void setUserComponent(UserComponent userComponent) {

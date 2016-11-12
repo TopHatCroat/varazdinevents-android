@@ -3,8 +3,10 @@ package hr.foi.varazdinevents.places.login;
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 
 /**
@@ -31,7 +33,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
             if (user_list.size() == 0) {
                 getViewLayer().showBasicError("Krivo korisničko ime ili lozinka");
             } else {
-                getViewLayer().onSuccess();
+                getViewLayer().onSuccess(user_list.get(0));
             }
         } else {
             getViewLayer().showBasicError("Nema zapisa u bazi");

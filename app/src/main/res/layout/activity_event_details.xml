@@ -34,98 +34,45 @@
 
         <android.widget.RelativeLayout
             android:id="@+id/details_content_holder"
-            android:layout_height="match_parent"
+            android:layout_height="503dp"
             android:layout_width="match_parent">
 
 
-            <TextView
+            <TextView android:id="@+id/event_details_title"
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/event_details_host"
-                style="@style/TextDesign"/>
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_category"
-                style="@style/TextDesign"/>
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_offers"
-                style="@style/TextDesign"/>
-
-
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_text"
-                style="@style/TextDesign"/>
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_officialLink"
-                style="@style/TextDesign" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_facebook"
-                style="@style/TextDesign" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_title"
-                style="@style/TextDesign"
-                android:textSize="20dp"
-                android:layout_alignBottom="@+id/event_details_image"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <ImageView
-                android:padding="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/event_details_image"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:layout_below="@+id/event_details_host"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="69dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_date"
-                style="@style/TextDesign"
-                android:layout_alignTop="@+id/event_details_title"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_details_dateTo"
-                style="@style/TextDesign"
-                android:layout_below="@+id/event_details_date"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_marginTop="63dp"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                style="@style/TitleTextDesign"/>
+
+            <ImageView android:id="@+id/event_details_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/event_details_title" />
+
+            <include layout="@layout/event_details_general"
+                android:id="@+id/layout_event_details_general"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/event_details_image" />
+
+            <include layout="@layout/event_details_offers"
+                android:id="@+id/layout_event_details_offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_event_details_general" />
+
+
+            <include layout="@layout/event_details_description"
+                android:id="@+id/layout_event_details_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_event_details_offers"/>
 
         </android.widget.RelativeLayout>
 

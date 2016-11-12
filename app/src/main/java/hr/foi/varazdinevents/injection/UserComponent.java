@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import dagger.Subcomponent;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
+import hr.foi.varazdinevents.injection.modules.SettingsActivityModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 
 /**
@@ -23,4 +24,6 @@ public interface UserComponent {
     MainActivityComponent plus(@NonNull MainActivityModule mainActivityModule);
     @NonNull
     EventDetailsActivityComponent plus(@NonNull EventDetailsActivityModule eventDetailsActivityModule);
+    @NonNull
+    SettingsActivityComponent plus(@NonNull SettingsActivityModule settingsActivityModule);
 }

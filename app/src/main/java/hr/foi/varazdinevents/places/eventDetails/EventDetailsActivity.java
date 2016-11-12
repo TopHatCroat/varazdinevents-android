@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -49,8 +51,8 @@ public class EventDetailsActivity extends BaseActivity {
     TextView title;
     @BindView(R.id.event_details_date)
     TextView date;
-    @BindView(R.id.event_details_dateTo)
-    TextView dateTo;
+//    @BindView(R.id.event_details_dateTo)
+//    TextView dateTo;
     @BindView(R.id.event_details_host)
     TextView host;
     @BindView(R.id.event_details_category)
@@ -59,8 +61,8 @@ public class EventDetailsActivity extends BaseActivity {
     TextView facebook;
     @BindView(R.id.event_details_offers)
     TextView offers;
-    @BindView(R.id.event_details_officialLink)
-    TextView officialLink;
+//    @BindView(R.id.event_details_officialLink)
+//    TextView officialLink;
     @BindView(R.id.event_details_text)
     TextView text;
 
@@ -83,13 +85,17 @@ public class EventDetailsActivity extends BaseActivity {
         showLoading(true);
         //Picasso.with(itemView.getContext()).load(event.getImage()).into(image);
         this.title.setText(event.getTitle());
-        this.date.setText(event.getDate() != null ? event.getDate().toString() : "");
-        this.dateTo.setText(event.getDateTo() != null ? event.getDateTo().toString() : "");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        this.date.setText(dateFormat.format(event.date));
+
+//        this.date.setText(event.getDate() != null ? event.getDate().toString() : "");
+//        this.dateTo.setText(event.getDateTo() != null ? event.getDateTo().toString() : "");
         this.host.setText(event.getHost());
         this.category.setText(event.getCategory());
         this.facebook.setText(event.getFacebook());
         this.offers.setText(event.getOffers());
-        this.officialLink.setText(event.getOfficialLink());
+//        this.officialLink.setText(event.getOfficialLink());
         this.text.setText(event.getText());
         showLoading(false);
 

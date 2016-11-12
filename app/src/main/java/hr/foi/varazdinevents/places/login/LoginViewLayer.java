@@ -1,5 +1,6 @@
 package hr.foi.varazdinevents.places.login;
 
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
 /**
@@ -7,7 +8,7 @@ import hr.foi.varazdinevents.ui.base.ViewLayer;
  */
 
 public interface LoginViewLayer extends ViewLayer {
-    void onSuccess();
+    void onSuccess(User user);
     void onFailure(String message);
 
 }

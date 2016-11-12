@@ -11,13 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.places.settings.SettingsActivity;
 import hr.foi.varazdinevents.util.BundleService;
 
 /**
@@ -86,7 +86,29 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                SettingsActivity.start(this);
+                break;
+            case R.id.menu_about:
+//                AboutActivity.start(this);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isWithNavigation()) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
     public boolean isWithNavigation() {
