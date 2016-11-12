@@ -2,12 +2,15 @@ package hr.foi.varazdinevents.places.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -63,6 +66,17 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     protected void onStop(){
         super.onStop();
         presenter.detachView();
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+//        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        }
+//        else{
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+//        }
+        return super.onCreateView(parent, name, context, attrs);
     }
 
     public void showLoading(boolean loading) {
