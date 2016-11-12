@@ -2,7 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/pref_user_account"
+        android:title="@string/pref_title_application_settings"
+        android:key="pref_key_application_settings"/>
+
+    <ListPreference
+        android:id="@+id/pref_id_language"
+        android:key="pref_key_language"
+        android:summary="@string/pref_summary_language"
+        android:title="@string/pref_title_language"
+        android:entries="@array/Language"
+        android:entryValues="@array/LanguageValues"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_title_user_account"
         android:key="pref_key_user_account_settings"/>
 
         <Preference

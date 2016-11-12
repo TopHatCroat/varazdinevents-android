@@ -2,8 +2,10 @@ package hr.foi.varazdinevents.places.settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -25,16 +27,23 @@ import hr.foi.varazdinevents.ui.base.ViewLayer;
 /**
  * Created by Antonio Martinović on 12.11.16.
  */
-public class SettingsActivity extends BaseActivity implements ViewLayer {
+public class SettingsActivity extends BaseActivity implements ViewLayer, SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
     User user;
     @Inject
     SettingsFragment settingsFragment;
+    private String storePrefs;
+    private SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction()
                 .replace(R.id.settings_container, settingsFragment).commit();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        storePrefs = prefs.getString("Language", "German");
     }
 
     @Override
@@ -68,5 +77,13 @@ public class SettingsActivity extends BaseActivity implements ViewLayer {
     @Override
     public boolean isWithNavigation() {
         return false;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("pref_key_language")) {
+            storePrefs = (prefs.getString("Language", "German"));
+        }
+        // etc
     }
 }

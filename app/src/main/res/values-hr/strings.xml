@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Varazdin Events</string>
+    <string name="nav_header_title">NASLOV ZAGLAVLJA</string>
+    <string name="nav_header_info">INFORMACIJE ZAGLAVLJA</string>
+    <string name="navigation_drawer_open">Otvori ladicu</string>
+    <string name="navigation_drawer_close">Zatvori ladicu</string>
+    <string name="pref_title_user_account">Postavke računa</string>
+    <string name="pref_summary_username">Korisničko ime</string>
+    <string name="pref_title_username">Korisničko ime</string>
+    <string name="pref_summary_password">Lozinka</string>
+    <string name="pref_title_password">Lozinka</string>
+    <string name="pref_summary_email">Email</string>
+    <string name="pref_title_email">Email</string>
+    <string name="pref_summary_language">Jezik</string>
+    <string name="pref_title_language">Jezik</string>
+    <string name="pref_title_application_settings">Postavke aplikacije</string>
+    <string name="loginError">Krivi email ili lozinka</string>
+    <string name="loginDatabaseError">Nema zapisa u bazi</string>
+</resources>

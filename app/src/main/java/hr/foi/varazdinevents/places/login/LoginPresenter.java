@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.foi.varazdinevents.MainApplication;
+import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
@@ -31,12 +32,12 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         if (count > 0) {
             user_list = User.find(User.class, "email= ? and password= ? ", username, password);
             if (user_list.size() == 0) {
-                getViewLayer().showBasicError("Krivi email ili lozinka");
+                getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.loginError));
             } else {
                 getViewLayer().onSuccess(user_list.get(0));
             }
         } else {
-            getViewLayer().showBasicError("Nema zapisa u bazi");
+            getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.loginDatabaseError));
         }
     }
 
