@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_user_account"
+        android:key="pref_key_user_account_settings"/>
+
+        <Preference
+            android:key="pref_key_username"
+            android:summary="@string/pref_summary_username"
+            android:title="@string/pref_title_username"/>
+
+        <Preference
+            android:key="pref_key_password"
+            android:summary="@string/pref_summary_password"
+            android:title="@string/pref_title_password"/>
+
+        <Preference
+            android:key="pref_key_email"
+            android:summary="@string/pref_summary_email"
+            android:title="@string/pref_title_email"/>
+
+
+</PreferenceScreen>
