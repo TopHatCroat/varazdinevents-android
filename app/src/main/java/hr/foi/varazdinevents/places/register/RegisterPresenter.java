@@ -29,8 +29,7 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity>{
             getViewLayer().showBasicError("Obavezno popunite sva polja");
         }
         else{
-            long id = User.count(User.class) + 1;
-            User user = new User(id, username, email,  password);
+            User user = new User(null, username, email, password, null);
             user.save();
             //getViewLayer().showBasicError("Registracija uspješna. Prijavite se!");
             getViewLayer().onSuccess();

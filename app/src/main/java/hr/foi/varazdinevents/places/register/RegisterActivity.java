@@ -79,6 +79,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewLayer 
     public void onSuccess() {
         showLoading(false);
         LoginActivity.start(this);
+        this.finish();
     }
 
     @Override
@@ -109,4 +110,9 @@ public class RegisterActivity extends BaseActivity implements RegisterViewLayer 
         presenter.tryRegister(user_username, user_email, user_pass, user_pass2);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

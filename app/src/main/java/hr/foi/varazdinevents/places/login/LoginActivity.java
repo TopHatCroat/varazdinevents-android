@@ -36,9 +36,9 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (User.count(User.class) < 2) {
-            User user = new User(1,"a", "a", "a");
+            User user = new User("a", "a", "a");
             user.save();
-            User user2 = new User(2, "", "", "");
+            User user2 = new User("", "", "");
             user2.save();
         }
 
@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         showLoading(false);
         MainApplication.get(this).createUserComponent(user);
         MainActivity.start(this);
+        this.finish();
     }
 
     @Override
