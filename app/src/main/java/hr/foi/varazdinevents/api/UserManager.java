@@ -12,18 +12,36 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Antonio Martinović on 09.11.16.
  */
+
+/**
+ * Contains all methods for working with users such as log in or creating new user
+ */
 public class UserManager {
     private RestService restService;
     private User user;
 
+    /**
+     * @param restService reference to Retrofit interface with API calls defined
+     */
     public UserManager(RestService restService) {
         this.restService = restService;
     }
 
+    /**
+     * Returns a placeholder user for testing
+     * @param username name of the user
+     * @return User class with all data set to @param username
+     */
     public static User getStubUser(String username) {
         return new User(username, username, username + "@foi.hr");
     }
 
+    /**
+     * Checks for user presence in the local DB and calls API for user log in
+     * @param username
+     * @param password
+     * @return User class with token added
+     */
     public Observable<User> login(final String username, String password) {
         List<User> users = new ArrayList<>();
         users = User.find(User.class, "username= ? and password= ? ", username, password);
@@ -45,6 +63,11 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Logs the user with @param token out
+     * @param token user token
+     * @return true if log out is successful, otherwise false
+     */
     public Observable<Boolean> logout(String token) {
         return restService.logutUser(token)
                 .map(new Func1<UserResponse, Boolean>() {

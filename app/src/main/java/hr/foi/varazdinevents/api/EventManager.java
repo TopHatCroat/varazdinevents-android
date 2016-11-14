@@ -14,17 +14,29 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
+
+/**
+* Contains all methods for working with events such as getting all events and creating new ones
+ */
 public class EventManager {
 
     private User user;
 
     private RestService restService;
 
+    /**
+     * @param user current user logged in
+     * @param restService Retrofit API calls interface
+     */
     public EventManager(User user, RestService restService) {
         this.restService = restService;
         this.user = user;
     }
 
+    /**
+     * Gets all events from API
+     * @return list of events
+     */
     public Observable<ImmutableList<Event>> getEvents() {
         return restService.getEvents()
                 .map(new Func1<EventResponseComplete, ImmutableList<Event>>() {

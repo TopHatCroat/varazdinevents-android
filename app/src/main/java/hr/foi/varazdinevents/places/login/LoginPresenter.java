@@ -39,6 +39,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
                 @Override
                 public void onError(Throwable e) {
                     getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.loginError));
+                    getViewLayer().onFailure("asdasdasdada");
                 }
 
                 @Override
