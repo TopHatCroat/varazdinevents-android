@@ -59,4 +59,5 @@ public class UserManager {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
 }

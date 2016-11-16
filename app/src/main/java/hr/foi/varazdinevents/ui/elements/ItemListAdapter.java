@@ -68,7 +68,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> implem
         return ((Listable) items.get(position)).getType();
     }
 
-    public void setItems(ImmutableList<Event> items){
+    public void setItems(List<Event> items){
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();

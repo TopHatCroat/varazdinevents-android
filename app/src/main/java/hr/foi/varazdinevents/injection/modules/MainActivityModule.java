@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntKey;

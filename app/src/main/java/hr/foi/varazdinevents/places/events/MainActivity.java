@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 
 import com.google.common.collect.ImmutableList;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -80,7 +82,7 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
-    public void showEvents(ImmutableList<Event> events) {
+    public void showEvents(List<Event> events) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

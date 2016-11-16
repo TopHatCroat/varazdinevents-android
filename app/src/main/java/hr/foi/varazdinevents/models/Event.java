@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.SyncStateContract;
 
+import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,8 +16,9 @@ import hr.foi.varazdinevents.util.Constants;
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
-public class Event implements Listable, Parcelable{
-    public Integer id;
+public class Event extends SugarRecord implements Listable, Parcelable{
+    @Unique
+    public Integer apiId;
     public String title;
     public String text;
     public Integer date;
@@ -79,12 +83,12 @@ public class Event implements Listable, Parcelable{
         return Constants.EVENTS_SIMPLE_CARD;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getApiId() {
+        return apiId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setApiId(Integer apiId) {
+        this.apiId = apiId;
     }
 
     public String getTitle() {

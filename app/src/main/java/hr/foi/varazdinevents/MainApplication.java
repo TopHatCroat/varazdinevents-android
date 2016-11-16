@@ -13,6 +13,7 @@ import hr.foi.varazdinevents.injection.UserComponent;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 import hr.foi.varazdinevents.models.User;
+import timber.log.Timber;
 
 
 /**
@@ -26,10 +27,10 @@ public class MainApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         SugarContext.init(this);
-//
-//        if (BuildConfig.DEBUG) {
-//            Timber.plant(new Timber.DebugTree());
-//        }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     @Override
