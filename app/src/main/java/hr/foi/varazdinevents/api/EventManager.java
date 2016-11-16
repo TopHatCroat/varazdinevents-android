@@ -21,6 +21,10 @@ import timber.log.Timber;
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
+
+/**
+* Contains all methods for working with events such as getting all events and creating new ones
+ */
 public class EventManager {
 
     private User user;
@@ -28,12 +32,20 @@ public class EventManager {
 
     private List<Event> events;
 
+    /**
+     * @param user current user logged in
+     * @param restService Retrofit API calls interface
+     */
     public EventManager(User user, RestService restService) {
         this.restService = restService;
         this.user = user;
         events = new ArrayList<>();
     }
 
+    /**
+     * Gets all events from API
+     * @return list of events
+     */
     public Observable<List<Event>> getEvents() {
         return Observable.concat(
                 fromMemory(), fromDatabase(), fromNetwork())
