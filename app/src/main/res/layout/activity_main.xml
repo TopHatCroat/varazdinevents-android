@@ -32,7 +32,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <hr.foi.varazdinevents.ui.elements.ItemRecyclerView
+        <hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView
             android:id="@+id/item_recycler_view"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
-import hr.foi.varazdinevents.ui.elements.ItemViewHolder;
+import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
 /**

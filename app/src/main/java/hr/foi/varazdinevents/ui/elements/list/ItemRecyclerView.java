@@ -1,4 +1,4 @@
-package hr.foi.varazdinevents.ui.elements;
+package hr.foi.varazdinevents.ui.elements.list;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

@@ -1,14 +1,12 @@
 package hr.foi.varazdinevents.places.events;
 
-import com.google.common.collect.ImmutableList;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
+import rx.Observer;
 
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
-import rx.Observer;
 
 /**
  * Created by Antonio Martinović on 12.10.16.
@@ -41,17 +39,17 @@ public class MainPresenter extends BasePresenter<MainActivity> {
             public void onError(Throwable e) {
                 getViewLayer().showLoading(false);
                 getViewLayer().showBasicError("ne radi");
+                e.printStackTrace();
             }
         };
 
         rx.Observable<List<Event>> eventStream = eventManager.getEvents();
-
         eventStream.subscribe(eventObserver);
-
     }
 
     @Override
     public void itemClicked(Object item) {
         getViewLayer().onItemClicked(item);
     }
+
 }

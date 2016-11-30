@@ -1,17 +1,23 @@
 package hr.foi.varazdinevents.api;
 
+import android.support.v7.util.SortedList;
+
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import hr.foi.varazdinevents.api.responses.EventResponse;
+import hr.foi.varazdinevents.api.responses.EventResponseComplete;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -26,7 +32,6 @@ import timber.log.Timber;
 * Contains all methods for working with events such as getting all events and creating new ones
  */
 public class EventManager {
-
     private User user;
     private RestService restService;
 
@@ -47,8 +52,18 @@ public class EventManager {
      * @return list of events
      */
     public Observable<List<Event>> getEvents() {
-        return Observable.concat(
-                fromMemory(), fromDatabase(), fromNetwork())
+        return Observable.merge(fromMemory(), fromDatabase(), fromNetwork())
+//                .map(new Func1<List<Event>, List<Event>>() {
+//                    @Override
+//                    public List<Event> call(List<Event> events) {
+//                        List<Event> resultList = new LinkedList<Event>();
+//                        for (Event event : events) {
+//                            if (event.getDate() > System.currentTimeMillis() / 1000)
+//                                resultList.add(event);
+//                        }
+//                        return resultList;
+//                    }
+//                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -66,8 +81,9 @@ public class EventManager {
 
     private Observable<List<Event>> fromDatabase() {
         return Observable.just(
-                Select.from(Event.class).where(
-                        Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list())
+                Event.listAll(Event.class)
+                //Select.from(Event.class).where(Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list())
+                )
                 .doOnNext(new Action1<List<Event>>() {
                     @Override
                     public void call(List<Event> events) {
@@ -111,6 +127,7 @@ public class EventManager {
                        toMemory(events);
                    }
                })
+
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -133,8 +150,6 @@ public class EventManager {
     private void toDatabase(List<Event> events) {
         Timber.w("Saving to database...");
         Event.saveInTx(events);
-
     }
-
 
 }

@@ -2,22 +2,18 @@ package hr.foi.varazdinevents.places.events;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.google.common.collect.ImmutableList;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,27 +26,28 @@ import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
-import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
-import hr.foi.varazdinevents.ui.elements.ItemRecyclerView;
+import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
+import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
-public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener {
+public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener,
+        SearchView.OnQueryTextListener  {
 //    protected MainActivityComponent mainActivityComponent;
 
     @Inject
     MainPresenter presenter;
     @Inject
-    ItemListAdapter itemListAdapter;
+    ItemListAdapter eventListAdapter;
     @Inject
     User user;
-
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
     @BindView(R.id.progresBar)
     ProgressBar progressBar;
 
     ItemTouchHelper itemTouchHelper;
+    List<Event> events = new ArrayList<>();
 
     @Override
     protected void onStart() {
@@ -83,13 +80,14 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     }
 
     public void showEvents(List<Event> events) {
+        setEvents(events);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setAdapter(itemListAdapter);
-        itemListAdapter.setItems(events);
+        recyclerView.setAdapter(eventListAdapter);
+        eventListAdapter.setItems(events);
         ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(itemListAdapter);
+                new SimpleItemTouchHelperCallback(eventListAdapter);
         itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
@@ -103,6 +101,31 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     public void onItemClicked(Object item) {
         EventDetailsActivity.startWithEvent((Event)item, this);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        final List<Event> filteredModelList = filter(query);
+        eventListAdapter.animateTo(filteredModelList);
+        recyclerView.scrollToPosition(0);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
 
     protected int getLayout() {
         return R.layout.activity_main;
@@ -129,4 +152,24 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    private List<Event> filter(String query) {
+        query = query.toLowerCase();
+
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : this.events){
+            if(event.isMatching(query))
+                filteredList.add(event);
+        }
+        return filteredList;
+    }
+
 }

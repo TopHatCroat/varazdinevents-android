@@ -16,6 +16,7 @@
     <string name="pref_title_application_settings">Application settings</string>
     <string name="loginError">Incorrect e-mail or password</string>
     <string name="loginDatabaseError">No such entry in database</string>
+    <string name="action_search">Search</string>
 
     <string-array name="Language">
         <item>English</item>

@@ -6,19 +6,18 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Map;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntKey;
 import dagger.multibindings.IntoMap;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.ActivityScope;
+import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.places.events.BasicEventViewHolderFactory;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.events.MainPresenter;
 
-import hr.foi.varazdinevents.ui.elements.ItemListAdapter;
+import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
 /**

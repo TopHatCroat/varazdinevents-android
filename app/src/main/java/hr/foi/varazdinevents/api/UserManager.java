@@ -3,6 +3,7 @@ package hr.foi.varazdinevents.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.foi.varazdinevents.api.responses.UserResponse;
 import hr.foi.varazdinevents.models.User;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

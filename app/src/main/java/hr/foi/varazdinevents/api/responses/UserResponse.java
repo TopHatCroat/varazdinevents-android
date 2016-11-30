@@ -1,4 +1,4 @@
-package hr.foi.varazdinevents.api;
+package hr.foi.varazdinevents.api.responses;
 
 /**
  * Created by Antonio Martinović on 13.11.16.

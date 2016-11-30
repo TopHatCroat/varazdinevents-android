@@ -2,21 +2,19 @@ package hr.foi.varazdinevents.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.SyncStateContract;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Unique;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import hr.foi.varazdinevents.ui.elements.Listable;
+import hr.foi.varazdinevents.ui.elements.list.Listable;
+import hr.foi.varazdinevents.ui.elements.Searchable;
 import hr.foi.varazdinevents.util.Constants;
 
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
-public class Event extends SugarRecord implements Listable, Parcelable{
+public class Event extends SugarRecord implements Listable, Searchable, Parcelable{
     @Unique
     public Integer apiId;
     public String title;
@@ -29,6 +27,9 @@ public class Event extends SugarRecord implements Listable, Parcelable{
     public String facebook;
     public String offers;
     public String category;
+
+    @Ignore
+    public Boolean isHidden = false;
 
     public Event(){}
 
@@ -170,4 +171,25 @@ public class Event extends SugarRecord implements Listable, Parcelable{
     public void setCategory(String category) {
         this.category = category;
     }
+
+    @Override
+    public boolean isMatching(String query) {
+        if (query.isEmpty())
+            return true;
+
+        StringBuilder descriptor = new StringBuilder();
+        descriptor.append(this.getTitle().toLowerCase());
+//        descriptor.append(this.getText().toLowerCase());
+//        descriptor.append(this.getOffers().toLowerCase());
+//        descriptor.append(this.getOffers().toLowerCase());
+
+        for (String part : query.split("\\s")) { //splits query string on every white space
+            if(!descriptor.toString().contains(part)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
