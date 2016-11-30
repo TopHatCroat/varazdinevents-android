@@ -53,6 +53,7 @@ public class EventManager {
      */
     public Observable<List<Event>> getEvents() {
         return Observable.merge(fromMemory(), fromDatabase(), fromNetwork())
+                .cache()
 //                .map(new Func1<List<Event>, List<Event>>() {
 //                    @Override
 //                    public List<Event> call(List<Event> events) {
@@ -64,6 +65,13 @@ public class EventManager {
 //                        return resultList;
 //                    }
 //                })
+                .map(new Func1<List<Event>, List<Event>>() {
+                    @Override
+                    public List<Event> call(List<Event> events) {
+                        toMemory(events);
+                        return EventManager.this.events;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -124,7 +132,6 @@ public class EventManager {
                    public void call(List<Event> events) {
                        Timber.w("Loading from REST...");
                        toDatabase(events);
-                       toMemory(events);
                    }
                })
 
