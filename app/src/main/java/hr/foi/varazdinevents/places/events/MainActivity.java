@@ -2,11 +2,15 @@ package hr.foi.varazdinevents.places.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +45,10 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     ItemListAdapter eventListAdapter;
     @Inject
     User user;
+    @Inject
+    Slide enterAnimation;
+    @Inject
+    Fade returnAnimation;
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
     @BindView(R.id.progresBar)
@@ -48,6 +56,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     ItemTouchHelper itemTouchHelper;
     List<Event> events = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(enterAnimation);
+            getWindow().setReturnTransition(returnAnimation);
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -61,17 +78,6 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     protected void onStop(){
         super.onStop();
         presenter.detachView();
-    }
-
-    @Override
-    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-//        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        }
-//        else{
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-        return super.onCreateView(parent, name, context, attrs);
     }
 
     public void showLoading(boolean loading) {
@@ -125,7 +131,6 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
-
 
     protected int getLayout() {
         return R.layout.activity_main;

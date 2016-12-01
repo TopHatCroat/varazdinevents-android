@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
+import android.transition.Fade;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +41,8 @@ public class EventDetailsActivity extends BaseActivity {
 
     @Inject
     EventDetailsPresenter presenter;
+    @Inject
+    Fade animation;
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -88,7 +91,11 @@ public class EventDetailsActivity extends BaseActivity {
         collapsingToolbarLayout.setTitle(event.getTitle());
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         toolbar.setTitle(event.getTitle());
-        Picasso.with(this).load(event.getImage()).into(image);
+        Picasso.with(this)
+                .load(event.getImage())
+                .resize(380, 380)
+                .centerCrop()
+                .into(image);
 
         Typeface iconFont = FontManager.getFontAwesome(getApplicationContext());
         FontManager.markAsIconContainer(awesomeCalendar, iconFont);
@@ -103,6 +110,10 @@ public class EventDetailsActivity extends BaseActivity {
 //        fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(animation);
+        }
 
     }
 

@@ -1,15 +1,6 @@
 package hr.foi.varazdinevents.injection.modules;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-
 import dagger.Module;
-import dagger.Provides;
-import hr.foi.varazdinevents.injection.ActivityScope;
-import hr.foi.varazdinevents.ui.base.BaseActivity;
-import hr.foi.varazdinevents.util.BundleService;
-
 
 @Module
 public class BundleModule {

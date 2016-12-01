@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.injection.modules;
 
 import android.app.Activity;
 import android.content.Context;
+import android.transition.Fade;
 
 import dagger.Module;
 import dagger.Provides;

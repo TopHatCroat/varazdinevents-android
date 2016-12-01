@@ -107,7 +107,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
         } else {
             super.onBackPressed();
         }
-
     }
 
     public boolean isWithNavigation() {
