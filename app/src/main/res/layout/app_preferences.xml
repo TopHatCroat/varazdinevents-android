@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
     <PreferenceCategory
         android:title="@string/pref_title_application_settings"
@@ -8,9 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center">
+        <!--android:layout_weight="1"-->
+
         <Button
             android:id="@+id/btn_en"
             android:layout_width="wrap_content"
@@ -36,20 +40,19 @@
         android:title="@string/pref_title_user_account"
         android:key="pref_key_user_account_settings"/>
 
-        <Preference
-            android:key="pref_key_username"
-            android:summary="@string/pref_summary_username"
-            android:title="@string/pref_title_username"/>
+    <Preference
+        android:key="pref_key_username"
+        android:summary="@string/pref_summary_username"
+        android:title="@string/pref_title_username"/>
 
-        <Preference
-            android:key="pref_key_password"
-            android:summary="@string/pref_summary_password"
-            android:title="@string/pref_title_password"/>
+    <Preference
+        android:key="pref_key_password"
+        android:summary="@string/pref_summary_password"
+        android:title="@string/pref_title_password"/>
 
-        <Preference
-            android:key="pref_key_email"
-            android:summary="@string/pref_summary_email"
-            android:title="@string/pref_title_email"/>
-
+    <Preference
+        android:key="pref_key_email"
+        android:summary="@string/pref_summary_email"
+        android:title="@string/pref_title_email"/>
 
 </PreferenceScreen>

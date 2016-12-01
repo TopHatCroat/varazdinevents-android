@@ -26,10 +26,10 @@ import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
-import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
-import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
+import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 
 public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener  {
