@@ -17,6 +17,11 @@
     <string name="loginError">Incorrect e-mail or password</string>
     <string name="loginDatabaseError">No such entry in database</string>
     <string name="action_search">Search</string>
+    <string name="category_party">Party</string>
+    <string name="category_culture">Culture</string>
+    <string name="application">Application</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
 
     <string-array name="Language">
         <item>English</item>

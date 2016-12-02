@@ -4,22 +4,22 @@
         <item
             android:id="@+id/navigation1"
             android:icon="@android:drawable/ic_menu_agenda"
-            android:title="PLACEHOLDER 1" />
+            android:title="@string/category_party" />
         <item
             android:id="@+id/navigation2"
             android:icon="@android:drawable/ic_menu_search"
-            android:title="PLACEHOLDER 2" />
+            android:title="@string/category_culture" />
     </group>
-    <item android:title="Aplikacija">
+    <item android:title="@string/application">
         <menu>
             <item
                 android:id="@+id/menu_settings"
                 android:icon="@android:drawable/ic_menu_preferences"
-                android:title="Postavke" />
+                android:title="@string/settings" />
             <item
                 android:id="@+id/menu_about"
                 android:icon="@android:drawable/ic_menu_info_details"
-                android:title="O applikaciji" />
+                android:title="@string/about" />
         </menu>
     </item>
 </menu>

@@ -10,6 +10,8 @@ public class Constants {
     public static final Integer EVENTS_SIMPLE_CARD = 100;
 
 
-    private static final String ARG_EVENT = "arg_event";
+    public static final String ARG_EVENT = "arg_event";
+
+    public static final String PREF_LANG_KEY = "pref_key_language";
 
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 
 import javax.inject.Inject;
 
@@ -27,18 +28,17 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.app_preferences);
 
-//        Preference languagePreference = (Preference) findPreference("pref_key_language");
-//
-//        languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            @Override
-//            public boolean onPreferenceClick(Preference preference) {
-//
-//                SharedPreferences customSharedPreference = getSharedPreferences("myCustomSharedPrefs", Activity.MODE_PRIVATE)
-//                ^should be changed to: SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//                  preferences.getString('weightPref', null);
-//
-//                return true;
-//            }
-//        });
+        Preference languagePreference = (Preference) findPreference("pref_key_language");
+
+        languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                preferences.getString("weightPref", null);
+
+                return true;
+            }
+        });
     }
 }

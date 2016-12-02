@@ -16,4 +16,16 @@
     <string name="pref_title_application_settings">Verwendungeinstellungen</string>
     <string name="loginError">Falsche Email oder Passwort</string>
     <string name="loginDatabaseError">Kein Eintrag in der Datenbank</string>
+
+    <string-array name="Language">
+        <item>English</item>
+        <item>Croatian</item>
+        <item>German</item>
+    </string-array>
+
+    <string-array name="LanguageValues">
+        <item>"en"</item>
+        <item>"hr"</item>
+        <item>"de"</item>
+    </string-array>
 </resources>
