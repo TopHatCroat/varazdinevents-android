@@ -1,7 +1,11 @@
 package hr.foi.varazdinevents.api;
 
+import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
+import hr.foi.varazdinevents.api.responses.EventResponse;
 import hr.foi.varazdinevents.api.responses.EventResponseComplete;
+import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.api.responses.UserResponse;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -43,5 +47,6 @@ public interface RestService {
     @GET("user/login")
     Observable<UserResponse> logutUser(@Query("token") String token);
 
-
+    @POST("events")
+    Observable<ErrorResponseComplete> createEvent(@Query("token") String token, @Body NewEventPojo json);
 }

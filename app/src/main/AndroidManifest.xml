@@ -26,6 +26,7 @@
 
         <activity android:name=".places.register.RegisterActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".places.settings.SettingsActivity" />
+        <activity android:name=".places.newEvent.NewEventActivity" />
 
         <activity android:name=".places.eventDetails.EventDetailsActivity"/>
         <meta-data android:name="DATABASE" android:value="varazdinEvents.db" />

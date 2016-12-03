@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
 import hr.foi.varazdinevents.util.BundleService;
 
@@ -43,9 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setupActivityComponent();
-
+        super.onCreate(savedInstanceState);
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
 
@@ -88,6 +88,9 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
         switch (item.getItemId()) {
             case R.id.menu_settings:
                 SettingsActivity.start(this);
+                break;
+            case R.id.menu_create_event:
+                NewEventActivity.start(this);
                 break;
             case R.id.menu_about:
 //                AboutActivity.start(this);
