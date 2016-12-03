@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.Fade;
 import android.transition.Slide;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import javax.inject.Inject;
 
@@ -38,12 +37,13 @@ import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
 public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener  {
-//    protected MainActivityComponent mainActivityComponent;
 
     @Inject
     MainPresenter presenter;
     @Inject
     ItemListAdapter eventListAdapter;
+    @Inject
+    LinearLayoutManager linearLayoutManager;
     @Inject
     User user;
     @Inject
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     public void showEvents(List<Event> events) {
         setEvents(events);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(eventListAdapter);
         eventListAdapter.setItems(events);

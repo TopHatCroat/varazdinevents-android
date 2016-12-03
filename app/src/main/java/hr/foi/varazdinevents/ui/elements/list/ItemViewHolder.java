@@ -9,7 +9,7 @@ import android.view.View;
 
 import butterknife.Unbinder;
 
-public abstract class ItemViewHolder extends RecyclerView.ViewHolder implements Listable {
+public abstract class ItemViewHolder extends RecyclerView.ViewHolder {
     protected Unbinder unbinder;
 
     public ItemViewHolder(View itemView) {

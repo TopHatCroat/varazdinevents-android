@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,7 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
 
     public void setItems(List<T> items){
         this.items.clear();
+        Collections.sort(items);
         this.items.addAll(items);
 
         notifyDataSetChanged();

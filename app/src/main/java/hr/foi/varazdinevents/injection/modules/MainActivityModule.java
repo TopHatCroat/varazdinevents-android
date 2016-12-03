@@ -13,7 +13,6 @@ import dagger.multibindings.IntoMap;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.places.events.BasicEventViewHolderFactory;
-import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.events.MainPresenter;
 
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
@@ -57,8 +56,8 @@ public class MainActivityModule {
 
     @Provides
     @ActivityScope
-    LinearLayoutManager provideLinearLayoutManager(MainActivity mainActivity) {
-        return new LinearLayoutManager(mainActivity);
+    LinearLayoutManager provideLinearLayoutManager(Context context) {
+        return new LinearLayoutManager(context);
     }
 
     @Provides

@@ -66,8 +66,5 @@ public class BasicEventViewHolder extends ItemViewHolder {
         unbinder.unbind();
     }
 
-    @Override
-    public int getType() {
-        return this.ITEM_LAYOUT;
-    }
+
 }
