@@ -39,7 +39,7 @@ import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
 public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener,
-        SearchView.OnQueryTextListener  {
+        SearchView.OnQueryTextListener{
 //    protected MainActivityComponent mainActivityComponent;
 
     @Inject
@@ -121,17 +121,44 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
 
-        final MenuItem favoriteItem = menu.findItem(R.id.action_favorite);
-        favoriteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                final List<Event> filteredModelList = filterFavorite();
-                eventListAdapter.animateTo(filteredModelList);
-                recyclerView.scrollToPosition(0);
-                return true;
-            }
-        });
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        List<Event> filteredModelList;
+        switch (menuItem.getItemId()) {
+            case R.id.action_favorite:
+                filteredModelList = filterFavorite();
+                break;
+            case R.id.action_theatreAndMovie:
+                filteredModelList = filterCategory("Kazalište i film");
+                break;
+            case R.id.action_backgroundMusic:
+                filteredModelList = filterCategory("Slušaona");
+                break;
+            case R.id.action_volunteering:
+                filteredModelList = filterCategory("Volontiranje");
+                break;
+            case R.id.action_concert:
+                filteredModelList = filterCategory("Svirka");
+                break;
+            case R.id.action_course:
+                filteredModelList = filterCategory("Tečaj");
+                break;
+            case R.id.action_lecture:
+                filteredModelList = filterCategory("Predavanje");
+                break;
+            case R.id.action_party:
+                filteredModelList = filterCategory("Party");
+                break;
+            case R.id.action_other:
+                filteredModelList = filterCategory("Ostalo");
+                break;
+            default: filteredModelList = null;
+        }
+        eventListAdapter.animateTo(filteredModelList);
+        recyclerView.scrollToPosition(0);
         return true;
     }
 
@@ -197,6 +224,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         final List<Event> filteredList = new ArrayList<>();
         for(Event event : this.events){
             if(event.isFavorite)
+                filteredList.add(event);
+        }
+        return filteredList;
+    }
+
+    private List<Event> filterCategory(String stringCategory){
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : this.events){
+            if(event.category.equals(stringCategory))
                 filteredList.add(event);
         }
         return filteredList;

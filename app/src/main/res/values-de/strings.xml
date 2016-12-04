@@ -29,4 +29,5 @@
         <item>"de"</item>
     </string-array>
     <string name="category_favorites"></string>
+    <string name="settings">Einstellungen</string>
 </resources>
