@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context=".places.events.MainActivity"
-        android:id="@+id/coordinator_layout">
+        android:id="@+id/coordinator_layout"
+        android:background="@color/very_light_gray">
 
         <android.support.design.widget.AppBarLayout
             android:layout_height="wrap_content"
@@ -40,8 +41,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/activity_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardview_dark_background"/>
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -32,15 +32,29 @@
     </style>
 
     <style name="white_text">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="awesome">
-        <item name="android:textSize">24dp</item>
+        <item name="android:textSize">20git dp</item>
         <item name="android:padding">3dp</item>
         <item name="android:layout_margin">3dp</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="card_title_style">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textColor">@color/title_text_color</item>
+    </style>
+
+    <style name="card_subtitle_style">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textColor">@color/subtitle_text_color</item>
     </style>
 
 </resources>
