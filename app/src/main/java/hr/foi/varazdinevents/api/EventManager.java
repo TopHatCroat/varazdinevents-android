@@ -131,12 +131,12 @@ public class EventManager {
                    @Override
                    public void call(List<Event> events) {
                        Timber.w("Loading from REST...");
+                       toMemory(events);
                        toDatabase(events);
                    }
                })
-
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread());
     }
 
     private void toMemory(List<Event> events) {
@@ -147,7 +147,8 @@ public class EventManager {
             eventsMap.put(event.apiId, event);
         }
         for (Event event : events) {
-            eventsMap.put(event.apiId, event);
+            if(!eventsMap.containsKey(event.apiId))
+                eventsMap.put(event.apiId, event);
         }
 
         this.events = new ArrayList<Event>(eventsMap.values());
@@ -156,7 +157,15 @@ public class EventManager {
 
     private void toDatabase(List<Event> events) {
         Timber.w("Saving to database...");
-        Event.saveInTx(events);
+        Event tmp;
+        for (Event event : this.events) {
+            tmp = Select.from(Event.class)
+                    .where(Condition.prop("API_ID").eq(event.apiId))
+                    .first();
+            if(tmp == null) {
+                Event.save(event);
+            }
+        }
     }
 
     public static boolean toggleFavorite(Event event){

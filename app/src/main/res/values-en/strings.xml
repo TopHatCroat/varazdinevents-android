@@ -19,6 +19,7 @@
     <string name="action_search">Search</string>
     <string name="category_party">Party</string>
     <string name="category_culture">Culture</string>
+    <string name="category_favorites">Favorites</string>
     <string name="application">Application</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>

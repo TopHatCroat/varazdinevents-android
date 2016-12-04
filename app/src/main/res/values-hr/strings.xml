@@ -33,4 +33,6 @@
         <item>"hr"</item>
         <item>"de"</item>
     </string-array>
+    <string name="category_favorites">Omiljeno</string>
+    <string name="action_search">Pretraži</string>
 </resources>

@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.orm.query.Condition;
+import com.orm.query.Select;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +59,8 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
 
     ItemTouchHelper itemTouchHelper;
     List<Event> events = new ArrayList<>();
+
+    boolean favoriteListChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +120,17 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
+
+        final MenuItem favoriteItem = menu.findItem(R.id.action_favorite);
+        favoriteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                final List<Event> filteredModelList = filterFavorite();
+                eventListAdapter.animateTo(filteredModelList);
+                recyclerView.scrollToPosition(0);
+                return true;
+            }
+        });
 
         return true;
     }
@@ -176,5 +192,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         }
         return filteredList;
     }
+
+    private List<Event> filterFavorite(){
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : this.events){
+            if(event.isFavorite)
+                filteredList.add(event);
+        }
+        return filteredList;
+    }
+
 
 }
