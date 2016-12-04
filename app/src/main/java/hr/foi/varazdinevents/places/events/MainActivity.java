@@ -23,6 +23,7 @@ import com.orm.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -49,8 +50,10 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     @Inject
     User user;
     @Inject
+    @Nullable
     Slide enterAnimation;
     @Inject
+    @Nullable
     Fade returnAnimation;
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;

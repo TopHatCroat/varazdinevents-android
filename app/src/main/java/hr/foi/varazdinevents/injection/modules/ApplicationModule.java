@@ -10,6 +10,7 @@ import dagger.Module;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.injection.ActivityScope;
 
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 /**
@@ -30,6 +31,7 @@ public class ApplicationModule {
     }
 
     @Provides
+    @Nullable
     Fade provideFade() {
         Fade fade = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -40,6 +42,7 @@ public class ApplicationModule {
     }
 
     @Provides
+    @Nullable
     Slide provideSlide() {
         Slide slide = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

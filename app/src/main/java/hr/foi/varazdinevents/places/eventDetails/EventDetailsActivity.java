@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,6 +46,7 @@ public class EventDetailsActivity extends BaseActivity {
     @Inject
     EventDetailsPresenter presenter;
     @Inject
+    @Nullable
     Fade animation;
 //    @Inject
 //    EventManager eventManager;
@@ -139,14 +141,19 @@ public class EventDetailsActivity extends BaseActivity {
         showLoading(true);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        this.date.setText(dateFormat.format(event.date*1000L));
+        //this.date.setText(dateFormat.format(event.date*1000L));
+        this.date.setText("Datum: " + dateFormat.format(event.date*1000L));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        this.time.setText(timeFormat.format(event.date*1000L));
+        //this.time.setText(timeFormat.format(event.date*1000L));
+        this.time.setText("Vrijeme: " + timeFormat.format(event.date*1000L));
 
-        this.host.setText(event.getHost());
-        this.category.setText(event.getCategory());
-        this.facebook.setText(event.getFacebook());
+        //this.host.setText(event.getHost());
+        this.host.setText("Organizator: " + event.getHost());
+        //this.category.setText(event.getCategory());
+        this.category.setText("Kategorija: " + event.getCategory());
+        this.facebook.setText("Facebook: poveznica na event");
+        //this.facebook.setText(event.getFacebook());
         this.offers.setText(event.getOffers());
 //        this.officialLink.setText(event.getOfficialLink());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

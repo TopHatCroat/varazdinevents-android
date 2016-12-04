@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
+    android:padding="0dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorEventDetailsGeneral"
-    android:padding="@dimen/text_padding">
+    android:id="@+id/background_layout"
+    android:paddingBottom="3dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="3dp"
+    android:layout_margin="15dp">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Općenito o događaju"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="3dp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#80ffffff"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,11 +55,18 @@
             style="@style/white_text"/>
 
     </LinearLayout>
-
+   <!-- <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80D9534F"
+        android:layout_marginRight="22dp"
+        android:layout_marginLeft="22dp" /> -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,10 +83,18 @@
             style="@style/white_text"/>
 
     </LinearLayout>
+    <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:background="#80D9534F"
+         android:layout_marginRight="22dp"
+         android:layout_marginLeft="22dp" /> -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,10 +112,18 @@
 
 
     </LinearLayout>
+    <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:background="#80D9534F"
+         android:layout_marginRight="22dp"
+         android:layout_marginLeft="22dp" /> -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,10 +142,18 @@
 
 
     </LinearLayout>
+    <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:background="#80D9534F"
+         android:layout_marginRight="22dp"
+         android:layout_marginLeft="22dp" /> -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -108,9 +168,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/event_details_category"
             style="@style/white_text"/>
-
     </LinearLayout>
-
-
-
+    <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:background="#80D9534F"
+         android:layout_marginRight="22dp"
+         android:layout_marginLeft="22dp" /> -->
 </LinearLayout>
+</RelativeLayout>
