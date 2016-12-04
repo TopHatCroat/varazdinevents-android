@@ -19,8 +19,8 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     public Integer apiId;
     public String title;
     public String text;
-    public Integer date;
-    public Integer dateTo;
+    public Long date;
+    public Long dateTo;
     public String host;
     public String officialLink;
     public String image;
@@ -36,8 +36,8 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     protected Event(Parcel in) {
         title = in.readString();
         text = in.readString();
-        date = in.readInt(); //getDate() != null ? in.readInt() : 0;
-        dateTo = in.readInt(); //getDateTo() != null ? in.readInt() : 0;
+        date = in.readLong(); //getDate() != null ? in.readInt() : 0;
+        dateTo = in.readLong(); //getDateTo() != null ? in.readInt() : 0;
         host = in.readString();
         officialLink = in.readString();
         image = in.readString();
@@ -69,8 +69,8 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         parcel.writeString(text);
         //parcel.writeInt(date);
         //parcel.writeInt(dateTo);
-        parcel.writeInt(date != null ? date : 0);
-        parcel.writeInt(dateTo != null ? dateTo : 0);
+        parcel.writeLong(date != null ? date : 0);
+        parcel.writeLong(dateTo != null ? dateTo : 0);
         parcel.writeString(host);
         parcel.writeString(officialLink);
         parcel.writeString(image);
@@ -108,19 +108,19 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         this.text = text;
     }
 
-    public Integer getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(Integer date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
-    public Integer getDateTo() {
+    public Long getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Integer dateTo) {
+    public void setDateTo(Long dateTo) {
         this.dateTo = dateTo;
     }
 

@@ -31,7 +31,7 @@ public class BasicEventViewHolder extends ItemViewHolder {
     @BindView(R.id.basic_item_title)
     TextView title;
 
-    @BindView(R.id.basic_item_date)
+    @BindView(R.id.basic_item_datetime)
     TextView date;
 
     //@BindView(R.id.basic_item_time)
@@ -52,7 +52,7 @@ public class BasicEventViewHolder extends ItemViewHolder {
         event = (Event) item;
         this.title.setText(event.getTitle());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         this.date.setText(dateFormat.format(event.date));
 
         //this.time.setText(event.getTime());

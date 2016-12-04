@@ -1,73 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <android.widget.RelativeLayout
-        android:layout_height="153dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/layout_margin">
+    <android.widget.LinearLayout
+        android:layout_height="@dimen/basic_item_card_height"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="40dp"
+            android:layout_height="@dimen/image_card_size"
             android:id="@+id/basic_item_picture"
             android:scaleType="centerCrop"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/basic_item_host"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:gravity="left"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2">
+                <TextView
 
-            android:text="CallerBlocker"
-            android:textSize="12dp"
-            android:fontFamily="Arial"
-            android:textStyle="bold"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/basic_item_title"
+                    style="@style/card_title_style"/>
 
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/basic_item_date"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/basic_item_host"
-            android:layout_marginLeft="70dp"
-            android:layout_marginStart="70dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:gravity="right"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/basic_item_host"
+                    style="@style/card_subtitle_style"/>
 
-            android:text="CallerBlocker"
-            android:textSize="12dp"
-            android:fontFamily="Arial"
-            android:textStyle="bold"/>
+            </LinearLayout>
 
-        <TextView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_weight="1">
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/basic_item_title"
-            android:layout_above="@+id/basic_item_host"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
 
-            android:text="CallerBlocker"
-            android:textSize="15dp"
-            android:fontFamily="Arial"
-            android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/basic_item_datetime"
+                    style="@style/card_subtitle_style"/>
 
-    </android.widget.RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+
+
+    </android.widget.LinearLayout>
 
 
 </android.support.v7.widget.CardView>

@@ -130,10 +130,10 @@ public class EventDetailsActivity extends BaseActivity {
         showLoading(true);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        this.date.setText(dateFormat.format(event.date*1000L));
+        this.date.setText(dateFormat.format(event.date));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        this.time.setText(timeFormat.format(event.date*1000L));
+        this.time.setText(timeFormat.format(event.date));
 
         this.host.setText(event.getHost());
         this.category.setText(event.getCategory());

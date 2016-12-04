@@ -142,8 +142,8 @@ public class EventManager {
                             event.setApiId(eventResponse.id);
                             event.setTitle(eventResponse.title);
                             event.setText(eventResponse.text);
-                            event.setDate(eventResponse.date);
-                            event.setDateTo(eventResponse.dateTo);
+                            if(eventResponse.date != null) event.setDate(eventResponse.date * 1000L);
+                            if(eventResponse.dateTo != null) event.setDateTo(eventResponse.dateTo * 1000L);
                             event.setHost(eventResponse.host);
                             event.setOfficialLink(eventResponse.officialLink);
                             event.setImage(eventResponse.image);

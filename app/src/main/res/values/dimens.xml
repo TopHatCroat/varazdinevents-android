@@ -12,4 +12,7 @@
     <dimen name="text_padding">8dp</dimen>
     <dimen name="action_bar_height">56dp</dimen>
     <dimen name="layout_padding">16dp</dimen>
+    <dimen name="image_card_size">200dp</dimen>
+    <dimen name="basic_item_card_height">250dp</dimen>
+    <dimen name="layout_margin">10dp</dimen>
 </resources>
