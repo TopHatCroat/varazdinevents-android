@@ -159,4 +159,11 @@ public class EventManager {
         Event.saveInTx(events);
     }
 
+    public static boolean toggleFavorite(Event event){
+        Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
+        tmp.isFavorite = !tmp.isFavorite;
+        tmp.save();
+        return tmp.isFavorite;
+    }
+
 }

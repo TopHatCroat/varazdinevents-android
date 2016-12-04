@@ -29,11 +29,14 @@ public class Event extends SugarRecord implements Listable, Searchable, Parcelab
     public String category;
 
     @Ignore
-    public Boolean isHidden = false;
+    public boolean isHidden = false;
+
+    public boolean isFavorite = false;
 
     public Event(){}
 
     protected Event(Parcel in) {
+        apiId = in.readInt();
         title = in.readString();
         text = in.readString();
         date = in.readInt(); //getDate() != null ? in.readInt() : 0;
@@ -65,6 +68,7 @@ public class Event extends SugarRecord implements Listable, Searchable, Parcelab
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(apiId);
         parcel.writeString(title);
         parcel.writeString(text);
         //parcel.writeInt(date);
@@ -170,6 +174,14 @@ public class Event extends SugarRecord implements Listable, Searchable, Parcelab
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     @Override

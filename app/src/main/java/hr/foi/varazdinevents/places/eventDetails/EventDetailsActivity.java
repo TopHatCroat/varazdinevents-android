@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.transition.Fade;
 import android.view.View;
@@ -23,8 +24,10 @@ import java.text.SimpleDateFormat;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
@@ -43,6 +46,8 @@ public class EventDetailsActivity extends BaseActivity {
     EventDetailsPresenter presenter;
     @Inject
     Fade animation;
+//    @Inject
+//    EventManager eventManager;
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -69,8 +74,12 @@ public class EventDetailsActivity extends BaseActivity {
 //    TextView officialLink;
     @BindView(R.id.event_details_text)
     TextView text;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+
+    @BindView(R.id.fab_detailed_favorite)
+    FloatingActionButton fab_detailed_favorite;
+//    @BindView(R.id.fab_basic_favorite)
+//    FloatingActionButton fab_basic_favorite;
+
 
     @BindView(R.id.awesome_calendar)
     TextView awesomeCalendar;
@@ -87,6 +96,7 @@ public class EventDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.event = getIntent().getParcelableExtra(ARG_EVENT);
+        toggleFavoriteIcon(this.event.isFavorite);
 
         collapsingToolbarLayout.setTitle(event.getTitle());
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
@@ -106,8 +116,8 @@ public class EventDetailsActivity extends BaseActivity {
 
 //        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
 //        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
-//        fab.setRippleColor(lightVibrantColor);
-//        fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
+//        fab_detailed_favorite.setRippleColor(lightVibrantColor);
+//        fab_detailed_favorite.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -177,4 +187,14 @@ public class EventDetailsActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.fab_detailed_favorite)
+    public void onFavoriteClicked(){
+        this.event.setFavorite(EventManager.toggleFavorite(this.event));
+        toggleFavoriteIcon(this.event.isFavorite);
+    }
+
+    public void toggleFavoriteIcon(boolean isFavorite){
+        if(isFavorite) fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_red_500_24dp));
+        else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_red_400_24dp));
+    }
 }
