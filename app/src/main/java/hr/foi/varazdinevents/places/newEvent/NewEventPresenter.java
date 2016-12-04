@@ -1,6 +1,7 @@
 package hr.foi.varazdinevents.places.newEvent;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
@@ -10,6 +11,12 @@ import rx.Observer;
  * Created by Antonio Martinović on 03.12.16.
  */
 public class NewEventPresenter extends BasePresenter<NewEventActivity> {
+
+    private final EventManager eventManager;
+
+    public NewEventPresenter(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 
     @Override
     public void itemClicked(Object item) {
@@ -41,7 +48,7 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
             }
         };
 
-        rx.Observable<ErrorResponseComplete> eventStream = getViewLayer().eventManager.createEvent(event);
+        rx.Observable<ErrorResponseComplete> eventStream = eventManager.createEvent(event);
         eventStream.subscribe(eventObserver);
     }
 }

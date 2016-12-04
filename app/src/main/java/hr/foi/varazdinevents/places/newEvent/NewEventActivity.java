@@ -6,6 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.inject.Inject;
 
@@ -17,11 +25,18 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.NewEventModule;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.util.PickerHelper;
+import timber.log.Timber;
 
 /**
  * Created by Antonio Martinović on 03.12.16.
  */
-public class NewEventActivity extends BaseActivity{
+public class NewEventActivity extends BaseActivity implements TimePickerDialog.OnTimeSetListener,
+        DatePickerDialog.OnDateSetListener {
+    private static final String START_DATE_PICKER_TAG = "start_date_picker";
+    public static final String START_TIME_PICKER_TAG = "start_time_picker";
+    public static final String END_DATE_PICKER_TAG = "end_date_picker";
+    public static final String END_TIME_PICKER_TAG = "end_time_picker";
     @Inject
     EventManager eventManager;
     @Inject
@@ -32,13 +47,13 @@ public class NewEventActivity extends BaseActivity{
     @BindView(R.id.text_new_event)
     EditText text;
     @BindView(R.id.start_date_new_event)
-    EditText startDate;
+    TextView startDate;
     @BindView(R.id.start_time_new_event)
-    EditText startTime;
+    TextView startTime;
     @BindView(R.id.end_date_new_event)
-    EditText endDate;
+    TextView endDate;
     @BindView(R.id.end_time_new_event)
-    EditText endTime;
+    TextView endTime;
     @BindView(R.id.host_new_event)
     EditText host;
     @BindView(R.id.official_link_new_event)
@@ -93,42 +108,24 @@ public class NewEventActivity extends BaseActivity{
         eventManager.getNewEvent().setTitle(editText.toString());
     }
 
-    @OnTextChanged(value = R.id.start_date_new_event)
-    public void onChangeDate(CharSequence editText) {
-        if(editText.length() > 0) {
-            eventManager.getNewEvent().setDate(Integer.valueOf(editText.toString()));
-        } else {
-            eventManager.getNewEvent().setDate((int) (System.currentTimeMillis() / 1000));
-        }
+    @OnClick(R.id.start_date_new_event)
+    public void onChangeDate() {
+        PickerHelper.createDatePicker(START_DATE_PICKER_TAG, this, this);
     }
 
-    @OnTextChanged(value = R.id.start_time_new_event)
-    public void onChangeLength(CharSequence editText) {
-        if(editText.length() > 0) {
-            eventManager.getNewEvent().setDateTo(eventManager.getNewEvent().getDate() +
-                    Integer.valueOf(editText.toString()));
-        } else {
-            eventManager.getNewEvent().setDateTo((int) (System.currentTimeMillis() / 1000));
-        }
+    @OnClick(R.id.start_time_new_event)
+    public void onChangeLength() {
+        PickerHelper.createTimePicker(START_TIME_PICKER_TAG, this, this);
     }
 
-    @OnTextChanged(value = R.id.end_date_new_event)
-    public void onChangeEndDate(CharSequence editText) {
-        if(editText.length() > 0) {
-            eventManager.getNewEvent().setDateTo(Integer.valueOf(editText.toString()));
-        } else {
-            eventManager.getNewEvent().setDateTo((int) (System.currentTimeMillis() / 1000));
-        }
+    @OnClick(R.id.end_date_new_event)
+    public void onChangeEndDate() {
+        PickerHelper.createDatePicker(END_DATE_PICKER_TAG, this, this);
     }
 
-    @OnTextChanged(value = R.id.end_time_new_event)
-    public void onChangeEndTime(CharSequence editText) {
-        if(editText.length() > 0) {
-            eventManager.getNewEvent().setDateTo(eventManager.getNewEvent().getDate() +
-                    Integer.valueOf(editText.toString()));
-        } else {
-            eventManager.getNewEvent().setDateTo((int) (System.currentTimeMillis() / 1000));
-        }
+    @OnClick(R.id.end_time_new_event)
+    public void onChangeEndTime() {
+        PickerHelper.createTimePicker(END_TIME_PICKER_TAG, this, this);
     }
 
     @OnTextChanged(value = R.id.host_new_event)
@@ -183,5 +180,69 @@ public class NewEventActivity extends BaseActivity{
     protected void onStop(){
         super.onStop();
         presenter.detachView();
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        switch (view.getTag()) {
+            case START_DATE_PICKER_TAG:
+                if(eventManager.getNewEvent().getDate() != null) {
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDate() * 100);
+                }
+                calendar.set(year, monthOfYear, dayOfMonth);
+                eventManager.getNewEvent().setDate((int) (calendar.getTimeInMillis() / 1000));
+                updateDateField(startDate, calendar);
+                break;
+            case END_DATE_PICKER_TAG:
+                if(eventManager.getNewEvent().getDateTo() != null) {
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDateTo() * 1000);
+                }
+                calendar.set(year, monthOfYear, dayOfMonth);
+                eventManager.getNewEvent().setDateTo((int) (calendar.getTimeInMillis() / 1000));
+                updateDateField(endDate, calendar);
+                break;
+        }
+    }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        Calendar calendar = Calendar.getInstance();
+        switch (view.getTag()) {
+            case START_TIME_PICKER_TAG:
+                if(eventManager.getNewEvent().getDate() != null) {
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDate() * 1000);
+                }
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, second);
+                eventManager.getNewEvent().setDate((int) (calendar.getTimeInMillis() / 1000));
+                updateTimeField(startTime, calendar);
+                break;
+            case END_TIME_PICKER_TAG:
+                if(eventManager.getNewEvent().getDateTo() != null) {
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDateTo() * 1000);
+                }
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, second);
+                eventManager.getNewEvent().setDateTo((int) (calendar.getTimeInMillis() / 1000));
+                updateTimeField(endTime, calendar);
+                break;
+        }
+    }
+
+    private void updateTimeField(TextView timeView, Calendar calendar) {
+        Calendar cal = new GregorianCalendar();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        dateFormat.setTimeZone(cal.getTimeZone());
+        timeView.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    private void updateDateField(TextView dateView, Calendar calendar) {
+        Calendar cal = new GregorianCalendar();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        dateFormat.setTimeZone(cal.getTimeZone());
+        dateView.setText(dateFormat.format(calendar.getTime()));
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
@@ -20,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -42,6 +42,7 @@ public class EventDetailsActivity extends BaseActivity {
     @Inject
     EventDetailsPresenter presenter;
     @Inject
+    @Nullable
     Fade animation;
 
     @BindView(R.id.collapsingToolbarLayout)
