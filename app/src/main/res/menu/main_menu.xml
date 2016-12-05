@@ -6,5 +6,33 @@
         android:title="@string/action_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_favorite_red_500_24dp"
+        android:title="@string/category_favorites" />
+    <item
+        android:id="@+id/action_theatreAndMovie"
+        android:title="@string/category_theatreAndMovie" />
+    <item
+        android:id="@+id/action_backgroundMusic"
+        android:title="@string/category_backgroundMusic" />
+    <item
+        android:id="@+id/action_concert"
+        android:title="@string/category_concert" />
+    <item
+        android:id="@+id/action_volunteering"
+        android:title="@string/category_volunteering" />
+    <item
+        android:id="@+id/action_course"
+        android:title="@string/category_course" />
+    <item
+        android:id="@+id/action_lecture"
+        android:title="@string/category_lecture" />
+    <item
+        android:id="@+id/action_party"
+        android:title="@string/category_party" />
+    <item
+        android:id="@+id/action_other"
+        android:title="@string/category_other" />
 
 </menu>

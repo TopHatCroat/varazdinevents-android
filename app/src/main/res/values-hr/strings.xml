@@ -33,4 +33,12 @@
         <item>"hr"</item>
         <item>"de"</item>
     </string-array>
+    <string name="category_favorites">Omiljeno</string>
+    <string name="action_search">Pretraži</string>
+    <string name="category_volunteering">Volontiranje</string>
+    <string name="category_theatreAndMovie">Kazaliste i film</string>
+    <string name="category_other">Ostalo</string>
+    <string name="category_lecture">Predavanje</string>
+    <string name="category_course">Tecaj</string>
+    <string name="category_backgroundMusic">Slusaona</string>
 </resources>

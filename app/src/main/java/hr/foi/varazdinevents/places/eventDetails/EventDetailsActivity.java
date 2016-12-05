@@ -23,8 +23,10 @@ import java.text.SimpleDateFormat;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
@@ -42,7 +44,10 @@ public class EventDetailsActivity extends BaseActivity {
     @Inject
     EventDetailsPresenter presenter;
     @Inject
+    @Nullable
     Fade animation;
+//    @Inject
+//    EventManager eventManager;
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -69,8 +74,12 @@ public class EventDetailsActivity extends BaseActivity {
 //    TextView officialLink;
     @BindView(R.id.event_details_text)
     TextView text;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+
+    @BindView(R.id.fab_detailed_favorite)
+    FloatingActionButton fab_detailed_favorite;
+//    @BindView(R.id.fab_basic_favorite)
+//    FloatingActionButton fab_basic_favorite;
+
 
     @BindView(R.id.awesome_calendar)
     TextView awesomeCalendar;
@@ -87,6 +96,7 @@ public class EventDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.event = getIntent().getParcelableExtra(ARG_EVENT);
+        toggleFavoriteIcon(this.event.isFavorite);
 
         collapsingToolbarLayout.setTitle(event.getTitle());
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
@@ -106,8 +116,8 @@ public class EventDetailsActivity extends BaseActivity {
 
 //        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
 //        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
-//        fab.setRippleColor(lightVibrantColor);
-//        fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
+//        fab_detailed_favorite.setRippleColor(lightVibrantColor);
+//        fab_detailed_favorite.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -129,14 +139,19 @@ public class EventDetailsActivity extends BaseActivity {
         showLoading(true);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        this.date.setText(dateFormat.format(event.date));
+        //this.date.setText(dateFormat.format(event.date*1000L));
+        this.date.setText("Datum: " + dateFormat.format(event.date*1000L));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        this.time.setText(timeFormat.format(event.date));
+        //this.time.setText(timeFormat.format(event.date*1000L));
+        this.time.setText("Vrijeme: " + timeFormat.format(event.date*1000L));
 
-        this.host.setText(event.getHost());
-        this.category.setText(event.getCategory());
-        this.facebook.setText(event.getFacebook());
+        //this.host.setText(event.getHost());
+        this.host.setText("Organizator: " + event.getHost());
+        //this.category.setText(event.getCategory());
+        this.category.setText("Kategorija: " + event.getCategory());
+        this.facebook.setText("Facebook: poveznica na event");
+        //this.facebook.setText(event.getFacebook());
         this.offers.setText(event.getOffers());
 //        this.officialLink.setText(event.getOfficialLink());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -177,4 +192,15 @@ public class EventDetailsActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.fab_detailed_favorite)
+    public void onFavoriteClicked(){
+        this.event.setFavorite(EventManager.toggleFavorite(this.event));
+        toggleFavoriteIcon(this.event.isFavorite);
+    }
+
+    public void toggleFavoriteIcon(boolean isFavorite){
+        if(isFavorite) fab_detailed_favorite.setImageDrawable(Cont
+                extCompat.getDrawable(this, R.drawable.ic_favorite_red_500_24dp));
+        else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_red_400_24dp));
+    }
 }

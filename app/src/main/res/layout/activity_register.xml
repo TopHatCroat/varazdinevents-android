@@ -112,7 +112,7 @@
             android:background="@drawable/horizontal_shadow"
             android:layout_width="wrap_content"
             android:layout_marginLeft="31dp"
-            android:layout_marginRight="28dp">
+            android:layout_marginRight="30dp">
         </View>
 
         <ImageButton

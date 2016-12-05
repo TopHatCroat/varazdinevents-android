@@ -144,7 +144,8 @@ public class EventManager {
             eventsMap.put(event.apiId, event);
         }
         for (Event event : events) {
-            eventsMap.put(event.apiId, event);
+            if(!eventsMap.containsKey(event.apiId))
+                eventsMap.put(event.apiId, event);
         }
 
         this.events = new ArrayList<Event>(eventsMap.values());
@@ -162,6 +163,13 @@ public class EventManager {
                 Event.save(event);
             }
         }
+    }
+
+    public static boolean toggleFavorite(Event event){
+        Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
+        tmp.isFavorite = !tmp.isFavorite;
+        tmp.save();
+        return tmp.isFavorite;
     }
 
 }

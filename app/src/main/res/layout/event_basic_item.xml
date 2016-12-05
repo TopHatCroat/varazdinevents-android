@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/layout_margin">
-    <android.widget.LinearLayout
-        android:layout_height="@dimen/basic_item_card_height"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.widget.RelativeLayout
+        android:layout_height="153dp"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
@@ -57,15 +59,21 @@
                     style="@style/card_subtitle_style"/>
 
             </LinearLayout>
+
         </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:visibility="visible"
+            android:id="@+id/fab_basic_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/app_bar_layout"
+            app:layout_anchorGravity="bottom|right|end"
+            android:src="@drawable/ic_favorite_border_red_400_24dp"
+            android:layout_above="@+id/basic_item_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-
-
-
-
-
-
-    </android.widget.LinearLayout>
+    </android.widget.RelativeLayout>
 
 
 </android.support.v7.widget.CardView>

@@ -9,6 +9,7 @@
             android:id="@+id/navigation2"
             android:icon="@android:drawable/ic_menu_search"
             android:title="@string/category_culture" />
+
     </group>
     <item android:title="@string/application">
         <menu>
