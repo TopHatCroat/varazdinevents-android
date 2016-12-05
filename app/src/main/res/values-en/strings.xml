@@ -39,6 +39,7 @@
     <string name="start_date">Start Date</string>
     <string name="end_time">End Time</string>
     <string name="end_date">End Date</string>
+    <string name="create_new_event">Create new event</string>
 
     <string-array name="Language">
         <item>English</item>

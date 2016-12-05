@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -65,7 +67,7 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
     @BindView(R.id.offers_new_event)
     EditText offers;
     @BindView(R.id.category_new_event)
-    EditText category;
+    Spinner category;
     @BindView(R.id.create_new_event)
     FloatingActionButton createButton;
     @BindView(R.id.progresBar)
@@ -74,6 +76,12 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar.setTitle(R.string.create_new_event);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(adapter);
     }
 
     @Override
@@ -153,10 +161,10 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
         eventManager.getNewEvent().setOffers(editText.toString());
     }
 
-    @OnTextChanged(value = R.id.category_new_event)
-    public void onChangeCategory(CharSequence editText) {
-        eventManager.getNewEvent().setCategory(editText.toString());
-    }
+//    @OnTextChanged(value = R.id.category_new_event)
+//    public void onChangeCategory(CharSequence editText) {
+//        eventManager.getNewEvent().setCategory(editText.toString());
+//    }
 
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {

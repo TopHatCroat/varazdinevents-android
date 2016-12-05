@@ -32,7 +32,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/basic_item_title"
@@ -56,16 +55,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" >
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/basic_item_datetime"
                     style="@style/card_subtitle_style"
-
                     android:layout_gravity="bottom|end"
-                    android:textAlignment="viewEnd"
-                    />
+                    android:textAlignment="viewEnd" />
             </LinearLayout>
 
         </RelativeLayout>

@@ -27,8 +27,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"/>
-            <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
-
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
@@ -43,13 +41,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title"
-                    android:id="@+id/title_new_event_description" />
-
                 <EditText
+                    style="@style/new_event_input"
+                    android:hint="@string/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/title_new_event" />
@@ -60,13 +54,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text"
-                    android:id="@+id/text_new_event_description" />
-
                 <EditText
+                    style="@style/new_event_input"
+                    android:hint="@string/text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/text_new_event" />
@@ -75,17 +65,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/datetime_input_padding">
 
                 <TextView
+                    style="@style/new_event_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/start_date"
                     android:id="@+id/start_date_new_event_description" />
 
                 <TextView
+                    style="@style/new_event_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="end"
                     android:id="@+id/start_date_new_event"
                     android:inputType="number"/>
 
@@ -93,15 +87,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="@dimen/datetime_input_padding">
 
                 <TextView
+                    style="@style/new_event_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/start_time"
                     android:id="@+id/start_time_new_event_description" />
 
                 <TextView
+                    style="@style/new_event_input"
+                    android:gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/start_time_new_event"
@@ -111,15 +109,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/datetime_input_padding">
 
                 <TextView
+                    style="@style/new_event_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/end_date"
                     android:id="@+id/end_date_new_event_description" />
 
                 <TextView
+                    style="@style/new_event_input"
+                    android:gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/end_date_new_event"
@@ -129,15 +131,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="@dimen/datetime_input_padding">
 
                 <TextView
+                    style="@style/new_event_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/end_time"
                     android:id="@+id/end_time_new_event_description" />
 
                 <TextView
+                    style="@style/new_event_input"
+                    android:gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/end_time_new_event"
@@ -150,13 +156,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/host"
-                    android:id="@+id/host_new_event_description" />
-
                 <EditText
+                    android:hint="@string/host"
+                    style="@style/new_event_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_new_event" />
@@ -168,13 +170,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/officialLink"
-                    android:id="@+id/official_link_new_event_description" />
-
                 <EditText
+                    android:hint="@string/officialLink"
+                    style="@style/new_event_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/official_link_new_event" />
@@ -186,13 +184,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/image"
-                    android:id="@+id/image_new_event_description" />
-
                 <EditText
+                    android:hint="@string/image"
+                    style="@style/new_event_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/image_new_event" />
@@ -204,17 +198,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/facebook"
-                    android:id="@+id/facebook_new_event_description" />
-
                 <EditText
+                    android:hint="@string/facebook"
+                    style="@style/new_event_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/facebook_new_event" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -222,13 +211,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/offers"
-                    android:id="@+id/offers_new_event_description" />
-
                 <EditText
+                    android:hint="@string/offers"
+                    style="@style/new_event_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/offers_new_event" />
@@ -244,12 +229,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category"
-                    android:id="@+id/category_new_event_description" />
+                    android:id="@+id/category_new_event_description"
+                    style="@style/new_event_input"/>
 
-                <EditText
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/category_new_event" />
+                    android:id="@+id/category_new_event"
+                    style="@style/new_event_input"/>
 
             </LinearLayout>
         </LinearLayout>
