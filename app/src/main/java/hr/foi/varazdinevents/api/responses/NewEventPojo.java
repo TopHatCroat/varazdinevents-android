@@ -8,9 +8,9 @@ public class NewEventPojo {
     public Integer id;
     public String title;
     public String text;
-    public Integer date;
+    public Long date;
     public String time;
-    public Integer dateTo;
+    public Long dateTo;
     public String timeTo;
     public String host;
     public String officialLink;

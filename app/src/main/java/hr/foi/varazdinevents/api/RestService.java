@@ -26,7 +26,7 @@ public interface RestService {
      * API call for getting events
      * @return Response containing a list of events and it's meta data
      */
-    @GET("events")
+    @GET("events") // /query/{timestamp}"
     Observable<EventResponseComplete> getEvents();
 
     /**

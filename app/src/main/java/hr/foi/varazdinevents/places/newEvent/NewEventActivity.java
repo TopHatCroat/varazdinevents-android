@@ -188,18 +188,18 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
         switch (view.getTag()) {
             case START_DATE_PICKER_TAG:
                 if(eventManager.getNewEvent().getDate() != null) {
-                    calendar.setTimeInMillis(eventManager.getNewEvent().getDate() * 100);
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDate());
                 }
                 calendar.set(year, monthOfYear, dayOfMonth);
-                eventManager.getNewEvent().setDate((int) (calendar.getTimeInMillis() / 1000));
+                eventManager.getNewEvent().setDate(calendar.getTimeInMillis());
                 updateDateField(startDate, calendar);
                 break;
             case END_DATE_PICKER_TAG:
                 if(eventManager.getNewEvent().getDateTo() != null) {
-                    calendar.setTimeInMillis(eventManager.getNewEvent().getDateTo() * 1000);
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDateTo());
                 }
                 calendar.set(year, monthOfYear, dayOfMonth);
-                eventManager.getNewEvent().setDateTo((int) (calendar.getTimeInMillis() / 1000));
+                eventManager.getNewEvent().setDateTo(calendar.getTimeInMillis());
                 updateDateField(endDate, calendar);
                 break;
         }
@@ -211,22 +211,22 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
         switch (view.getTag()) {
             case START_TIME_PICKER_TAG:
                 if(eventManager.getNewEvent().getDate() != null) {
-                    calendar.setTimeInMillis(eventManager.getNewEvent().getDate() * 1000);
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDate());
                 }
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
                 calendar.set(Calendar.SECOND, second);
-                eventManager.getNewEvent().setDate((int) (calendar.getTimeInMillis() / 1000));
+                eventManager.getNewEvent().setDate(calendar.getTimeInMillis() );
                 updateTimeField(startTime, calendar);
                 break;
             case END_TIME_PICKER_TAG:
                 if(eventManager.getNewEvent().getDateTo() != null) {
-                    calendar.setTimeInMillis(eventManager.getNewEvent().getDateTo() * 1000);
+                    calendar.setTimeInMillis(eventManager.getNewEvent().getDateTo());
                 }
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
                 calendar.set(Calendar.SECOND, second);
-                eventManager.getNewEvent().setDateTo((int) (calendar.getTimeInMillis() / 1000));
+                eventManager.getNewEvent().setDateTo(calendar.getTimeInMillis());
                 updateTimeField(endTime, calendar);
                 break;
         }

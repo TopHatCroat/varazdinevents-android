@@ -82,9 +82,9 @@ public class EventManager {
         NewEventPojo createEvent = new NewEventPojo();
         createEvent.title = event.getTitle();
         createEvent.text = event.getText();
-        createEvent.date = event.getDate();
+        createEvent.date = event.getDate() / 1000;
         createEvent.time = new SimpleDateFormat("HH:mm:ss").format(event.date);
-        createEvent.dateTo = event.getDateTo();
+        createEvent.dateTo = event.getDateTo() / 1000;
         createEvent.timeTo = new SimpleDateFormat("HH:mm:ss").format(event.dateTo);
         createEvent.host = event.getHost();
         createEvent.officialLink = event.getOfficialLink();
