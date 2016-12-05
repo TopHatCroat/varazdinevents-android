@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/layout_margin">
+<android.widget.LinearLayout
+    android:layout_height="@dimen/basic_item_card_height"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <RelativeLayout
-        android:layout_height="@dimen/basic_item_card_height"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="@dimen/image_card_size">
 
         <ImageView
             android:layout_width="match_parent"
@@ -19,64 +23,76 @@
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"/>
 
+
         <android.support.design.widget.FloatingActionButton
             android:visibility="visible"
             android:id="@+id/fab_basic_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_anchor="@id/basic_item_picture"
-            app:layout_anchorGravity="end"
-            android:layout_alignBottom="@id/basic_item_picture"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:src="@drawable/ic_favorite_border_red_400_24dp" />
+            android:src="@drawable/ic_favorite_border_red_400_24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/layout_margin"
+            android:layout_marginRight="@dimen/layout_margin"
+            android:layout_marginBottom="@dimen/negative_layout_margin"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/vertical_card_layout_padding"
+        android:paddingBottom="@dimen/vertical_card_layout_padding"
+        android:paddingEnd="@dimen/layout_padding"
+        android:paddingRight="@dimen/layout_padding"
+        android:paddingStart="@dimen/layout_padding"
+        android:paddingLeft="@dimen/layout_padding" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/basic_item_picture"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <TextView
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/basic_item_title"
-                    style="@style/card_title_style"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/basic_item_host"
-                    style="@style/card_subtitle_style"/>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="bottom|end"
-                android:layout_weight="1">
+                android:id="@+id/basic_item_title"
+                style="@style/card_title_style" />
 
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/basic_item_datetime"
-                    style="@style/card_subtitle_style"/>
-
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/basic_item_host"
+                android:gravity="bottom"
+                style="@style/card_subtitle_style"/>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/basic_item_datetime"
+                style="@style/card_subtitle_style"
+
+                android:layout_gravity="bottom|end"
+                android:textAlignment="viewEnd"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
 
+</android.widget.LinearLayout>
 
 </android.support.v7.widget.CardView>

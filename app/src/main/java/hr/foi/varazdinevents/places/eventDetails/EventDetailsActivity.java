@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.transition.Fade;
 import android.view.View;
@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -199,8 +200,7 @@ public class EventDetailsActivity extends BaseActivity {
     }
 
     public void toggleFavoriteIcon(boolean isFavorite){
-        if(isFavorite) fab_detailed_favorite.setImageDrawable(Cont
-                extCompat.getDrawable(this, R.drawable.ic_favorite_red_500_24dp));
+        if(isFavorite) fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_red_500_24dp));
         else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_red_400_24dp));
     }
 }

@@ -14,7 +14,7 @@ import hr.foi.varazdinevents.util.Constants;
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
-public class Event extends SugarRecord implements Listable, Searchable, Parcelable{
+public class Event extends SugarRecord implements Listable<Event>, Searchable, Parcelable{
     @Unique
     public Integer apiId;
     public String title;
@@ -204,4 +204,8 @@ public class Event extends SugarRecord implements Listable, Searchable, Parcelab
         return true;
     }
 
+    @Override
+    public int compareTo(Event event) {
+        return event.date > this.date ? -1 : 1;
+    }
 }

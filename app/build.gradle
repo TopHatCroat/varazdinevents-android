@@ -63,6 +63,8 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.jakewharton.timber:timber:4.3.1'
 
+    compile 'com.wdullaer:materialdatetimepicker:3.0.0'
+
     //xml layout login
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'

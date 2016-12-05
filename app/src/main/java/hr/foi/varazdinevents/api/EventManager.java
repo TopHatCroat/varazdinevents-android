@@ -3,19 +3,20 @@ package hr.foi.varazdinevents.api;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
 import hr.foi.varazdinevents.api.responses.EventResponse;
 import hr.foi.varazdinevents.api.responses.EventResponseComplete;
+import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -32,6 +33,8 @@ import timber.log.Timber;
 public class EventManager {
     private User user;
     private RestService restService;
+
+    private Event newEvent;
 
     private List<Event> events;
 
@@ -73,6 +76,34 @@ public class EventManager {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
+    }
+
+    public Observable<ErrorResponseComplete> createEvent(Event event) {
+        NewEventPojo createEvent = new NewEventPojo();
+        createEvent.title = event.getTitle();
+        createEvent.text = event.getText();
+        createEvent.date = event.getDate() / 1000;
+        createEvent.time = new SimpleDateFormat("HH:mm:ss").format(event.date);
+        createEvent.dateTo = event.getDateTo() / 1000;
+        createEvent.timeTo = new SimpleDateFormat("HH:mm:ss").format(event.dateTo);
+        createEvent.host = event.getHost();
+        createEvent.officialLink = event.getOfficialLink();
+        createEvent.image = event.getImage();
+        createEvent.facebook = event.getFacebook();
+        createEvent.offers = event.getOffers();
+        createEvent.category = event.getCategory();
+
+        return restService.createEvent(this.user.getToken(), createEvent)
+//                .doOnNext(new Action1<EventResponse>() {
+//                    @Override
+//                    public void call(EventResponse event) {
+//                        Timber.w("Loading from REST...");
+//                        toMemory(event);
+//                        toDatabase(event);
+//                    }
+//                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Observable<List<Event>> fromMemory(){
@@ -165,6 +196,16 @@ public class EventManager {
         }
     }
 
+    public Event getNewEvent() {
+        if(this.newEvent == null) {
+            this.newEvent = new Event();
+        }
+        return newEvent;
+    }
+
+    public void setNewEvent(Event newEvent) {
+        this.newEvent = newEvent;
+    }
     public static boolean toggleFavorite(Event event){
         Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
         tmp.isFavorite = !tmp.isFavorite;

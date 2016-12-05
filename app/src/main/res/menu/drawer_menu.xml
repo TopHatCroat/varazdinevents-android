@@ -11,6 +11,16 @@
             android:title="@string/category_culture" />
 
     </group>
+    <item android:title="@string/organisers">
+        <menu>
+            <item
+                android:id="@+id/menu_create_event"
+                android:icon="@drawable/ic_create_light_24dp"
+                android:title="@string/new_event_description"
+                />
+
+        </menu>
+    </item>
     <item android:title="@string/application">
         <menu>
             <item
