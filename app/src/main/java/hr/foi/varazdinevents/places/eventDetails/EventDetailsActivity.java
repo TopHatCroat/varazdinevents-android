@@ -9,6 +9,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,6 +60,8 @@ public class EventDetailsActivity extends BaseActivity {
     LinearLayout contentHolder;
     @BindView(R.id.event_details_image)
     ImageView image;
+    @BindView(R.id.event_details_title)
+    TextView title;
     @BindView(R.id.event_details_date)
     TextView date;
     @BindView(R.id.event_details_time)
@@ -82,6 +85,8 @@ public class EventDetailsActivity extends BaseActivity {
 //    FloatingActionButton fab_basic_favorite;
 
 
+    @BindView(R.id.awesome_title)
+    TextView awesomeTitle;
     @BindView(R.id.awesome_calendar)
     TextView awesomeCalendar;
     @BindView(R.id.awesome_clock)
@@ -109,6 +114,7 @@ public class EventDetailsActivity extends BaseActivity {
                 .into(image);
 
         Typeface iconFont = FontManager.getFontAwesome(getApplicationContext());
+        FontManager.markAsIconContainer(awesomeTitle, iconFont);
         FontManager.markAsIconContainer(awesomeCalendar, iconFont);
         FontManager.markAsIconContainer(awesomeClock, iconFont);
         FontManager.markAsIconContainer(awesomeFaceboot, iconFont);
@@ -140,25 +146,24 @@ public class EventDetailsActivity extends BaseActivity {
         showLoading(true);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        //this.date.setText(dateFormat.format(event.date*1000L));
         this.date.setText("Datum: " + dateFormat.format(event.date*1000L));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        //this.time.setText(timeFormat.format(event.date*1000L));
         this.time.setText("Vrijeme: " + timeFormat.format(event.date*1000L));
 
-        //this.host.setText(event.getHost());
+        this.title.setText("Naziv: " + event.getTitle());
         this.host.setText("Organizator: " + event.getHost());
-        //this.category.setText(event.getCategory());
         this.category.setText("Kategorija: " + event.getCategory());
-        this.facebook.setText("Facebook: poveznica na event");
-        //this.facebook.setText(event.getFacebook());
+        this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
+        String text = "Facebook: <a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
         this.offers.setText(event.getOffers());
 //        this.officialLink.setText(event.getOfficialLink());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.text.setText(Html.fromHtml(event.getText(), Html.FROM_HTML_MODE_LEGACY).toString());
+            this.facebook.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
         } else {
             this.text.setText(Html.fromHtml(event.getText()).toString());
+            this.facebook.setText(Html.fromHtml(text));
         }
         showLoading(false);
 

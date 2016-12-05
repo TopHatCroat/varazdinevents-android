@@ -79,7 +79,7 @@
                 <include layout="@layout/event_details_offers"
                     android:id="@+id/layout_event_details_offers"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="15dp" />
 
                 <include layout="@layout/event_details_description"
                     android:id="@+id/layout_event_details_description"
