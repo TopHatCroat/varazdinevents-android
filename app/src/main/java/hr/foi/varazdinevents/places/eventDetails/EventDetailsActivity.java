@@ -3,10 +3,13 @@ package hr.foi.varazdinevents.places.eventDetails;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -17,9 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -38,11 +50,13 @@ import hr.foi.varazdinevents.util.FontManager;
  * Created by Antonio Martinović on 08.11.16.
  */
 
-public class EventDetailsActivity extends BaseActivity {
+public class EventDetailsActivity extends BaseActivity implements OnMapReadyCallback {
     private static final String ARG_EVENT = "arg_event";
-
+    private GoogleMap mMap;
     private Event event;
-
+    Double latitude;
+    Double longitude;
+    String location_title;
     @Inject
     EventDetailsPresenter presenter;
     @Inject
@@ -132,6 +146,9 @@ public class EventDetailsActivity extends BaseActivity {
             getWindow().setEnterTransition(animation);
         }
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -157,6 +174,28 @@ public class EventDetailsActivity extends BaseActivity {
         this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
         String text = "Facebook: <a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
         this.offers.setText(event.getOffers());
+
+        //Google map information
+            String location = "731 Market St, San Francisco, CA 94103";
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> addressList;
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+                if (addressList.size()!=0) {
+                    Address address = addressList.get(0);
+                    this.latitude = address.getLatitude();
+                    this.longitude = address.getLongitude();
+                }
+                else {
+                    this.latitude = 46.294399;
+                    this.longitude = 16.344964;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        this.location_title = event.getTitle();
+
 //        this.officialLink.setText(event.getOfficialLink());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.text.setText(Html.fromHtml(event.getText(), Html.FROM_HTML_MODE_LEGACY).toString());
@@ -207,5 +246,15 @@ public class EventDetailsActivity extends BaseActivity {
     public void toggleFavoriteIcon(boolean isFavorite){
         if(isFavorite) fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_red_500_24dp));
         else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_red_400_24dp));
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng latlong = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(latlong).title(location_title));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong,17));
+        mMap.setMyLocationEnabled(true);
     }
 }
