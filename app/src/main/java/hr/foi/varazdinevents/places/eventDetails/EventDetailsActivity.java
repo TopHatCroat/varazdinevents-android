@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.places.eventDetails;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -24,13 +25,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -54,9 +59,8 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
     private static final String ARG_EVENT = "arg_event";
     private GoogleMap mMap;
     private Event event;
-    Double latitude;
-    Double longitude;
-    String location_title;
+    Double latitude, longitude;
+    String locationTitle, locationCategory;
     @Inject
     EventDetailsPresenter presenter;
     @Inject
@@ -162,11 +166,14 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
         presenter.attachView(this);
         showLoading(true);
 
+        Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        this.date.setText("Datum: " + dateFormat.format(event.date*1000L));
+       // this.date.setText("Datum: " + dateFormat.format(event.getDate()));
+        this.date.setText("Datum: " + dateFormat.format(eventDate));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        this.time.setText("Vrijeme: " + timeFormat.format(event.date*1000L));
+        //this.time.setText("Vrijeme: " + timeFormat.format(event.getDate()));
+        this.time.setText("Vrijeme: " + timeFormat.format(eventDate));
 
         this.title.setText("Naziv: " + event.getTitle());
         this.host.setText("Organizator: " + event.getHost());
@@ -194,7 +201,8 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
                 e.printStackTrace();
             }
 
-        this.location_title = event.getTitle();
+        this.locationTitle = event.getTitle();
+        this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate)+ " u " + timeFormat.format(eventDate) + " sati";
 
 //        this.officialLink.setText(event.getOfficialLink());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -253,8 +261,10 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng latlong = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(latlong).title(location_title));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
+        marker.showInfoWindow();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong,17));
         mMap.setMyLocationEnabled(true);
     }
+
 }

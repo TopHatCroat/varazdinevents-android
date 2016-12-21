@@ -9,6 +9,7 @@ import com.google.auto.factory.AutoFactory;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,8 +53,9 @@ public class BasicEventViewHolder extends ItemViewHolder {
         event = (Event) item;
         this.title.setText(event.getTitle());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        this.date.setText(dateFormat.format(event.date));
+        Date eventDate = new Date(event.getDate() - 3600000);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        this.date.setText(dateFormat.format(eventDate));
 
         //this.time.setText(event.getTime());
         this.host.setText(event.getHost());
