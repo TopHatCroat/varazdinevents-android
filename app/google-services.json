@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "48578341985",
+    "firebase_url": "https://varazdin-events.firebaseio.com",
+    "project_id": "varazdin-events",
+    "storage_bucket": "varazdin-events.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48578341985:android:990dba67ee4a1336",
+        "android_client_info": {
+          "package_name": "hr.foi.varazdinevents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48578341985-4t8q4rlpbfko3ctgv3o7lc1t9oobl3sr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hr.foi.varazdinevents",
+            "certificate_hash": "53655A39E6A7CB565B0B8703A2680452E329C8CC"
+          }
+        },
+        {
+          "client_id": "48578341985-3mahivq9u1v40jbh8isl7m66l5okmd3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [{ "current_key": "" }],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48578341985-3mahivq9u1v40jbh8isl7m66l5okmd3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
