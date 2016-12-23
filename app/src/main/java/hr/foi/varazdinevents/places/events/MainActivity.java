@@ -2,10 +2,12 @@ package hr.foi.varazdinevents.places.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -48,6 +50,8 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     ItemListAdapter eventListAdapter;
     @Inject
     LinearLayoutManager linearLayoutManager;
+    @Inject
+    GridLayoutManager gridLayoutManager;
     @Inject
     User user;
     @Inject
@@ -242,5 +246,14 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         return filteredList;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(gridLayoutManager);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
+    }
 }

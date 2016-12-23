@@ -84,4 +84,11 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+
+    public Observable<String> registerFCMToken(String token) {
+        return restService.sendFCMToken(token)
+
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

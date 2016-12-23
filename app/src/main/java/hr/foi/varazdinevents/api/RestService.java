@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -49,4 +50,7 @@ public interface RestService {
 
     @POST("events")
     Observable<ErrorResponseComplete> createEvent(@Query("token") String token, @Body NewEventPojo json);
+
+    @GET("firebase/add/{token}")
+    Observable<String> sendFCMToken(@Path("token") String token);
 }

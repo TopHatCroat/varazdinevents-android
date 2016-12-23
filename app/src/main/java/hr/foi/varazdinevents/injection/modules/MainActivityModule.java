@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.injection.modules;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.Map;
@@ -58,6 +59,13 @@ public class MainActivityModule {
     @ActivityScope
     LinearLayoutManager provideLinearLayoutManager(Context context) {
         return new LinearLayoutManager(context);
+    }
+
+
+    @Provides
+    @ActivityScope
+    GridLayoutManager provideGridLayoutManager(Context context) {
+        return new GridLayoutManager(context, 2);
     }
 
     @Provides
