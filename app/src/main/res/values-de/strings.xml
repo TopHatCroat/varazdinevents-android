@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Varazdin Events</string>
-    <string name="nav_header_title">HAUPTTITEL</string>
-    <string name="nav_header_info">HAUPTTITEL INFO</string>
+    <string name="nav_header_title">VarazdinEvents</string>
+    <string name="nav_header_info">info@varazdinevents.cf</string>
     <string name="navigation_drawer_open">Schublade öffnen</string>
     <string name="navigation_drawer_close">Schublade schlißen</string>
     <string name="pref_title_user_account">Kontoeinstellungen</string>

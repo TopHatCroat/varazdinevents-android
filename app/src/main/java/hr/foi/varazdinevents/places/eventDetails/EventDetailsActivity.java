@@ -182,24 +182,9 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
         String text = "Facebook: <a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
         this.offers.setText(event.getOffers());
 
-        //Google map information
-            String location = "731 Market St, San Francisco, CA 94103";
-            Geocoder geocoder = new Geocoder(this);
-            List<Address> addressList;
-            try {
-                addressList = geocoder.getFromLocationName(location, 1);
-                if (addressList.size()!=0) {
-                    Address address = addressList.get(0);
-                    this.latitude = address.getLatitude();
-                    this.longitude = address.getLongitude();
-                }
-                else {
-                    this.latitude = 46.294399;
-                    this.longitude = 16.344964;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        //testni primjer - Pavlinska 2 FOI
+        this.latitude = 46.307819;
+        this.longitude = 16.338159;
 
         this.locationTitle = event.getTitle();
         this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate)+ " u " + timeFormat.format(eventDate) + " sati";
@@ -252,8 +237,8 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
     }
 
     public void toggleFavoriteIcon(boolean isFavorite){
-        if(isFavorite) fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_red_500_24dp));
-        else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_red_400_24dp));
+        if(isFavorite) fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
+        else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
     }
 
 
