@@ -18,6 +18,6 @@
     <dimen name="vertical_card_layout_padding">6dp</dimen>
     <dimen name="datetime_input_padding">8dp</dimen>
     <dimen name="negative_layout_margin">-15dp</dimen>
-    <dimen name="large_layout_side_padding">200dp</dimen>
+    <dimen name="large_layout_side_padding">30dp</dimen>
     <dimen name="large_layout_top_padding">30dp</dimen>
 </resources>

@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.api;
 
+import org.json.JSONObject;
+
 import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
 import hr.foi.varazdinevents.api.responses.EventResponse;
 import hr.foi.varazdinevents.api.responses.EventResponseComplete;
@@ -31,6 +33,7 @@ public interface RestService {
     Observable<EventResponseComplete> getEvents();
 
     /**
+     *
      * API call for user log in
      * @param username user's nickname
      * @param password user's passoword
@@ -52,5 +55,5 @@ public interface RestService {
     Observable<ErrorResponseComplete> createEvent(@Query("token") String token, @Body NewEventPojo json);
 
     @GET("firebase/add/{token}")
-    Observable<String> sendFCMToken(@Path("token") String token);
+    Observable<JSONObject> sendFCMToken(@Path("token") String token);
 }

@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.api;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,9 +87,8 @@ public class UserManager {
     }
 
 
-    public Observable<String> registerFCMToken(String token) {
+    public Observable<JSONObject> registerFCMToken(String token) {
         return restService.sendFCMToken(token)
-
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
