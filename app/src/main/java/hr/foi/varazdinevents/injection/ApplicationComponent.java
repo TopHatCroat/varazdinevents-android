@@ -9,7 +9,6 @@ import hr.foi.varazdinevents.injection.modules.LoginActivityModule;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.NetworkModule;
 import hr.foi.varazdinevents.injection.modules.RegisterActivityModule;
-import hr.foi.varazdinevents.injection.modules.SettingsActivityModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 
 /**

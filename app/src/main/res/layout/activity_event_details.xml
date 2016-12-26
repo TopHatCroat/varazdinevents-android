@@ -70,7 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:id="@+id/details_content_holder">
+                android:id="@+id/details_content_holder"
+                android:layout_marginLeft="@dimen/large_layout_side_padding"
+                android:layout_marginRight="@dimen/large_layout_side_padding"
+                android:layout_marginTop="@dimen/large_layout_top_padding">
 
                 <include layout="@layout/event_details_general"
                     android:id="@+id/layout_event_details_general"

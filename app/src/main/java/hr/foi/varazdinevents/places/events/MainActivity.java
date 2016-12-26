@@ -101,7 +101,12 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     public void showEvents(List<Event> events) {
         setEvents(events);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(gridLayoutManager);
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
 
         recyclerView.setAdapter(eventListAdapter);
         eventListAdapter.setItems(events);
@@ -245,15 +250,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         }
         return filteredList;
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recyclerView.setLayoutManager(gridLayoutManager);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerView.setLayoutManager(linearLayoutManager);
-        }
-    }
+//
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            recyclerView.setLayoutManager(gridLayoutManager);
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+//            recyclerView.setLayoutManager(linearLayoutManager);
+//        }
+//    }
 }

@@ -7,7 +7,7 @@
 
     <ListPreference
         android:id="@+id/pref_id_language"
-        android:key="pref_key_language"
+        android:key="pref_key_language"'
         android:summary="@string/pref_summary_language"
         android:title="@string/pref_title_language"
         android:entries="@array/Language"

@@ -41,7 +41,10 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/activity_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/large_layout_side_padding"
+            android:layout_marginRight="@dimen/large_layout_side_padding"
+            android:layout_marginTop="@dimen/large_layout_top_padding"/>
 
         <LinearLayout
             android:layout_width="match_parent"

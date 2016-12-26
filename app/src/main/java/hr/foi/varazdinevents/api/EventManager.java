@@ -55,17 +55,6 @@ public class EventManager {
     public Observable<List<Event>> getEvents() {
         return Observable.merge(fromMemory(), fromDatabase(), fromNetwork())
                 .cache()
-//                .map(new Func1<List<Event>, List<Event>>() {
-//                    @Override
-//                    public List<Event> call(List<Event> events) {
-//                        List<Event> resultList = new LinkedList<Event>();
-//                        for (Event event : events) {
-//                            if (event.getDate() > System.currentTimeMillis() / 1000)
-//                                resultList.add(event);
-//                        }
-//                        return resultList;
-//                    }
-//                })
                 .map(new Func1<List<Event>, List<Event>>() {
                     @Override
                     public List<Event> call(List<Event> events) {

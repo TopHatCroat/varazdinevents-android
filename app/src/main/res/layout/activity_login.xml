@@ -14,7 +14,8 @@
         android:background="#f0ad4e"
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        tools:context="com.example.bruno.airprojekt.MainActivity">
+        android:paddingLeft="@dimen/large_layout_side_padding"
+        android:paddingRight="@dimen/large_layout_side_padding">
 
         <TextView
             android:id="@+id/login_title"
@@ -45,7 +46,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="30dp">
+                android:paddingTop="30dp"
+                android:layout_marginLeft="@dimen/large_layout_side_padding"
+                android:layout_marginRight="@dimen/large_layout_side_padding"
+                android:layout_marginTop="@dimen/large_layout_top_padding">
 
                     <EditText
                         android:layout_width="fill_parent"
