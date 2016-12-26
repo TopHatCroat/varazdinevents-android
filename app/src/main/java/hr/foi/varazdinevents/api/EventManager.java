@@ -16,12 +16,15 @@ import hr.foi.varazdinevents.api.responses.EventResponseComplete;
 import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.util.SharedPrefs;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static hr.foi.varazdinevents.util.Constants.LAST_UPDATE_TIME_KEY;
 
 /**
  * Created by Antonio Martinović on 30.10.16.
@@ -31,8 +34,9 @@ import timber.log.Timber;
 * Contains all methods for working with events such as getting all events and creating new ones
  */
 public class EventManager {
-    private User user;
-    private RestService restService;
+    private final SharedPrefs sharedPrefs;
+    private final User user;
+    private final RestService restService;
 
     private Event newEvent;
 
@@ -42,9 +46,10 @@ public class EventManager {
      * @param user current user logged in
      * @param restService Retrofit API calls interface
      */
-    public EventManager(User user, RestService restService) {
+    public EventManager(User user, RestService restService, SharedPrefs sharedPrefs) {
         this.restService = restService;
         this.user = user;
+        this.sharedPrefs = sharedPrefs;
         events = new ArrayList<>();
     }
 
@@ -121,7 +126,9 @@ public class EventManager {
     }
 
     private Observable<List<Event>> fromNetwork() {
-       return restService.getEvents()
+        String lastUpdateValue = String.valueOf(sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
+
+        return restService.getEvents(lastUpdateValue)
                 .map(new Func1<EventResponseComplete, List<Event>>() {
                     @Override
                     public List<Event> call(EventResponseComplete eventResponses) {
@@ -140,6 +147,10 @@ public class EventManager {
                             event.setOffers(eventResponse.offers);
                             event.setCategory(eventResponse.category);
                             events.add(event);
+
+                            int lastUpdate = sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
+                            if(lastUpdate < eventResponse.lastUpdate)
+                                sharedPrefs.write(LAST_UPDATE_TIME_KEY, eventResponse.lastUpdate);
                         }
                         return events;
                     }

@@ -13,5 +13,7 @@ public class Constants {
     public static final String ARG_EVENT = "arg_event";
 
     public static final String PREF_LANG_KEY = "pref_key_language";
+    public static final String LAST_UPDATE_TIME_KEY = "last_update_timestamp";
+
 
 }

@@ -30,7 +30,7 @@ public interface RestService {
      * @return Response containing a list of events and it's meta data
      */
     @GET("events") // /query/{timestamp}"
-    Observable<EventResponseComplete> getEvents();
+    Observable<EventResponseComplete> getEvents(@Query("timestamp") String timestamp);
 
     /**
      *
