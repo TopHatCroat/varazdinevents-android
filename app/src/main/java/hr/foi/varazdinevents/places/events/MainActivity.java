@@ -38,12 +38,13 @@ import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
-public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener,
+public class MainActivity extends BaseNavigationActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener {
 
     @Inject
@@ -103,7 +104,12 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
     public void showEvents(List<Event> events) {
         setEvents(events);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(gridLayoutManager);
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
 
         recyclerView.setAdapter(eventListAdapter);
         eventListAdapter.setItems(events);
@@ -224,6 +230,11 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         */
     }
 
+    @Override
+    protected User getUser() {
+        return user;
+    }
+
     public List<Event> getEvents() {
         return events;
     }
@@ -260,15 +271,15 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         }
         return filteredList;
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recyclerView.setLayoutManager(gridLayoutManager);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerView.setLayoutManager(linearLayoutManager);
-        }
-    }
+//
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            recyclerView.setLayoutManager(gridLayoutManager);
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+//            recyclerView.setLayoutManager(linearLayoutManager);
+//        }
+//    }
 }

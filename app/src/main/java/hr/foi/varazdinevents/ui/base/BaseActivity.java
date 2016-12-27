@@ -25,19 +25,14 @@ import hr.foi.varazdinevents.util.BundleService;
  * Created by Antonio Martinović on 12.10.16.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements ViewLayer, NavigationView.OnNavigationItemSelectedListener  {
+public abstract class BaseActivity extends AppCompatActivity implements ViewLayer {
     private BundleService bundleService;
     protected Unbinder unbinder;
 
     @Nullable
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;
-    @Nullable
-    @BindView(R.id.drawer_layout)
-    protected DrawerLayout drawerLayout;
-    @Nullable
-    @BindView(R.id.navigation_view)
-    protected NavigationView navigationView;
+
 
     @BindView(R.id.coordinator_layout)
     protected CoordinatorLayout coordinatorLayout;
@@ -49,18 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
 
-
-        if(isWithNavigation()) {
+        if(toolbar != null)
             setSupportActionBar(toolbar);
-
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawerLayout.addDrawerListener(toggle);
-            toggle.syncState();
-
-
-            navigationView.setNavigationItemSelectedListener(this);
-        }
 
     }
 
@@ -79,40 +64,4 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
-    public BundleService getBundleService() {
-        return bundleService;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_settings:
-                SettingsActivity.start(this);
-                break;
-            case R.id.menu_create_event:
-                NewEventActivity.start(this);
-                break;
-            case R.id.menu_about:
-//                AboutActivity.start(this);
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(isWithNavigation()) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    public boolean isWithNavigation() {
-        return true;
-    }
 }

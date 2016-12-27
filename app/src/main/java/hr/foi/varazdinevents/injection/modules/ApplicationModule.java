@@ -6,6 +6,7 @@ import android.transition.Slide;
 import dagger.Provides;
 import dagger.Module;
 import hr.foi.varazdinevents.MainApplication;
+import hr.foi.varazdinevents.util.SharedPrefs;
 
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
@@ -47,5 +48,11 @@ public class ApplicationModule {
             slide.setDuration(1000);
         }
         return slide;
+    }
+
+    @Provides
+    @Singleton
+    SharedPrefs provideSharedPrefs() {
+        return new SharedPrefs(application);
     }
 }

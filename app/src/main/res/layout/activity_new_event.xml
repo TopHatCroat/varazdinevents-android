@@ -14,7 +14,10 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context=".places.events.MainActivity"
-        android:id="@+id/coordinator_layout">
+        android:id="@+id/coordinator_layout"
+        android:layout_marginLeft="@dimen/large_layout_side_padding"
+        android:layout_marginRight="@dimen/large_layout_side_padding"
+        android:layout_marginTop="@dimen/large_layout_top_padding">
 
         <android.support.design.widget.AppBarLayout
             android:layout_height="wrap_content"

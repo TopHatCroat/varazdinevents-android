@@ -15,7 +15,10 @@
         android:background="#f0ad4e"
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        tools:context="com.example.bruno.airprojekt.MainActivity">
+        tools:context="com.example.bruno.airprojekt.MainActivity"
+        android:layout_marginLeft="@dimen/large_layout_side_padding"
+        android:layout_marginRight="@dimen/large_layout_side_padding"
+        android:layout_marginTop="@dimen/large_layout_top_padding">
 
         <TextView
             android:id="@+id/login_title"

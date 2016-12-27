@@ -70,7 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:id="@+id/details_content_holder">
+                android:id="@+id/details_content_holder"
+                android:layout_marginLeft="@dimen/large_layout_side_padding"
+                android:layout_marginRight="@dimen/large_layout_side_padding"
+                android:layout_marginTop="@dimen/large_layout_top_padding">
 
                 <include layout="@layout/event_details_general"
                     android:id="@+id/layout_event_details_general"
@@ -118,6 +121,7 @@
             android:layout_height="wrap_content"
             app:layout_anchor="@id/app_bar_layout"
             android:layout_marginRight="@dimen/fab_margin"
+            app:rippleColor="@color/white"
             app:layout_anchorGravity="bottom|right|end"
             android:src="@drawable/ic_favorite_border_red_400_24dp"/>
 
