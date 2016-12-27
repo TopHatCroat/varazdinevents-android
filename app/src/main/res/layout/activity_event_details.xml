@@ -121,6 +121,7 @@
             android:layout_height="wrap_content"
             app:layout_anchor="@id/app_bar_layout"
             android:layout_marginRight="@dimen/fab_margin"
+            app:rippleColor="@color/white"
             app:layout_anchorGravity="bottom|right|end"
             android:src="@drawable/ic_favorite_border_red_400_24dp"/>
 

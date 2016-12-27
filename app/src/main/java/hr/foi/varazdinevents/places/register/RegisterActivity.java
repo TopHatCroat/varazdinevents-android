@@ -65,11 +65,6 @@ public class RegisterActivity extends BaseActivity implements RegisterViewLayer 
         // !!!!!!
     }
 
-    @Override
-    public boolean isWithNavigation() {
-        return false;
-    }
-
     public static void start(Context startingActivity) {
         Intent intent = new Intent(startingActivity, RegisterActivity.class);
         startingActivity.startActivity(intent);

@@ -48,19 +48,24 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.FontManager;
 
 /**
  * Created by Antonio Martinović on 08.11.16.
  */
 
-public class EventDetailsActivity extends BaseActivity implements OnMapReadyCallback {
+public class EventDetailsActivity extends BaseNavigationActivity implements OnMapReadyCallback {
     private static final String ARG_EVENT = "arg_event";
     private GoogleMap mMap;
     private Event event;
     Double latitude, longitude;
     String locationTitle, locationCategory;
+
+    @Inject
+    User user;
     @Inject
     EventDetailsPresenter presenter;
     @Inject
@@ -153,6 +158,11 @@ public class EventDetailsActivity extends BaseActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    protected User getUser() {
+        return user;
     }
 
     @Override

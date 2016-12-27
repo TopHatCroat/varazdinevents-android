@@ -36,12 +36,13 @@ import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
-public class MainActivity extends BaseActivity implements MainViewLayer, OnStartDragListener,
+public class MainActivity extends BaseNavigationActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener {
 
     @Inject
@@ -212,6 +213,11 @@ public class MainActivity extends BaseActivity implements MainViewLayer, OnStart
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    protected User getUser() {
+        return user;
     }
 
     public List<Event> getEvents() {

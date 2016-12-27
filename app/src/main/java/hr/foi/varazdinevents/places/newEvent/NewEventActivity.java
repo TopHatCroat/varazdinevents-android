@@ -26,14 +26,16 @@ import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.NewEventModule;
+import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.PickerHelper;
 import timber.log.Timber;
 
 /**
  * Created by Antonio Martinović on 03.12.16.
  */
-public class NewEventActivity extends BaseActivity implements TimePickerDialog.OnTimeSetListener,
+public class NewEventActivity extends BaseNavigationActivity implements TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener {
     private static final String START_DATE_PICKER_TAG = "start_date_picker";
     public static final String START_TIME_PICKER_TAG = "start_time_picker";
@@ -43,6 +45,8 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
     EventManager eventManager;
     @Inject
     NewEventPresenter presenter;
+    @Inject
+    User user;
 
     @BindView(R.id.title_new_event)
     EditText title;
@@ -82,6 +86,11 @@ public class NewEventActivity extends BaseActivity implements TimePickerDialog.O
                 R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(adapter);
+    }
+
+    @Override
+    protected User getUser() {
+        return user;
     }
 
     @Override

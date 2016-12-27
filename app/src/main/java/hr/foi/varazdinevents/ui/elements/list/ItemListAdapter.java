@@ -42,7 +42,7 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
-        holder.bind(items.get(position));
+        holder.bind(items.get(holder.getAdapterPosition()));
     }
 
     @Override
@@ -55,6 +55,7 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         return items.get(position).getType();
     }
 
+    @SuppressWarnings("unchecked")
     public void setItems(List<T> items){
         this.items.clear();
         Collections.sort(items);
