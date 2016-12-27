@@ -41,4 +41,19 @@
     <string name="category_lecture">Predavanje</string>
     <string name="category_course">Tecaj</string>
     <string name="category_backgroundMusic">Slusaona</string>
+    <string name="category">Kategorija</string>
+    <string name="category_concert">Koncert</string>
+    <string name="create_new_event">Novi događaj</string>
+    <string name="date">Datum</string>
+    <string name="end_date">Datum završetka</string>
+    <string name="end_time">Vrijeme završetka</string>
+    <string name="event_create_failed">Dogodila se pogreška. Molimo pokušajte ponovno.</string>
+    <string name="event_create_success">Događaj uspješno kreiran.</string>
+    <string name="event_details_general_description">Detalji događaja</string>
+    <string name="event_details_general_map">Lokacija događaja</string>
+    <string name="event_details_general_title">Općenito o događaju</string>
+    <string name="host"></string>
+    <string name="start_date">Datum početka</string>
+    <string name="start_time">Vrijeme početka</string>
+    <string name="text"></string>
 </resources>

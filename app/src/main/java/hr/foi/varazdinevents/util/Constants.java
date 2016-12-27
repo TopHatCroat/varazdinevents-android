@@ -14,4 +14,10 @@ public class Constants {
 
     public static final String PREF_LANG_KEY = "pref_key_language";
 
+    public static final String PREF_USERNAME_KEY = "pref_key_username";
+
+    public static final String PREF_PASSWORD_KEY = "pref_key_password";
+
+    public static final String PREF_EMAIL_KEY = "pref_key_email";
+
 }
