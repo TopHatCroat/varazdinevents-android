@@ -6,11 +6,11 @@
     <string name="navigation_drawer_open">Open drawer</string>
     <string name="navigation_drawer_close">Close drawer</string>
     <string name="pref_title_user_account">Account Settings</string>
-    <string name="pref_summary_username">Username</string>
+    <string name="pref_summary_username">Change username</string>
     <string name="pref_title_username">Username</string>
-    <string name="pref_summary_password">Password</string>
+    <string name="pref_summary_password">Change password</string>
     <string name="pref_title_password">Password</string>
-    <string name="pref_summary_email">Email</string>
+    <string name="pref_summary_email">Change email</string>
     <string name="pref_title_email">Email</string>
     <string name="pref_summary_language">Language</string>
     <string name="pref_title_language">Language</string>
@@ -48,6 +48,14 @@
     <string name="event_details_general_title">Općenito o događaju</string>
     <string name="event_details_general_description">Detalji događaja</string>
     <string name="event_details_general_map">Lokacija događaja</string>
+    <string name="pref_title_additional_settings">Additional Settings</string>
+    <string name="pref_summary_notifications">Notifications</string>
+    <string name="pref_title_notifications">Notifications</string>
+    <string name="pref_summary_user_details">User Details</string>
+    <string name="pref_title_user_details">User Details</string>
+    <string name="defaultUsername">DefaultUsername</string>
+    <string name="defaultPassword">DefaultPassword</string>
+    <string name="defaultEmail">DefaultEmail</string>
 
     <string-array name="Language">
         <item>English</item>
@@ -59,6 +67,18 @@
         <item>"en"</item>
         <item>"hr"</item>
         <item>"de"</item>
+    </string-array>
+
+    <string-array name="UserDetails"> //neki preference
+        <item>Username</item>
+        <item>Passowrd</item>
+        <item>Email</item>
+    </string-array>
+
+    <string-array name="UserDetailsValues">
+        <item>"user"</item>
+        <item>"pass"</item>
+        <item>"email"</item>
     </string-array>
 
     <string-array name="categories">
