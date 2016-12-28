@@ -95,11 +95,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
     }
 
     @Override
-    public boolean isWithNavigation() {
-        return false;
-    }
-    UserManager userManager;
-    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(PREF_LANG_KEY)) {
             changeLang(key);

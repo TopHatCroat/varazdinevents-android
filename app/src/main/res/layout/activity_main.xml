@@ -33,18 +33,26 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView
-            android:id="@+id/item_recycler_view"
+        <android.support.v4.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:showIn="@layout/activity_main"
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/large_layout_side_padding"
             android:layout_marginRight="@dimen/large_layout_side_padding"
-            android:layout_marginTop="@dimen/large_layout_top_padding"/>
+            android:layout_marginTop="@dimen/action_bar_height">
+
+            <hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView
+                android:id="@+id/item_recycler_view"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:showIn="@layout/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,21 +61,9 @@
             <ProgressBar
                 android:id="@+id/progresBar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </LinearLayout>
-
-
-
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/fab_basic_favorite"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom|end"-->
-            <!--android:layout_margin="@dimen/fab_margin"-->
-            <!--android:src="@android:drawable/ic_dialog_email"/>-->
-
-
 
     </android.support.design.widget.CoordinatorLayout>
 
