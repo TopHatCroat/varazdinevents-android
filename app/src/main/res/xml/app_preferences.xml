@@ -17,20 +17,43 @@
         android:title="@string/pref_title_user_account"
         android:key="pref_key_user_account_settings"/>
 
-        <Preference
+    <!--<EditTextPreference-->
+        <!--android:id="@+id/pref_id_user_details"-->
+        <!--android:key="pref_key_user_details"-->
+        <!--android:summary="@string/pref_summary_user_details"-->
+        <!--android:title="@string/pref_title_user_details"-->
+        <!--android:entries="@array/UserDetails"-->
+        <!--android:entryValues="@array/UserDetailsValues"/>-->
+        <EditTextPreference
+            android:id="@+id/pref_id_username"
             android:key="pref_key_username"
             android:summary="@string/pref_summary_username"
-            android:title="@string/pref_title_username"/>
+            android:title="@string/pref_title_username"
+            android:text="@string/defaultUsername"/>
 
-        <Preference
+        <EditTextPreference
+            android:id="@+id/pref_id_password"
             android:key="pref_key_password"
             android:summary="@string/pref_summary_password"
-            android:title="@string/pref_title_password"/>
+            android:title="@string/pref_title_password"
+            android:text="@string/defaultPassword"/>/>
 
-        <Preference
+        <EditTextPreference
+            android:id="@+id/pref_id_email"
             android:key="pref_key_email"
             android:summary="@string/pref_summary_email"
-            android:title="@string/pref_title_email"/>
+            android:title="@string/pref_title_email"
+            android:text="@string/defaultEmail"/>/>
 
+    <PreferenceCategory
+        android:title="@string/pref_title_additional_settings"
+        android:key="pref_key_additional_settings"/>
+
+    <!--<CkeckBoxPreference-->
+    <Preference
+        android:key="pref_key_notifications"
+        android:summary="@string/pref_summary_notifications"
+        android:title="@string/pref_title_notifications"
+        android:defaultValue="true"/>
 
 </PreferenceScreen>

@@ -1,5 +1,10 @@
 package hr.foi.varazdinevents.places.settings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.text.InputType;
+import android.widget.EditText;
+
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 
 /**
@@ -11,4 +16,5 @@ public class SettingsPresenter extends BasePresenter<SettingsActivity>{
     public void itemClicked(Object item) {
 
     }
+
 }

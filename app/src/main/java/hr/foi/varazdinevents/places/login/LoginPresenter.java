@@ -39,6 +39,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
                 public void onCompleted() {
                     String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                     userManager.registerFCMToken(refreshedToken).subscribe();
+
                 }
 
                 @Override

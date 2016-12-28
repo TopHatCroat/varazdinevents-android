@@ -16,4 +16,10 @@ public class Constants {
     public static final String LAST_UPDATE_TIME_KEY = "last_update_timestamp";
 
 
+    public static final String PREF_USERNAME_KEY = "pref_key_username";
+
+    public static final String PREF_PASSWORD_KEY = "pref_key_password";
+
+    public static final String PREF_EMAIL_KEY = "pref_key_email";
+
 }
