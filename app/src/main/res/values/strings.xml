@@ -56,6 +56,7 @@
     <string name="defaultUsername">DefaultUsername</string>
     <string name="defaultPassword">DefaultPassword</string>
     <string name="defaultEmail">DefaultEmail</string>
+    <string name="new_event_title">Kreiranje novog događaja</string>
     <string name="host_profile_general_description">Host Info</string>
     <string name="host_profile_general_title">Host Details</string>
     <string name="host_profile_general_map">Host Location</string>

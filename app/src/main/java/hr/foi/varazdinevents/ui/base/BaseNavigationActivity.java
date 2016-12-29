@@ -8,10 +8,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.login.LoginActivity;
 import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
 
@@ -27,6 +33,15 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
     @BindView(R.id.navigation_view)
     protected NavigationView navigationView;
 
+
+    @Inject
+    User user;
+    /*@BindView(R.id.user_username)
+    TextView username;
+    @BindView(R.id.user_email)
+    TextView email;
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +53,13 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
 
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        //username.setText(user.getUsername());
+        //email.setText(user.getPassword());
+
+        //String username = user.getUsername();
+        //String password = user.getPassword();
+
     }
 
     @Override
@@ -61,6 +83,12 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 break;
             case R.id.menu_about:
 //                AboutActivity.start(this);
+                break;
+            case R.id.menu_login:
+                LoginActivity.start(this);
+                break;
+            case R.id.menu_logout:
+                MainActivity.start(this);
                 break;
         }
         return true;

@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorEventDetailsGeneral"
+    android:background="@drawable/back"
     android:id="@+id/background_layout"
     android:paddingBottom="3dp"
     android:paddingLeft="10dp"
@@ -28,15 +28,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/event_details_general_title"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="3dp" />
+        style="@style/event_card_title"
+        android:layout_marginTop="15dp" />
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="#80ffffff"
+        android:background="#80000000"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp" />
 
@@ -60,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_details_title"
-            style="@style/white_text"/>
+            style="@style/dark_grey_text"/>
 
     </LinearLayout>
     <!-- <View
@@ -89,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_details_date"
-            style="@style/white_text"/>
+            style="@style/dark_grey_text"/>
 
     </LinearLayout>
    <!-- <View
@@ -118,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_details_time"
-            style="@style/white_text"/>
+            style="@style/dark_grey_text"/>
 
     </LinearLayout>
     <!-- <View
@@ -180,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_details_facebook"
-            style="@style/white_text"/>
+            style="@style/dark_grey_text"/>
 
 
     </LinearLayout>
@@ -210,7 +207,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_details_category"
-            style="@style/white_text"/>
+            style="@style/dark_grey_text"/>
     </LinearLayout>
     <!-- <View
          android:layout_width="match_parent"

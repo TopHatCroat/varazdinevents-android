@@ -7,7 +7,9 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +69,8 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     ItemRecyclerView recyclerView;
     @BindView(R.id.progresBar)
     ProgressBar progressBar;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     ItemTouchHelper itemTouchHelper;
     List<Event> events = new ArrayList<>();
@@ -80,13 +84,22 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
             getWindow().setExitTransition(enterAnimation);
             getWindow().setReturnTransition(returnAnimation);
         }
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.loadEvents();
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
-        showLoading(true);
         presenter.loadEvents();
     }
 
@@ -97,8 +110,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     }
 
     public void showLoading(boolean loading) {
-        recyclerView.setVisibility(loading ? View.GONE : View.VISIBLE);
-        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+//        recyclerView.setVisibility(loading ? View.GONE : View.VISIBLE);
+//        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+        swipeRefreshLayout.setRefreshing(loading);
     }
 
     public void showEvents(List<Event> events) {
