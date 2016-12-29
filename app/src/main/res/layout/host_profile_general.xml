@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_title"
-                    style="@style/white_text"/>
+                    style="@style/dark_grey_text"/>
 
             </LinearLayout>
 
@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_facebook"
-                    style="@style/white_text"/>
+                    style="@style/dark_grey_text"/>
 
 
             </LinearLayout>
