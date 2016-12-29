@@ -1,7 +1,9 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -10,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
@@ -49,6 +52,8 @@ import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.FontManager;
@@ -97,7 +102,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
     TextView facebook;
     @BindView(R.id.event_details_offers)
     TextView offers;
-//    @BindView(R.id.event_details_officialLink)
+    //    @BindView(R.id.event_details_officialLink)
 //    TextView officialLink;
     @BindView(R.id.event_details_text)
     TextView text;
@@ -178,7 +183,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
 
         Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-       // this.date.setText("Datum: " + dateFormat.format(event.getDate()));
+        // this.date.setText("Datum: " + dateFormat.format(event.getDate()));
         this.date.setText("Datum: " + dateFormat.format(eventDate));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -187,6 +192,14 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
 
         this.title.setText("Naziv: " + event.getTitle());
         this.host.setText("Organizator: " + event.getHost());
+        this.host.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(EventDetailsActivity.this, HostProfileActivity.class);
+                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                EventDetailsActivity.this.startActivity(newIntent);
+            }
+        });
         this.category.setText("Kategorija: " + event.getCategory());
         this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
         String text = "Facebook: <a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
@@ -197,12 +210,12 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         this.longitude = 16.338159;
 
         this.locationTitle = event.getTitle();
-        this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate)+ " u " + timeFormat.format(eventDate) + " sati";
+        this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate) + " u " + timeFormat.format(eventDate) + " sati";
 
 //        this.officialLink.setText(event.getOfficialLink());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.text.setText(Html.fromHtml(event.getText(), Html.FROM_HTML_MODE_LEGACY).toString());
-            this.facebook.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
+            this.facebook.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
         } else {
             this.text.setText(Html.fromHtml(event.getText()).toString());
             this.facebook.setText(Html.fromHtml(text));
@@ -212,7 +225,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         presenter.detachView();
     }
@@ -241,14 +254,16 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
     }
 
     @OnClick(R.id.fab_detailed_favorite)
-    public void onFavoriteClicked(){
+    public void onFavoriteClicked() {
         this.event.setFavorite(EventManager.toggleFavorite(this.event));
         toggleFavoriteIcon(this.event.isFavorite);
     }
 
-    public void toggleFavoriteIcon(boolean isFavorite){
-        if(isFavorite) fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
-        else fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
+    public void toggleFavoriteIcon(boolean isFavorite) {
+        if (isFavorite)
+            fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
+        else
+            fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
     }
 
 
@@ -258,8 +273,24 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         LatLng latlong = new LatLng(latitude, longitude);
         Marker marker = mMap.addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
         marker.showInfoWindow();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong,17));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
     }
+
+//    public void onHostClick(View hostProfile){
+//        Intent intent = new Intent(this, HostProfileActivity.class);
+//        startActivity(intent);
+//    }
+
 
 }

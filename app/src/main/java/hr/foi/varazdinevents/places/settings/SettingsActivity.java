@@ -95,11 +95,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
     }
 
     @Override
-    public boolean isWithNavigation() {
-        return false;
-    }
-    UserManager userManager;
-    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(PREF_LANG_KEY)) {
             changeLang(key);
@@ -149,11 +144,12 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         if (!email.matches("[a-zA-Z][a-zA-Z0-9.]{1,}[a-zA-Z0-9]{1}[@]{1}[a-zA-Z]{1}[a-zA-Z.-]{2,}[a-zA-Z]")) {
             alertView("Error", "Incorrect email!");
         }
-        if(username.length()==0){
+        else if(username.length()==0){
             alertView("Error", "Incorrect username!");
         }
           //+pass regex?
         else{
+            //change to update
             User user = new User(null, username, email, password, null);
             user.save();
             alertView("Success", "Successfully updated!");
@@ -203,6 +199,5 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
 
         builder.show();
     }
-
 
 }

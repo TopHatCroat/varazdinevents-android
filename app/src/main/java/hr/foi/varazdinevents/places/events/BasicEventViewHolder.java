@@ -1,6 +1,8 @@
 package hr.foi.varazdinevents.places.events;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
+import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
+import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
@@ -58,9 +62,19 @@ public class BasicEventViewHolder extends ItemViewHolder {
         this.date.setText(dateFormat.format(eventDate));
 
         //this.time.setText(event.getTime());
-        this.host.setText(event.getHost());
+
         Picasso.with(itemView.getContext()).load(event.getImage()).into(image);
         //Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
+
+        this.host.setText(event.getHost());
+//        this.host.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent newIntent = new Intent(BasicEventViewHolder.this, HostProfileActivity.class);
+//                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                BasicEventViewHolder.this.startActivity(newIntent);
+//            }
+//        });
     }
 
     @Override

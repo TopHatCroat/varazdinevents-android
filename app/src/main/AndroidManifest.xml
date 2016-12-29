@@ -35,6 +35,7 @@
         <activity android:name=".places.newEvent.NewEventActivity" />
         <activity android:name=".places.eventDetails.EventDetailsActivity" />
         <activity android:name=".places.eventDetails.EventDetailsMap" />
+        <activity android:name=".places.hostProfile.HostProfileActivity"/>
 
         <service android:name=".fcm.InstanceIdService">
             <intent-filter>

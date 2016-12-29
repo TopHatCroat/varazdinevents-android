@@ -2,23 +2,24 @@ package hr.foi.varazdinevents.injection.modules;
 
 import android.app.Activity;
 import android.content.Context;
+//import android.support.test.espresso.core.deps.dagger.Module;
 
 import dagger.Module;
 import dagger.Provides;
 import hr.foi.varazdinevents.injection.ActivityScope;
-import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsPresenter;
+import hr.foi.varazdinevents.places.hostProfile.HostProfilePresenter;
 
 /**
- * Created by Antonio Martinović on 08.11.16.
+ * Created by Valentin Magdić on 26.12.16..
  */
 @Module
-public class EventDetailsActivityModule {
+public class HostProfileActivityModule {
     private Activity activity;
-    private EventDetailsPresenter presenterLayer;
+    private HostProfilePresenter presenterLayer;
 
-    public EventDetailsActivityModule(Activity activity) {
+    public HostProfileActivityModule(Activity activity) {
         this.activity = activity;
     }
 
@@ -34,9 +35,8 @@ public class EventDetailsActivityModule {
     }
 
     @Provides
-    EventDetailsPresenter provideEventDetailsPresenter(User user){
-        this.presenterLayer = new EventDetailsPresenter(user);
+    HostProfilePresenter provideHostProfilePresenter(User user){
+        this.presenterLayer = new HostProfilePresenter(user);
         return this.presenterLayer;
     }
-
 }
