@@ -22,4 +22,7 @@ public class Constants {
 
     public static final String PREF_EMAIL_KEY = "pref_key_email";
 
+    public static final String PREF_NOTIFICATIONS_KEY = "pref_key_notifications";
+
+
 }

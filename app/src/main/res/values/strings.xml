@@ -12,7 +12,7 @@
     <string name="pref_title_password">Password</string>
     <string name="pref_summary_email">Change email</string>
     <string name="pref_title_email">Email</string>
-    <string name="pref_summary_language">Language</string>
+    <string name="pref_summary_language">Change language</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_title_application_settings">Application settings</string>
     <string name="loginError">Incorrect e-mail or password</string>
@@ -49,7 +49,7 @@
     <string name="event_details_general_description">Detalji događaja</string>
     <string name="event_details_general_map">Lokacija događaja</string>
     <string name="pref_title_additional_settings">Additional Settings</string>
-    <string name="pref_summary_notifications">Notifications</string>
+    <string name="pref_summary_notifications">Allow push notifications</string>
     <string name="pref_title_notifications">Notifications</string>
     <string name="pref_summary_user_details">User Details</string>
     <string name="pref_title_user_details">User Details</string>
@@ -60,6 +60,9 @@
     <string name="host_profile_general_description">Host Info</string>
     <string name="host_profile_general_title">Host Details</string>
     <string name="host_profile_general_map">Host Location</string>
+    <string name="defaultUserEmailPlaceholder">defaultUserEmailPlaceholder</string>
+    <string name="defaultUsernamePlaceHolder">defaultUsernamePlaceholder</string>
+    <string name="category_all">All Events</string>
 
     <string-array name="Language">
         <item>English</item>

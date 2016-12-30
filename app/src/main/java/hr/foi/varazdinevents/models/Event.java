@@ -33,6 +33,8 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
 
     public boolean isFavorite = false;
 
+    public boolean isNotified = false;
+
     public Event(){}
 
     protected Event(Parcel in) {
@@ -183,6 +185,10 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
+
+    public boolean isNotified() { return isNotified; }
+
+    public void setNotified(boolean notified) { this.isNotified = notified; }
 
     @Override
     public boolean isMatching(String query) {
