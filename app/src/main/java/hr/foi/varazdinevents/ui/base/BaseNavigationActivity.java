@@ -14,6 +14,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
+import dagger.BindsOptionalOf;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
@@ -36,11 +38,11 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
 
     @Inject
     User user;
-    /*@BindView(R.id.user_username)
-    TextView username;
-    @BindView(R.id.user_email)
-    TextView email;
-    */
+//    @BindView(R.id.user_username)
+//    TextView username;
+//    @BindView(R.id.user_email)
+//    TextView email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,11 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        //username.setText(user.getUsername());
-        //email.setText(user.getPassword());
-
-        //String username = user.getUsername();
-        //String password = user.getPassword();
+//        username.setText(user.getUsername());
+//        email.setText(user.getPassword());
+//
+//        String username = user.getUsername();
+//        String password = user.getPassword();
 
     }
 

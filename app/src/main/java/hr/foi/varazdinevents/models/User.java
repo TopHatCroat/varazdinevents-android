@@ -102,7 +102,5 @@ public class User extends SugarRecord implements Parcelable{
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    public void setToken(String token) { this.token = token; }
 }

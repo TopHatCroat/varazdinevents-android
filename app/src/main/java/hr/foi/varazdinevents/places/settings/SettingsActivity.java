@@ -7,10 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
+import hr.foi.varazdinevents.fcm.MessagingService;
 import hr.foi.varazdinevents.injection.modules.SettingsActivityModule;
 import hr.foi.varazdinevents.models.User;
 
@@ -32,6 +36,7 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
 import static hr.foi.varazdinevents.util.Constants.PREF_LANG_KEY;
+import static hr.foi.varazdinevents.util.Constants.PREF_NOTIFICATIONS_KEY;
 import static hr.foi.varazdinevents.util.Constants.PREF_USERNAME_KEY;
 import static hr.foi.varazdinevents.util.Constants.PREF_PASSWORD_KEY;
 import static hr.foi.varazdinevents.util.Constants.PREF_EMAIL_KEY;
@@ -63,6 +68,15 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false);
 //        EditText username = (EditText) findViewById(R.id.pref_id_username);
 //        username.setText(user.getUsername());
+
+//        final CheckBoxPreference checkboxPref = (CheckBoxPreference) getPreferenceManager().findPreference("checkboxPref");
+//
+//        checkboxPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                Log.d("MyApp", "Pref " + preference.getKey() + " changed to " + newValue.toString());
+//                return true;
+//            }
+//        });
 
     }
 
@@ -113,6 +127,9 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
             String email = sharedPreferences.getString(PREF_EMAIL_KEY, "");
             updateUserDetails(user.getUsername(), user.getPassword(), email);
         }
+        if(key.equals(PREF_NOTIFICATIONS_KEY)){
+            MessagingService.allowNotifications = !MessagingService.allowNotifications;
+        }
     }
 
     public void loadLocale() {
@@ -147,10 +164,12 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         else if(username.length()==0){
             alertView("Error", "Incorrect username!");
         }
-          //+pass regex?
+//          +pass regex?
         else{
-            //change to update
             User user = new User(null, username, email, password, null);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setEmail(email);
             user.save();
             alertView("Success", "Successfully updated!");
         }

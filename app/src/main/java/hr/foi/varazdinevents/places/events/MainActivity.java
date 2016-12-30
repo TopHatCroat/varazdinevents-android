@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -170,6 +171,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         List<Event> filteredModelList;
         switch (menuItem.getItemId()) {
+            case R.id.action_all:
+                filteredModelList = showAll();
+                break;
             case R.id.action_favorite:
                 filteredModelList = filterFavorite();
                 break;
@@ -276,6 +280,14 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         for(Event event : this.events){
             if(event.isMatching(query))
                 filteredList.add(event);
+        }
+        return filteredList;
+    }
+
+    private List<Event> showAll(){
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : this.events){
+            filteredList.add(event);
         }
         return filteredList;
     }
