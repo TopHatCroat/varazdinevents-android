@@ -16,8 +16,9 @@
     <dimen name="basic_item_card_height">300dp</dimen>
     <dimen name="layout_margin">10dp</dimen>
     <dimen name="vertical_card_layout_padding">6dp</dimen>
+    <dimen name="vertical_card_large_layout_padding">30dp</dimen>
     <dimen name="datetime_input_padding">8dp</dimen>
-    <dimen name="negative_layout_margin">-15dp</dimen>
+    <dimen name="negative_fab_margin">-30dp</dimen>
     <dimen name="large_layout_side_padding">0dp</dimen>
     <dimen name="large_layout_top_padding">0dp</dimen>
 </resources>

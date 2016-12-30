@@ -46,6 +46,8 @@ import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
+import static hr.foi.varazdinevents.util.Constants.LIST_STATE_KEY;
+
 public class MainActivity extends BaseNavigationActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener {
 
@@ -76,6 +78,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     List<Event> events = new ArrayList<>();
 
     boolean favoriteListChecked = false;
+    private Parcelable listState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,16 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
-        presenter.loadEvents();
+        if (events.size() == 0) presenter.loadEvents();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (listState != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
     }
 
     @Override
@@ -296,4 +308,19 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 //            recyclerView.setLayoutManager(linearLayoutManager);
 //        }
 //    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        state.putParcelable(LIST_STATE_KEY, listState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+        listState = state.getParcelable(LIST_STATE_KEY);
+    }
 }

@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/layout_margin">
-<android.widget.LinearLayout
-    android:layout_height="@dimen/basic_item_card_height"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-    <RelativeLayout
+    <android.widget.RelativeLayout
+        android:layout_height="@dimen/basic_item_card_height"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/image_card_size">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
@@ -23,6 +20,61 @@
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/vertical_card_large_layout_padding"
+            android:paddingBottom="@dimen/vertical_card_layout_padding"
+            android:paddingEnd="@dimen/layout_padding"
+            android:paddingRight="@dimen/layout_padding"
+            android:paddingStart="@dimen/layout_padding"
+            android:paddingLeft="@dimen/layout_padding"
+            android:layout_below="@id/basic_item_picture">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/basic_item_title"
+                    style="@style/card_title_style" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/basic_item_host"
+                    style="@style/card_subtitle_style"
+                    android:layout_gravity="bottom|end"
+                    android:textAlignment="viewEnd"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/basic_item_datetime"
+                    style="@style/card_subtitle_style"
+
+                    android:layout_gravity="bottom|end"
+                    android:textAlignment="viewEnd"/>
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:visibility="visible"
@@ -30,74 +82,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_favorite_border_white_24dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/layout_margin"
             android:layout_marginRight="@dimen/layout_margin"
-            android:layout_marginBottom="@dimen/negative_layout_margin"
+            android:layout_marginTop="170dp"
             />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="@dimen/vertical_card_layout_padding"
-        android:paddingBottom="@dimen/vertical_card_layout_padding"
-        android:paddingEnd="@dimen/layout_padding"
-        android:paddingRight="@dimen/layout_padding"
-        android:paddingStart="@dimen/layout_padding"
-        android:paddingLeft="@dimen/layout_padding" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/basic_item_title"
-                style="@style/card_title_style" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/basic_item_host"
-                style="@style/card_subtitle_style"
-
-                android:layout_gravity="bottom|end"
-                android:textAlignment="viewEnd"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" >
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/basic_item_datetime"
-                style="@style/card_subtitle_style"
-
-                android:layout_gravity="bottom|end"
-                android:textAlignment="viewEnd"/>
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</android.widget.LinearLayout>
+    </android.widget.RelativeLayout>
 
 </android.support.v7.widget.CardView>
