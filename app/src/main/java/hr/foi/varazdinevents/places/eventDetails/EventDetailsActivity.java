@@ -183,15 +183,13 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
 
         Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        // this.date.setText("Datum: " + dateFormat.format(event.getDate()));
-        this.date.setText("Datum: " + dateFormat.format(eventDate));
+        this.date.setText(dateFormat.format(eventDate));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        //this.time.setText("Vrijeme: " + timeFormat.format(event.getDate()));
-        this.time.setText("Vrijeme: " + timeFormat.format(eventDate));
+        this.time.setText(timeFormat.format(eventDate));
 
-        this.title.setText("Naziv: " + event.getTitle());
-        this.host.setText("Organizator: " + event.getHost());
+        this.title.setText(event.getTitle());
+        this.host.setText(event.getHost());
         this.host.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,9 +198,9 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
                 EventDetailsActivity.this.startActivity(newIntent);
             }
         });
-        this.category.setText("Kategorija: " + event.getCategory());
+        this.category.setText(event.getCategory());
         this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
-        String text = "Facebook: <a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
+        String text = "<a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
         this.offers.setText(event.getOffers());
 
         //testni primjer - Pavlinska 2 FOI

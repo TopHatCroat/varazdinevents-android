@@ -90,6 +90,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
             case R.id.menu_logout:
                 MainActivity.start(this);
                 break;
+            case R.id.menu_all_events:
+                MainActivity.start(this);
+                break;
         }
         return true;
     }

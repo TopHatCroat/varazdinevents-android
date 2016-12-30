@@ -26,10 +26,8 @@
             android:layout_marginBottom="16dp"
             android:layout_marginTop="22dp"
             android:gravity="center_horizontal"
-            android:text="Registracija korisnika"
-            android:textColor="#fff"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:text="@string/signup"
+            style="@style/large_white_title" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -54,7 +52,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/user_icon"
-                    android:hint="Korisničko ime"
+                    android:hint="@string/pref_title_username"
                     android:fontFamily="sans-serif"
                     android:inputType="textEmailAddress"
                     android:id="@+id/TFusername_register"
@@ -64,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/user_icon"
-                    android:hint="Email"
+                    android:hint="@string/pref_title_email"
                     android:fontFamily="sans-serif"
                     android:inputType="textEmailAddress"
                     android:id="@+id/TFemail_register"
@@ -76,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:drawableLeft="@drawable/password_icon"
-                    android:hint="Lozinka"
+                    android:hint="@string/pref_title_password"
                     android:fontFamily="sans-serif"
                     android:inputType="textPassword"
                     android:id="@+id/TFpass1_register"
@@ -87,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:drawableLeft="@drawable/password_icon"
-                    android:hint="Ponovi lozinku"
+                    android:hint="@string/pref_title_password_repeat"
                     android:fontFamily="sans-serif"
                     android:inputType="textPassword"
                     android:id="@+id/TFpass2_register"/>
@@ -96,7 +94,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#f0ad4e"
-                    android:text="Registriraj se!"
+                    android:text="@string/signup"
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="18sp"
