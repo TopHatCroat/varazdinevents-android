@@ -60,9 +60,18 @@
     <string name="host_profile_general_description">Host Info</string>
     <string name="host_profile_general_title">Host Details</string>
     <string name="host_profile_general_map">Host Location</string>
-    <string name="defaultUserEmailPlaceholder">defaultUserEmailPlaceholder</string>
-    <string name="defaultUsernamePlaceHolder">defaultUsernamePlaceholder</string>
-    <string name="category_all">All Events</string>
+    <string name="all_events_menu">All Events</string>
+    <string name="menu_host">Host Info</string>
+    <string name="event_general_title">Title: </string>
+    <string name="event_general_date">Date: </string>
+    <string name="event_general_time">Time: </string>
+    <string name="event_general_host">Host: </string>
+    <string name="event_general_facebook">Facebook: </string>
+    <string name="event_general_category">Category: </string>
+    <string name="signup">Sign Up</string>
+    <string name="pref_title_password_repeat">Repeat password</string>
+
+
 
     <string-array name="Language">
         <item>English</item>

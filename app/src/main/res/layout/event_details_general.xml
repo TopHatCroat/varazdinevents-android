@@ -51,6 +51,12 @@
             android:text="@string/fa_title"
             android:id="@+id/awesome_title"
             />
+        <TextView
+            android:text="@string/event_general_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            style="@style/dark_grey_text"/>
 
         <TextView
             android:text="TextView"
@@ -82,6 +88,13 @@
             />
 
         <TextView
+            android:text="@string/event_general_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            style="@style/dark_grey_text"/>
+
+        <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,6 +122,12 @@
             style="@style/awesome"
             android:text="@string/fa_clock"
             android:id="@+id/awesome_clock" />
+        <TextView
+            android:text="@string/event_general_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            style="@style/dark_grey_text"/>
 
         <TextView
             android:text="TextView"
@@ -138,6 +157,13 @@
             style="@style/awesome"
             android:text="@string/fa_host"
             android:id="@+id/awesome_host" />
+
+        <TextView
+            android:text="@string/event_general_host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            style="@style/dark_grey_text"/>
 
         <TextView
             android:text="TextView"
@@ -171,6 +197,12 @@
             android:text="@string/fa_facebook"
             android:id="@+id/awesome_facebook" />
 
+        <TextView
+            android:text="@string/event_general_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            style="@style/dark_grey_text"/>
 
         <TextView
             android:text="TextView"
@@ -201,6 +233,13 @@
             style="@style/awesome"
             android:text="@string/fa_rocket"
             android:id="@+id/awesome_rocket" />
+
+        <TextView
+            android:text="@string/event_general_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            style="@style/dark_grey_text"/>
 
         <TextView
             android:text="TextView"

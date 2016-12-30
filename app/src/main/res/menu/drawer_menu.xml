@@ -2,21 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation1"
+            android:id="@+id/menu_all_events"
             android:icon="@android:drawable/ic_menu_agenda"
-            android:title="@string/category_party" />
-        <item
-            android:id="@+id/navigation2"
-            android:icon="@android:drawable/ic_menu_search"
-            android:title="@string/category_culture" />
+            android:title="@string/all_events_menu" />
 
     </group>
     <item android:title="@string/organisers">
         <menu>
             <item
                 android:id="@+id/menu_create_event"
-                android:icon="@drawable/ic_create_light_24dp"
+                android:icon="@android:drawable/ic_menu_edit"
                 android:title="@string/new_event_description"
+                />
+            <item
+                android:id="@+id/menu_host"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="@string/menu_host"
                 />
 
         </menu>
