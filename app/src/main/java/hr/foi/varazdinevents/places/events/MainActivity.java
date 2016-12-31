@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -83,6 +85,20 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setExitTransition(enterAnimation);
             getWindow().setReturnTransition(returnAnimation);
+        }
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View hView =  navigationView.getHeaderView(0);
+        TextView username = (TextView)hView.findViewById(R.id.user_username);
+        TextView email = (TextView)hView.findViewById(R.id.user_email);
+        if (user.getUsername().equals("")) {
+            username.setText(R.string.nav_header_title);
+            email.setText(R.string.nav_header_info);
+        }
+        else {
+            user = getUser();
+            username.setText(user.getUsername());
+            email.setText(user.getEmail());
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

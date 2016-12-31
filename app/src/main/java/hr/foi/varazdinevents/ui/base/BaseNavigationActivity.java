@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -33,14 +32,8 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
     @BindView(R.id.navigation_view)
     protected NavigationView navigationView;
 
-
     @Inject
     User user;
-    /*@BindView(R.id.user_username)
-    TextView username;
-    @BindView(R.id.user_email)
-    TextView email;
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +43,7 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-
         navigationView.setNavigationItemSelectedListener(this);
-
-        //username.setText(user.getUsername());
-        //email.setText(user.getPassword());
-
-        //String username = user.getUsername();
-        //String password = user.getPassword();
-
     }
 
     @Override

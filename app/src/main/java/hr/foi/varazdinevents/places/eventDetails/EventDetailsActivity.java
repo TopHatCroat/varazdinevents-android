@@ -203,9 +203,24 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         String text = "<a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
         this.offers.setText(event.getOffers());
 
-        //testni primjer - Pavlinska 2 FOI
-        this.latitude = 46.307819;
-        this.longitude = 16.338159;
+        //Google map information
+        String location = "731 Market St, San Francisco, CA 94103";
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(location, 1);
+            if (addressList.size()!=0) {
+                Address address = addressList.get(0);
+                this.latitude = address.getLatitude();
+                this.longitude = address.getLongitude();
+            }else {
+                //testni primjer - Pavlinska 2 FOI
+                this.latitude = 46.307819;
+                this.longitude = 16.338159;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         this.locationTitle = event.getTitle();
         this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate) + " u " + timeFormat.format(eventDate) + " sati";
