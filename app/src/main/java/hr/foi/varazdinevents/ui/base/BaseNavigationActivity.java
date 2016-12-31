@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -45,9 +46,26 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View hView =  navigationView.getHeaderView(0);
+        TextView username = (TextView)hView.findViewById(R.id.user_username);
+        TextView email = (TextView)hView.findViewById(R.id.user_email);
+        if (user.getUsername().equals("")) {
+            username.setText(R.string.nav_header_title);
+            email.setText(R.string.nav_header_info);
+        }
+        else {
+            user = getUser();
+            username.setText(user.getUsername());
+            email.setText(user.getEmail());
+        }
+
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override

@@ -91,20 +91,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
             getWindow().setReturnTransition(returnAnimation);
         }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View hView =  navigationView.getHeaderView(0);
-        TextView username = (TextView)hView.findViewById(R.id.user_username);
-        TextView email = (TextView)hView.findViewById(R.id.user_email);
-        if (user.getUsername().equals("")) {
-            username.setText(R.string.nav_header_title);
-            email.setText(R.string.nav_header_info);
-        }
-        else {
-            user = getUser();
-            username.setText(user.getUsername());
-            email.setText(user.getEmail());
-        }
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

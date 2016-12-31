@@ -83,7 +83,7 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar.setTitle(R.string.create_new_event);
+        getSupportActionBar().setTitle(R.string.create_new_event);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.categories, android.R.layout.simple_spinner_item);
