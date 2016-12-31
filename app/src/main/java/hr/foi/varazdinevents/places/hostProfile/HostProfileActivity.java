@@ -92,6 +92,7 @@ public class HostProfileActivity extends BaseNavigationActivity{
         super.onCreate(savedInstanceState);
 
 
+
 //        collapsingToolbarLayout.setTitle(event.getTitle());
 //        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 //        toolbar.setTitle(event.getTitle());

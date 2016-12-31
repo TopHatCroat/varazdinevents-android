@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -47,6 +48,8 @@ import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+
+import static hr.foi.varazdinevents.util.Constants.LIST_STATE_KEY;
 
 public class MainActivity extends BaseNavigationActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener {
@@ -78,6 +81,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     List<Event> events = new ArrayList<>();
 
     boolean favoriteListChecked = false;
+    private Parcelable listState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +120,16 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
-        presenter.loadEvents();
+        if (events.size() == 0) presenter.loadEvents();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (listState != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
     }
 
     @Override
@@ -174,6 +187,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         List<Event> filteredModelList;
         switch (menuItem.getItemId()) {
+            case R.id.action_all:
+                filteredModelList = showAll();
+                break;
             case R.id.action_favorite:
                 filteredModelList = filterFavorite();
                 break;
@@ -284,6 +300,14 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return filteredList;
     }
 
+    private List<Event> showAll(){
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : this.events){
+            filteredList.add(event);
+        }
+        return filteredList;
+    }
+
     private List<Event> filterFavorite(){
         final List<Event> filteredList = new ArrayList<>();
         for(Event event : this.events){
@@ -312,4 +336,19 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 //            recyclerView.setLayoutManager(linearLayoutManager);
 //        }
 //    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        state.putParcelable(LIST_STATE_KEY, listState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+        listState = state.getParcelable(LIST_STATE_KEY);
+    }
 }

@@ -50,7 +50,7 @@
         android:key="pref_key_additional_settings"/>
 
     <!--<CkeckBoxPreference-->
-    <Preference
+    <CheckBoxPreference
         android:key="pref_key_notifications"
         android:summary="@string/pref_summary_notifications"
         android:title="@string/pref_title_notifications"

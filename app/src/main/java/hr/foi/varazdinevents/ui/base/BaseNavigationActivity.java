@@ -8,11 +8,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
+import dagger.BindsOptionalOf;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
@@ -31,6 +34,7 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
     @Nullable
     @BindView(R.id.navigation_view)
     protected NavigationView navigationView;
+
 
     @Inject
     User user;
