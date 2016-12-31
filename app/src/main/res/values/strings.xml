@@ -70,6 +70,9 @@
     <string name="event_general_category">Category: </string>
     <string name="signup">Sign Up</string>
     <string name="pref_title_password_repeat">Repeat password</string>
+    <string name="defaultUserEmailPlaceholder">defaultUserEmailPlaceholder</string>
+    <string name="defaultUsernamePlaceHolder">defaultUsernamePlaceholder</string>
+    <string name="category_all">All Events</string>
 
 
 
