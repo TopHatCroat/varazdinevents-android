@@ -235,6 +235,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     public static void start(Context startingActivity) {
         Intent intent = new Intent(startingActivity, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startingActivity.startActivity(intent);
     }
 

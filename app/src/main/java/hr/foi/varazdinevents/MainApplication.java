@@ -30,6 +30,9 @@ public class MainApplication extends MultiDexApplication {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        getApplicationComponent();
+        createUserComponent();
     }
 
     @Override

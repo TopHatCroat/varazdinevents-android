@@ -5,9 +5,12 @@
             android:id="@+id/menu_all_events"
             android:icon="@android:drawable/ic_menu_agenda"
             android:title="@string/all_events_menu" />
-
     </group>
-    <item android:title="@string/organisers">
+    <item
+        android:id="@+id/organizers_menu_option"
+        android:title="@string/organisers"
+        android:visible="false"
+        >
         <menu>
             <item
                 android:id="@+id/menu_create_event"
@@ -19,7 +22,6 @@
                 android:icon="@android:drawable/ic_menu_my_calendar"
                 android:title="@string/menu_host"
                 />
-
         </menu>
     </item>
     <item android:title="@string/application">
@@ -35,10 +37,12 @@
             <item
                 android:id="@+id/menu_login"
                 android:icon="@android:drawable/ic_menu_myplaces"
+                android:visible="false"
                 android:title="@string/login" />
             <item
                 android:id="@+id/menu_logout"
                 android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:visible="false"
                 android:title="@string/logout" />
         </menu>
     </item>
