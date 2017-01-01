@@ -74,6 +74,7 @@
     <string name="defaultUsernamePlaceHolder">defaultUsernamePlaceholder</string>
     <string name="category_all">All Events</string>
     <string name="touch_to_set">Touch to set</string>
+    <string name="network_not_accessible">Network available</string>
 
 
     <string-array name="Language">

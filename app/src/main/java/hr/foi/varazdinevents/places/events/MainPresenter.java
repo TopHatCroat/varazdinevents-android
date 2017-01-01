@@ -2,6 +2,8 @@ package hr.foi.varazdinevents.places.events;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import hr.foi.varazdinevents.R;
 import rx.Observer;
 
 import hr.foi.varazdinevents.api.EventManager;
@@ -38,7 +40,7 @@ public class MainPresenter extends BasePresenter<MainActivity> {
             @Override
             public void onError(Throwable e) {
                 getViewLayer().showLoading(false);
-                getViewLayer().showBasicError("ne radi");
+                getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
                 e.printStackTrace();
             }
         };

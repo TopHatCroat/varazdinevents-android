@@ -58,8 +58,9 @@ public class EventManager {
      * @return list of events
      */
     public Observable<List<Event>> getEvents() {
-        return Observable.merge(fromMemory(), fromDatabase(), fromNetwork())
+        return Observable.concat(fromMemory(), fromDatabase(), fromNetwork())
                 .cache()
+
                 .map(new Func1<List<Event>, List<Event>>() {
                     @Override
                     public List<Event> call(List<Event> events) {
@@ -180,7 +181,6 @@ public class EventManager {
         }
 
         this.events = new ArrayList<Event>(eventsMap.values());
-
     }
 
     private void toDatabase(List<Event> events) {

@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.places.login;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
 
                 @Override
                 public void onError(Throwable e) {
+                    if (e instanceof UnknownHostException) {
+                        getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.network_not_accessible));
+                    }
                     getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.loginError));
                 }
 

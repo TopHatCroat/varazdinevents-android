@@ -32,7 +32,6 @@ import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.PickerHelper;
-import timber.log.Timber;
 
 /**
  * Created by Antonio Martinović on 03.12.16.
@@ -174,16 +173,21 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {
         showLoading(true);
-        validate();
-        eventManager.getNewEvent().setHost(user.getApiId().toString());
-        presenter.itemClicked(eventManager.getNewEvent());
+        if(dataValid()) {
+            eventManager.getNewEvent().setHost(user.getApiId().toString());
+            presenter.itemClicked(eventManager.getNewEvent());
+        }
     }
 
-    private void validate() {
+    private boolean dataValid() {
+        boolean isValid = true;
         if(Strings.isNullOrEmpty(String.valueOf(title.getText()))) {
             title.requestFocus();
             title.setError("Must not be empty");
+            isValid = false;
         }
+
+        return isValid;
     }
 
     public static void start(BaseActivity baseActivity) {

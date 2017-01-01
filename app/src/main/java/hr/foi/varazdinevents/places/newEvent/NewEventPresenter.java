@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.newEvent;
 
+import java.net.UnknownHostException;
+
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
@@ -42,8 +44,11 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
             @Override
             public void onError(Throwable e) {
                 getViewLayer().showLoading(false);
-                getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_failed));
-                e.printStackTrace();
+                if (e instanceof UnknownHostException) {
+                    getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.network_not_accessible));
+                } else {
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_failed));
+                }
             }
         };
 
