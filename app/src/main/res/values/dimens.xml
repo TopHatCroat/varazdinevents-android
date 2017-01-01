@@ -15,7 +15,7 @@
     <dimen name="image_card_size">200dp</dimen>
     <dimen name="basic_item_card_height">300dp</dimen>
     <dimen name="no_image_item_card_height">100dp</dimen>
-    <dimen name="no_image_item_card_height_total">130dp</dimen>
+    <dimen name="no_image_item_card_height_total">150dp</dimen>
     <dimen name="layout_margin">10dp</dimen>
     <dimen name="vertical_card_layout_padding">6dp</dimen>
     <dimen name="vertical_card_large_layout_padding">30dp</dimen>
@@ -23,4 +23,5 @@
     <dimen name="negative_fab_margin">-30dp</dimen>
     <dimen name="large_layout_side_padding">0dp</dimen>
     <dimen name="large_layout_top_padding">0dp</dimen>
+    <dimen name="fab_margin_total">20dp</dimen>
 </resources>
