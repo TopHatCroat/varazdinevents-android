@@ -4,16 +4,15 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -28,15 +27,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -52,10 +48,9 @@ import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
-import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
-import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
+import hr.foi.varazdinevents.util.Constants;
 import hr.foi.varazdinevents.util.FontManager;
 
 /**
@@ -79,6 +74,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
 //    @Inject
 //    EventManager eventManager;
 
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @Nullable
@@ -133,13 +130,23 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         toggleFavoriteIcon(this.event.isFavorite);
 
         collapsingToolbarLayout.setTitle(event.getTitle());
-        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         toolbar.setTitle(event.getTitle());
-        Picasso.with(this)
-                .load(event.getImage())
-                .resize(380, 380)
-                .centerCrop()
-                .into(image);
+
+        if(event.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
+            collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+
+            Picasso.with(this)
+                    .load(event.getImage())
+                    .resize(380, 380)
+                    .centerCrop()
+                    .into(image);
+        } else {
+            appBarLayout.setExpanded(false);
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+//            image.getLayoutParams().height = 200;
+//            collapsingToolbarLayout.setLayoutParams(params);
+        }
 
         Typeface iconFont = FontManager.getFontAwesome(getApplicationContext());
         FontManager.markAsIconContainer(awesomeTitle, iconFont);

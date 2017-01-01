@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.test.espresso.core.deps.guava.base.Strings;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
@@ -87,6 +88,9 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
 
     @Override
     public int getType() {
+        if(Strings.isNullOrEmpty(this.image) || this.image.equals("http://cms.varazdinevents.cf")) {
+            return Constants.EVENTS_NO_IMAGE_CARD;
+        }
         return Constants.EVENTS_SIMPLE_CARD;
     }
 

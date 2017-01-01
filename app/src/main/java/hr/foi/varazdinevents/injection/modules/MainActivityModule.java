@@ -16,6 +16,7 @@ import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.places.events.BasicEventViewHolderFactory;
 import hr.foi.varazdinevents.places.events.MainPresenter;
 
+import hr.foi.varazdinevents.places.events.NoImageEventViewHolderFactory;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
@@ -71,7 +72,14 @@ public class MainActivityModule {
     @Provides
     @IntoMap
     @IntKey(100)
-    ItemViewHolderFactory provideTitleViewHolder() {
+    ItemViewHolderFactory provideBasicViewHolder() {
         return new BasicEventViewHolderFactory();
+    }
+
+    @Provides
+    @IntoMap
+    @IntKey(101)
+    ItemViewHolderFactory provideNoImageViewHolder() {
+        return new NoImageEventViewHolderFactory();
     }
 }

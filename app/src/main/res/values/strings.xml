@@ -73,7 +73,7 @@
     <string name="defaultUserEmailPlaceholder">defaultUserEmailPlaceholder</string>
     <string name="defaultUsernamePlaceHolder">defaultUsernamePlaceholder</string>
     <string name="category_all">All Events</string>
-
+    <string name="touch_to_set">Touch to set</string>
 
 
     <string-array name="Language">
@@ -101,13 +101,13 @@
     </string-array>
 
     <string-array name="categories">
-        <item name="Theatre and movies"></item>
-        <item name="Listen room"></item>
-        <item name="Volunteering"></item>
-        <item name="Gig"></item>
-        <item name="Course"></item>
-        <item name="Lecture"></item>
-        <item name="Party"></item>
-        <item name="Other"></item>
+        <item>Theatre and movies</item>
+        <item>Listen room</item>
+        <item>Volunteering</item>
+        <item>Gig</item>
+        <item>Course</item>
+        <item>Lecture</item>
+        <item>Party</item>
+        <item>Other</item>
     </string-array>
 </resources>

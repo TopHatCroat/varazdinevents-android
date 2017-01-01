@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.common.base.Strings;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -61,8 +62,6 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     TextView endDate;
     @BindView(R.id.end_time_new_event)
     TextView endTime;
-    @BindView(R.id.host_new_event)
-    EditText host;
     @BindView(R.id.official_link_new_event)
     EditText officialLink;
     @BindView(R.id.image_new_event)
@@ -84,7 +83,6 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(R.string.create_new_event);
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,11 +146,6 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         PickerHelper.createTimePicker(END_TIME_PICKER_TAG, this, this);
     }
 
-    @OnTextChanged(value = R.id.host_new_event)
-    public void onChangeHost(CharSequence editText) {
-        eventManager.getNewEvent().setHost(editText.toString());
-    }
-
     @OnTextChanged(value = R.id.official_link_new_event)
     public void onChangeOfficialLink(CharSequence editText) {
         eventManager.getNewEvent().setOfficialLink(editText.toString());
@@ -181,7 +174,16 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {
         showLoading(true);
+        validate();
+        eventManager.getNewEvent().setHost(user.getApiId().toString());
         presenter.itemClicked(eventManager.getNewEvent());
+    }
+
+    private void validate() {
+        if(Strings.isNullOrEmpty(String.valueOf(title.getText()))) {
+            title.requestFocus();
+            title.setError("Must not be empty");
+        }
     }
 
     public static void start(BaseActivity baseActivity) {

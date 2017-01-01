@@ -57,6 +57,7 @@ public class UserManager {
                 .map(new Func1<UserResponse, User>() {
                     @Override
                     public User call(UserResponse userResponse) {
+                        user.setApiId(userResponse.id);
                         user.setToken(userResponse.token);
                         user.save();
                         return user;

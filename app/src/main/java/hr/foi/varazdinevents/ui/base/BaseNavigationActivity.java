@@ -64,6 +64,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
             navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
             navigationView.getMenu().findItem(R.id.menu_logout).setVisible(true);
         } else {
+
+            navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
+
             navigationView.getMenu().findItem(R.id.menu_login).setVisible(true);
         }
 

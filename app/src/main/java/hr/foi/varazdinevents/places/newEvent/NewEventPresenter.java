@@ -22,7 +22,6 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
     public void itemClicked(Object item) {
         final Event event = (Event) item;
 
-
         checkViewAttached();
         getViewLayer().showLoading(true);
 
