@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -31,13 +32,17 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.injection.modules.HostProfileActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
+import hr.foi.varazdinevents.places.events.MainPresenter;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
+import hr.foi.varazdinevents.ui.base.BasePresenter;
 import hr.foi.varazdinevents.util.FontManager;
+import rx.Observer;
 
 import static hr.foi.varazdinevents.util.Constants.ARG_EVENT;
 
@@ -49,6 +54,7 @@ public class HostProfileActivity extends BaseNavigationActivity{
     private static final String ARG_EVENT = "arg_event";
 //    private GoogleMap mMap;
     private Event event;
+    private UserManager userManager;
     @Inject
     User user;
     @Inject
@@ -91,8 +97,6 @@ public class HostProfileActivity extends BaseNavigationActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
 //        collapsingToolbarLayout.setTitle(event.getTitle());
 //        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 //        toolbar.setTitle(event.getTitle());
@@ -116,7 +120,9 @@ public class HostProfileActivity extends BaseNavigationActivity{
         presenter.attachView(this);
         showLoading(true);
 
-        //show data
+        this.title.setText(user.getUsername());
+        this.facebook.setText(user.getFacebook());
+        this.text.setText(user.getDescription());
 
         showLoading(false);
 

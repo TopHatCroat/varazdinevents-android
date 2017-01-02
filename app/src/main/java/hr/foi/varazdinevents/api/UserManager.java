@@ -1,16 +1,31 @@
 package hr.foi.varazdinevents.api;
 
+import com.orm.query.Condition;
+import com.orm.query.Select;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import hr.foi.varazdinevents.api.responses.EventResponse;
+import hr.foi.varazdinevents.api.responses.EventResponseComplete;
 import hr.foi.varazdinevents.api.responses.UserResponse;
+import hr.foi.varazdinevents.api.responses.UserResponseComplete;
+import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.util.SharedPrefs;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
+
+import static hr.foi.varazdinevents.util.Constants.LAST_UPDATE_TIME_KEY;
 
 /**
  * Created by Antonio Martinović on 09.11.16.
@@ -22,7 +37,9 @@ import rx.schedulers.Schedulers;
 public class UserManager {
     private RestService restService;
     private User user;
+    private SharedPrefs sharedPrefs;
 
+    private List<User> users;
     /**
      * @param restService reference to Retrofit interface with API calls defined
      */
@@ -73,7 +90,7 @@ public class UserManager {
      * @return true if log out is successful, otherwise false
      */
     public Observable<Boolean> logout(String token) {
-        return restService.logutUser(token)
+        return restService.logoutUser(token)
                 .map(new Func1<UserResponse, Boolean>() {
                     @Override
                     public Boolean call(UserResponse userResponse) {
@@ -93,4 +110,118 @@ public class UserManager {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<List<User>> getUsers() {
+        return Observable.concat(fromMemory(), fromDatabase(), fromNetwork())
+                .cache()
+
+                .map(new Func1<List<User>, List<User>>() {
+                    @Override
+                    public List<User> call(List<User> users) {
+                        toMemory(users);
+                        return UserManager.this.users;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    private Observable<List<User>> fromMemory(){
+        return Observable.just(users).doOnNext(new Action1<List<User>>() {
+            @Override
+            public void call(List<User> users) {
+                Timber.w("Loading from memory...");
+            }
+        });
+    }
+
+    private Observable<List<User>> fromDatabase() {
+        return Observable.just(
+                User.listAll(User.class)
+                //Select.from(Event.class).where(Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list())
+        )
+                .doOnNext(new Action1<List<User>>() {
+                    @Override
+                    public void call(List<User> users) {
+                        Timber.w("Loading from database...");
+                        toMemory(users);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    private Observable<List<User>> fromNetwork() {
+        String lastUpdateValue = String.valueOf(sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
+
+        return restService.getUsers(lastUpdateValue)
+                .map(new Func1<UserResponseComplete, List<User>>() {
+                    @Override
+                    public List<User> call(UserResponseComplete userResponses) {
+                        List<User> users = new LinkedList<>();
+                        for(UserResponse userResponse : userResponses.items){
+                            User user = new User();
+                            user.setApiId(userResponse.id);
+                            user.setUsername(userResponse.username);
+                            user.setEmail(userResponse.email);
+                            user.setPassword(userResponse.password);
+                            user.setToken(userResponse.token);
+                            user.setImage(userResponse.image);
+                            user.setDescription(userResponse.description);
+                            user.setWorkingTime(userResponse.workingTime);
+                            user.setAddress(userResponse.address);
+                            user.setFacebook(userResponse.facebook);
+                            user.setWeb(userResponse.web);
+                            user.setPhone(userResponse.phone);
+                            users.add(user);
+
+                            int lastUpdate = sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
+                            if(lastUpdate < userResponse.lastUpdate)
+                                sharedPrefs.write(LAST_UPDATE_TIME_KEY, userResponse.lastUpdate);
+                        }
+                        return users;
+                    }
+                })
+                .doOnNext(new Action1<List<User>>() {
+                    @Override
+                    public void call(List<User> users) {
+                        Timber.w("Loading from REST...");
+                        toMemory(users);
+                        toDatabase(users);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void toMemory(List<User> users) {
+        Timber.w("Saving to memory...");
+
+        Map<Integer, User> usersMap = new HashMap<>();
+        for (User user : this.users) {
+            usersMap.put(user.apiId, user);
+        }
+        for (User user : users) {
+            if(!usersMap.containsKey(user.apiId))
+                usersMap.put(user.apiId, user);
+        }
+
+        this.users = new ArrayList<User>(usersMap.values());
+    }
+
+    private void toDatabase(List<User> users) {
+        Timber.w("Saving to database...");
+        User tmp;
+        for (User user : this.users) {
+            tmp = Select.from(User.class)
+                    .where(Condition.prop("API_ID").eq(user.apiId))
+                    .first();
+            if(tmp == null) {
+                User.save(user);
+            }
+        }
+    }
+
 }

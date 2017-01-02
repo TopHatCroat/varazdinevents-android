@@ -7,6 +7,7 @@ import hr.foi.varazdinevents.api.responses.EventResponse;
 import hr.foi.varazdinevents.api.responses.EventResponseComplete;
 import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.api.responses.UserResponse;
+import hr.foi.varazdinevents.api.responses.UserResponseComplete;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -32,6 +33,8 @@ public interface RestService {
     @GET("events") // /query/{timestamp}"
     Observable<EventResponseComplete> getEvents(@Query("timestamp") String timestamp);
 
+    @GET("hosts")
+    Observable<UserResponseComplete> getUsers(@Query("timestamp") String timestamp);
     /**
      *
      * API call for user log in
@@ -49,11 +52,15 @@ public interface RestService {
      * @return User response with null token
      */
     @GET("user/login")
-    Observable<UserResponse> logutUser(@Query("token") String token);
+    Observable<UserResponse> logoutUser(@Query("token") String token);
 
     @POST("events")
     Observable<ErrorResponseComplete> createEvent(@Query("token") String token, @Body NewEventPojo json);
 
     @GET("firebase/add/{token}")
     Observable<JSONObject> sendFCMToken(@Path("token") String token);
+
+
+
+
 }
