@@ -56,17 +56,15 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
             email.setText(R.string.nav_header_info);
         }
         else {
-            username.setText(user.getUsername());
-            email.setText(user.getEmail());
+            username.setText("Korisnik: " + user.getUsername());
+            email.setText("Email: " + user.getEmail());
         }
 
         if( ! Strings.isNullOrEmpty(user.getToken())) {
             navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
             navigationView.getMenu().findItem(R.id.menu_logout).setVisible(true);
         } else {
-
-            navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
-
+            navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(false);
             navigationView.getMenu().findItem(R.id.menu_login).setVisible(true);
         }
 

@@ -83,7 +83,7 @@
                 <include layout="@layout/event_details_offers"
                     android:id="@+id/layout_event_details_offers"
                     android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+                    android:layout_height="2dp" />
 
                 <include layout="@layout/event_details_description"
                     android:id="@+id/layout_event_details_description"
@@ -93,7 +93,7 @@
                 <include layout="@layout/event_details_offers"
                     android:id="@+id/layout_event_details_offers"
                     android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+                    android:layout_height="2dp" />
 
                 <include layout="@layout/event_details_map"
                     android:id="@+id/event_details_map"
