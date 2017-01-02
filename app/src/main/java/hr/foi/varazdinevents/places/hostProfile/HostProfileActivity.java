@@ -127,12 +127,12 @@ public class HostProfileActivity extends BaseNavigationActivity{
         showLoading(true);
 
 //        this.title.setText(user.getUsername());
-        this.text.setText(user.getDescription());
-        this.workingTime.setText(user.getWorkingTime());
-        this.address.setText(user.getAddress());
-        this.facebook.setText(user.getFacebook());
-        this.web.setText(user.getWeb());
-        this.phone.setText(user.getPhone());
+//        this.text.setText(user.getDescription());
+//        this.workingTime.setText(user.getWorkingTime());
+//        this.address.setText(user.getAddress());
+//        this.facebook.setText(user.getFacebook());
+//        this.web.setText(user.getWeb());
+//        this.phone.setText(user.getPhone());
 //        this.image.setImageAlpha(user.getImage());
 
         showLoading(false);

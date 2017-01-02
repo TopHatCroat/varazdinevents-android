@@ -37,7 +37,7 @@
                 android:layout_marginRight="22dp"
                 android:layout_marginLeft="22dp" />
             <TextView
-                android:text="defaultTextPlaceholder"
+                android:text="Službeni profil administratora stranice na kojemu ćemo nastojati objediniti sva neobjavljena događanja na području grada Varaždina. Ukoliko uočite događaj koji nije objavljen na ovoj stranici, slobodno nam javite putem maila ili kontakt forme: http://varazdinevents.cf/contact "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/host_profile_text"

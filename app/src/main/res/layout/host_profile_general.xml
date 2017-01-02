@@ -79,7 +79,7 @@
                     android:id="@+id/awesome_home"/>
 
                 <TextView
-                    android:text="TextView"
+                    android:text="Julija Merlića 9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_address"
@@ -104,7 +104,7 @@
 
 
                 <TextView
-                    android:text="TextView"
+                    android:text="https://www.facebook.com/studentskizivotvarazdina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_facebook"
@@ -141,7 +141,7 @@
                     android:id="@+id/awesome_calendar"/>
 
                 <TextView
-                    android:text="TextView"
+                    android:text="http://varazdinevents.cf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_web"
@@ -177,7 +177,7 @@
                     android:id="@+id/awesome_host" />
 
                 <TextView
-                    android:text="TextView"
+                    android:text="0999999999"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_phone"
