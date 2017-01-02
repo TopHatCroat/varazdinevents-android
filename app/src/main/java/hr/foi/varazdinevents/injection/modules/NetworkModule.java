@@ -107,9 +107,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public UserManager provideUserManager(@Named("vzservice") RestService restService){
-        return new UserManager(restService);
-    public UserManager provideUserManager(RestService restService, SharedPrefs sharedPrefs){
+    public UserManager provideUserManager(@Named("vzservice") RestService restService, SharedPrefs sharedPrefs) {
         return new UserManager(restService, sharedPrefs);
     }
 
