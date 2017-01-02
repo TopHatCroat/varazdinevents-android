@@ -55,12 +55,12 @@
                     android:text="@string/fa_clock"
                     android:id="@+id/awesome_clock" />
 
-                <!--<TextView-->
-                <!--android:text="TextView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:id="@+id/host_profile_time"-->
-                <!--style="@style/white_text"/>-->
+                <TextView
+                android:text="0-24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/host_profile_time"
+                style="@style/dark_grey_text"/>
 
             </LinearLayout>
 
@@ -82,7 +82,7 @@
                     android:text="TextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/host_profile_title"
+                    android:id="@+id/host_profile_address"
                     style="@style/dark_grey_text"/>
 
             </LinearLayout>
@@ -140,12 +140,12 @@
                     android:text="@string/fa_calendar"
                     android:id="@+id/awesome_calendar"/>
 
-                <!--<TextView-->
-                    <!--android:text="TextView"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/host_profile_date"-->
-                    <!--style="@style/white_text"/>-->
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/host_profile_web"
+                    style="@style/dark_grey_text"/>
 
             </LinearLayout>
             <!-- <View
@@ -176,12 +176,12 @@
                     android:text="@string/fa_host"
                     android:id="@+id/awesome_host" />
 
-                <!--<TextView-->
-                    <!--android:text="TextView"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/host_profile_host"-->
-                    <!--style="@style/white_text"/>-->
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/host_profile_phone"
+                    style="@style/dark_grey_text"/>
 
             </LinearLayout>
             <!-- <View

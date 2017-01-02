@@ -43,8 +43,10 @@ public class UserManager {
     /**
      * @param restService reference to Retrofit interface with API calls defined
      */
-    public UserManager(RestService restService) {
+    public UserManager(RestService restService, SharedPrefs sharedPrefs) {
         this.restService = restService;
+        this.sharedPrefs = sharedPrefs;
+        users = new ArrayList<>();
     }
 
     /**
@@ -176,10 +178,6 @@ public class UserManager {
                             user.setWeb(userResponse.web);
                             user.setPhone(userResponse.phone);
                             users.add(user);
-
-                            int lastUpdate = sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
-                            if(lastUpdate < userResponse.lastUpdate)
-                                sharedPrefs.write(LAST_UPDATE_TIME_KEY, userResponse.lastUpdate);
                         }
                         return users;
                     }

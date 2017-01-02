@@ -54,7 +54,6 @@ public class HostProfileActivity extends BaseNavigationActivity{
     private static final String ARG_EVENT = "arg_event";
 //    private GoogleMap mMap;
     private Event event;
-    private UserManager userManager;
     @Inject
     User user;
     @Inject
@@ -62,6 +61,8 @@ public class HostProfileActivity extends BaseNavigationActivity{
     @Inject
     @Nullable
     Fade animation;
+    @Inject
+    UserManager userManager;
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -71,16 +72,20 @@ public class HostProfileActivity extends BaseNavigationActivity{
     LinearLayout contentHolder;
     @BindView(R.id.host_profile_image)
     ImageView image;
-    @BindView(R.id.host_profile_title)
-    TextView title;
-//    @BindView(R.id.host_profile_host)
-//    TextView host;
+//    @BindView(R.id.host_profile_title)
+//    TextView title;
+    @BindView(R.id.host_profile_time)
+    TextView workingTime;
     @BindView(R.id.host_profile_facebook)
     TextView facebook;
-//    @BindView(R.id.host_profile_offers)
-//    TextView offers;
+    @BindView(R.id.host_profile_address)
+    TextView address;
     @BindView(R.id.host_profile_text)
     TextView text;
+    @BindView(R.id.host_profile_web)
+    TextView web;
+    @BindView(R.id.host_profile_phone)
+    TextView phone;
 
     @BindView(R.id.awesome_home)
     TextView awesomeHome;
@@ -96,7 +101,8 @@ public class HostProfileActivity extends BaseNavigationActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        rx.Observable<List<User>> userStream = userManager.getUsers();
+        userStream.subscribe();
 //        collapsingToolbarLayout.setTitle(event.getTitle());
 //        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 //        toolbar.setTitle(event.getTitle());
@@ -120,9 +126,14 @@ public class HostProfileActivity extends BaseNavigationActivity{
         presenter.attachView(this);
         showLoading(true);
 
-        this.title.setText(user.getUsername());
-        this.facebook.setText(user.getFacebook());
+//        this.title.setText(user.getUsername());
         this.text.setText(user.getDescription());
+        this.workingTime.setText(user.getWorkingTime());
+        this.address.setText(user.getAddress());
+        this.facebook.setText(user.getFacebook());
+        this.web.setText(user.getWeb());
+        this.phone.setText(user.getPhone());
+//        this.image.setImageAlpha(user.getImage());
 
         showLoading(false);
 
