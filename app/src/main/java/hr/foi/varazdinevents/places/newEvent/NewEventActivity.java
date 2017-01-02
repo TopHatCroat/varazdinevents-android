@@ -16,8 +16,10 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -54,13 +56,13 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @BindView(R.id.text_new_event)
     EditText text;
     @BindView(R.id.start_date_new_event)
-    TextView startDate;
+    EditText startDate;
     @BindView(R.id.start_time_new_event)
-    TextView startTime;
+    EditText startTime;
     @BindView(R.id.end_date_new_event)
-    TextView endDate;
+    EditText endDate;
     @BindView(R.id.end_time_new_event)
-    TextView endTime;
+    EditText endTime;
     @BindView(R.id.official_link_new_event)
     EditText officialLink;
     @BindView(R.id.image_new_event)
@@ -165,11 +167,6 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         eventManager.getNewEvent().setOffers(editText.toString());
     }
 
-//    @OnTextChanged(value = R.id.category_new_event)
-//    public void onChangeCategory(CharSequence editText) {
-//        eventManager.getNewEvent().setCategory(editText.toString());
-//    }
-
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {
         showLoading(true);
@@ -180,11 +177,15 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     }
 
     private boolean dataValid() {
+        List<EditText> editTexts = Arrays.asList(title, text, startDate, startTime, endDate, endTime);
+
         boolean isValid = true;
-        if(Strings.isNullOrEmpty(String.valueOf(title.getText()))) {
-            title.requestFocus();
-            title.setError("Must not be empty");
-            isValid = false;
+        for (TextView et : editTexts) {
+            if (Strings.isNullOrEmpty(String.valueOf(et.getText()))) {
+                et.requestFocus();
+                et.setError("Must not be empty");
+                isValid = false;
+            }
         }
 
         return isValid;

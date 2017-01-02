@@ -112,11 +112,12 @@
                                     android:text="@string/start_date"
                                     android:id="@+id/start_date_new_event_description" />
 
-                                <TextView
+                                <EditText
+                                    android:inputType="none"
                                     style="@style/new_event_input"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="end"
+                                    android:gravity="center"
                                     android:hint="@string/touch_to_set"
                                     android:id="@+id/start_date_new_event"
                                     />
@@ -135,9 +136,10 @@
                                     android:text="@string/start_time"
                                     android:id="@+id/start_time_new_event_description" />
 
-                                <TextView
+                                <EditText
+                                    android:inputType="none"
                                     style="@style/new_event_input"
-                                    android:gravity="end"
+                                    android:gravity="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/start_time_new_event"
@@ -158,13 +160,15 @@
                                     android:text="@string/end_date"
                                     android:id="@+id/end_date_new_event_description" />
 
-                                <TextView
+                                <EditText
+                                    android:inputType="none"
                                     style="@style/new_event_input"
-                                    android:gravity="end"
+                                    android:gravity="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/end_date_new_event"
                                     android:hint="@string/touch_to_set"
+
                                     />
 
                             </LinearLayout>
@@ -181,9 +185,10 @@
                                     android:text="@string/end_time"
                                     android:id="@+id/end_time_new_event_description" />
 
-                                <TextView
+                                <EditText
+                                    android:inputType="none"
                                     style="@style/new_event_input"
-                                    android:gravity="end"
+                                    android:gravity="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/end_time_new_event"
