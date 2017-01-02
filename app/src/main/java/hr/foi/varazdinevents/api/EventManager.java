@@ -129,8 +129,8 @@ public class EventManager {
 
     private Observable<List<Event>> fromDatabase() {
         return Observable.just(
-                Event.listAll(Event.class)
-                //Select.from(Event.class).where(Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list())
+                //Event.listAll(Event.class)
+                Select.from(Event.class).where(Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list()
                 )
                 .doOnNext(new Action1<List<Event>>() {
                     @Override
