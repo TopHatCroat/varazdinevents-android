@@ -1,8 +1,13 @@
 package hr.foi.varazdinevents.places.newEvent;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +20,7 @@ import com.google.common.base.Strings;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -44,6 +50,8 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     public static final String START_TIME_PICKER_TAG = "start_time_picker";
     public static final String END_DATE_PICKER_TAG = "end_date_picker";
     public static final String END_TIME_PICKER_TAG = "end_time_picker";
+    private static final int SELECT_PICTURE = 100;
+    private final int PERMISSION_STORAGE_REQUEST = 1;
     @Inject
     EventManager eventManager;
     @Inject
@@ -79,6 +87,7 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     ProgressBar progressBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private Uri chosenImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +163,22 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
 
     @OnTextChanged(value = R.id.image_new_event)
     public void onChangeImage(CharSequence editText) {
-        eventManager.getNewEvent().setImage(editText.toString());
+        startImagePicker();
+//        eventManager.getNewEvent().setImage(editText.toString());
+    }
+
+    private void startImagePicker() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent,
+                    "Select Picture"), SELECT_PICTURE);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_STORAGE_REQUEST);
+        }
     }
 
     @OnTextChanged(value = R.id.facebook_new_event)
@@ -172,7 +196,7 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         showLoading(true);
         if(dataValid()) {
             eventManager.getNewEvent().setHost(user.getApiId().toString());
-            presenter.itemClicked(eventManager.getNewEvent());
+            presenter.createEvent(eventManager.getNewEvent(), chosenImage);
         }
     }
 
@@ -271,5 +295,30 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         dateFormat.setTimeZone(cal.getTimeZone());
         dateView.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null) {
+            chosenImage = data.getData();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_STORAGE_REQUEST: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startImagePicker();
+                } else {
+                    showBasicError("Unable to pick image");
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

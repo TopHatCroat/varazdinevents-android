@@ -1,7 +1,10 @@
 package hr.foi.varazdinevents.injection.modules;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
+import hr.foi.varazdinevents.ImgurService;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.injection.UserScope;
@@ -28,7 +31,9 @@ public class UserModule {
 
     @Provides
     @UserScope
-    EventManager provideEventManager(User user, RestService restService, SharedPrefs sharedPrefs) {
-        return new EventManager(user, restService, sharedPrefs);
+    EventManager provideEventManager(User user, @Named("vzservice") RestService restService,
+                                     @Named("imgurservice") ImgurService imgurService,
+                                     SharedPrefs sharedPrefs) {
+        return new EventManager(user, restService, imgurService, sharedPrefs);
     }
 }

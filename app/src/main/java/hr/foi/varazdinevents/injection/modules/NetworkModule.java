@@ -2,10 +2,12 @@ package hr.foi.varazdinevents.injection.modules;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import hr.foi.varazdinevents.ImgurService;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.api.UserManager;
@@ -20,6 +22,7 @@ import retrofit2.RxJavaCallAdapterFactory;
 public class NetworkModule {
     @Provides
     @Singleton
+    @Named("vzclient")
     public OkHttpClient provideOkHttpClient() {
         final OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
@@ -34,7 +37,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRestAdapter(MainApplication mainApplication, OkHttpClient okHttpClient) {
+    @Named("vzadapter")
+    public Retrofit provideRestAdapter(MainApplication mainApplication, @Named("vzclient") OkHttpClient okHttpClient) {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.client(okHttpClient).baseUrl("http://varazdinevents.cf/api/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -44,13 +48,47 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public RestService provideRestService(Retrofit restAdapter) {
+    @Named("vzservice")
+    public RestService provideRestService(@Named("vzadapter") Retrofit restAdapter) {
         return restAdapter.create(RestService.class);
     }
 
     @Provides
     @Singleton
-    public UserManager provideUserManager(RestService restService){
+    @Named("imgurclient")
+    public OkHttpClient provideImgurOkHttpClient() {
+        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(httpLoggingInterceptor);
+
+        builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS).readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    @Named("imguradapter")
+    public Retrofit provideImagurRestAdapter(MainApplication mainApplication, @Named("imgurclient") OkHttpClient okHttpClient) {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.client(okHttpClient).baseUrl("https://api.imgur.com/3/")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create());
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    @Named("imgurservice")
+    public ImgurService provideImagurRestService(@Named("imguradapter") Retrofit restAdapter) {
+        return restAdapter.create(ImgurService.class);
+    }
+
+    @Provides
+    @Singleton
+    public UserManager provideUserManager(@Named("vzservice") RestService restService){
         return new UserManager(restService);
     }
 
