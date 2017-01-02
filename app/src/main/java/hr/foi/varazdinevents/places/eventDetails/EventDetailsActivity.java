@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -197,6 +198,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
 
         this.title.setText(event.getTitle());
         this.host.setText(event.getHost());
+        this.host.setPaintFlags(this.host.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         this.host.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
