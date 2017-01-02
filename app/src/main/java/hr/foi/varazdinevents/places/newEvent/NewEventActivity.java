@@ -1,12 +1,21 @@
 package hr.foi.varazdinevents.places.newEvent;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,9 +24,12 @@ import com.google.common.base.Strings;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,6 +43,7 @@ import hr.foi.varazdinevents.injection.modules.NewEventModule;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
+import hr.foi.varazdinevents.util.FileUtils;
 import hr.foi.varazdinevents.util.PickerHelper;
 
 /**
@@ -42,6 +55,8 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     public static final String START_TIME_PICKER_TAG = "start_time_picker";
     public static final String END_DATE_PICKER_TAG = "end_date_picker";
     public static final String END_TIME_PICKER_TAG = "end_time_picker";
+    private static final int SELECT_PICTURE = 100;
+    private final int PERMISSION_STORAGE_REQUEST = 1;
     @Inject
     EventManager eventManager;
     @Inject
@@ -54,17 +69,17 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @BindView(R.id.text_new_event)
     EditText text;
     @BindView(R.id.start_date_new_event)
-    TextView startDate;
+    EditText startDate;
     @BindView(R.id.start_time_new_event)
-    TextView startTime;
+    EditText startTime;
     @BindView(R.id.end_date_new_event)
-    TextView endDate;
+    EditText endDate;
     @BindView(R.id.end_time_new_event)
-    TextView endTime;
+    EditText endTime;
     @BindView(R.id.official_link_new_event)
     EditText officialLink;
     @BindView(R.id.image_new_event)
-    EditText image;
+    ImageView image;
     @BindView(R.id.facebook_new_event)
     EditText facebook;
     @BindView(R.id.offers_new_event)
@@ -77,6 +92,7 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     ProgressBar progressBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private Uri chosenImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,9 +166,24 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         eventManager.getNewEvent().setOfficialLink(editText.toString());
     }
 
-    @OnTextChanged(value = R.id.image_new_event)
-    public void onChangeImage(CharSequence editText) {
-        eventManager.getNewEvent().setImage(editText.toString());
+    @OnClick(value = R.id.image_new_event)
+    public void onChangeImage() {
+        startImagePicker();
+//        eventManager.getNewEvent().setImage(editText.toString());
+    }
+
+    private void startImagePicker() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent,
+                    "Select Picture"), SELECT_PICTURE);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_STORAGE_REQUEST);
+        }
     }
 
     @OnTextChanged(value = R.id.facebook_new_event)
@@ -165,26 +196,25 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         eventManager.getNewEvent().setOffers(editText.toString());
     }
 
-//    @OnTextChanged(value = R.id.category_new_event)
-//    public void onChangeCategory(CharSequence editText) {
-//        eventManager.getNewEvent().setCategory(editText.toString());
-//    }
-
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {
         showLoading(true);
-        if(dataValid()) {
+//        if(dataValid()) {
             eventManager.getNewEvent().setHost(user.getApiId().toString());
-            presenter.itemClicked(eventManager.getNewEvent());
-        }
+            presenter.uploadImage(eventManager.getNewEvent(), chosenImage);
+//        }
     }
 
     private boolean dataValid() {
+        List<EditText> editTexts = Arrays.asList(title, text, startDate, startTime, endDate, endTime);
+
         boolean isValid = true;
-        if(Strings.isNullOrEmpty(String.valueOf(title.getText()))) {
-            title.requestFocus();
-            title.setError("Must not be empty");
-            isValid = false;
+        for (TextView et : editTexts) {
+            if (Strings.isNullOrEmpty(String.valueOf(et.getText()))) {
+                et.requestFocus();
+                et.setError("Must not be empty");
+                isValid = false;
+            }
         }
 
         return isValid;
@@ -270,5 +300,37 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         dateFormat.setTimeZone(cal.getTimeZone());
         dateView.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null) {
+            chosenImage = data.getData();
+            if(chosenImage != null) {
+                Bitmap myImg = BitmapFactory.decodeFile(FileUtils.getPath(this, chosenImage));
+                Matrix matrix = new Matrix();
+                Bitmap rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
+                        matrix, true);
+                image.setImageBitmap(rotated);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_STORAGE_REQUEST: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startImagePicker();
+                } else {
+                    showBasicError("Unable to pick image");
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

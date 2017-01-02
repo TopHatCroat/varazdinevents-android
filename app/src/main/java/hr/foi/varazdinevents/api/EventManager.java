@@ -3,6 +3,7 @@ package hr.foi.varazdinevents.api;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,13 +11,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import hr.foi.varazdinevents.ImgurService;
 import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
 import hr.foi.varazdinevents.api.responses.EventResponse;
 import hr.foi.varazdinevents.api.responses.EventResponseComplete;
+import hr.foi.varazdinevents.api.responses.ImgurResponse;
 import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.util.SharedPrefs;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -37,6 +42,7 @@ public class EventManager {
     private final SharedPrefs sharedPrefs;
     private final User user;
     private final RestService restService;
+    private final ImgurService imgurService;
 
     private Event newEvent;
 
@@ -46,9 +52,11 @@ public class EventManager {
      * @param user current user logged in
      * @param restService Retrofit API calls interface
      */
-    public EventManager(User user, RestService restService, SharedPrefs sharedPrefs) {
+    public EventManager(User user, RestService restService, ImgurService imgurService,
+                        SharedPrefs sharedPrefs) {
         this.restService = restService;
         this.user = user;
+        this.imgurService = imgurService;
         this.sharedPrefs = sharedPrefs;
         events = new ArrayList<>();
     }
@@ -89,14 +97,23 @@ public class EventManager {
         createEvent.category = event.getCategory();
 
         return restService.createEvent(this.user.getToken(), createEvent)
-//                .doOnNext(new Action1<EventResponse>() {
-//                    @Override
-//                    public void call(EventResponse event) {
-//                        Timber.w("Loading from REST...");
-//                        toMemory(event);
-//                        toDatabase(event);
-//                    }
-//                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<ImgurResponse> uploadImage(File image) {
+        String type;
+        if (image.getAbsolutePath().endsWith("png")) {
+            type = "image/png";
+        } else if (image.getAbsolutePath().endsWith("gif")) {
+            type = "image/gif";
+        } else {
+            type = "image/jpeg";
+        }
+
+        RequestBody uploadFile = RequestBody.create(MediaType.parse(type), image);
+
+        return imgurService.uploadImage(uploadFile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
