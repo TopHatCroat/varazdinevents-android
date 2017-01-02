@@ -81,7 +81,7 @@ public class EventManager {
 
     }
 
-    public Observable<ErrorResponseComplete> createEvent(Event event, final File image) {
+    public Observable<ErrorResponseComplete> createEvent(Event event) {
         NewEventPojo createEvent = new NewEventPojo();
         createEvent.title = event.getTitle();
         createEvent.text = event.getText();

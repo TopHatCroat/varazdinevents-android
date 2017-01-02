@@ -214,14 +214,25 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal"
+                                android:padding="@dimen/datetime_input_padding">
 
-                                <EditText
-                                    android:hint="@string/image"
+                                <TextView
                                     style="@style/new_event_input"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/image_new_event" />
+                                    android:text="@string/image"
+                                    android:id="@+id/image_new_event_description" />
+
+                                <ImageView
+                                    style="@style/new_event_input"
+                                    android:gravity="center"
+                                    android:src="@drawable/ic_add_a_photo_grey_700_48dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:id="@+id/image_new_event"
+                                    android:hint="@string/touch_to_set"
+                                    />
 
                             </LinearLayout>
 

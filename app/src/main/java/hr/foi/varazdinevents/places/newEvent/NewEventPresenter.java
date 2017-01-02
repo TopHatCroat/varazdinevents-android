@@ -2,6 +2,8 @@ package hr.foi.varazdinevents.places.newEvent;
 
 import android.net.Uri;
 
+import org.json.JSONException;
+
 import java.io.File;
 import java.net.UnknownHostException;
 
@@ -31,7 +33,7 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
 
     }
 
-    public void createEvent(Event event, Uri image) {
+    public void uploadImage(final Event event, Uri image) {
         File imageFile = null;
         if(image != null) {
             imageFile = new File(FileUtils.getPath(getViewLayer(), image));
@@ -40,41 +42,44 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
 
         checkViewAttached();
         getViewLayer().showLoading(true);
-//
-//        Observer<ErrorResponseComplete> eventObserver = new Observer<ErrorResponseComplete>() {
-//            @Override
-//            public void onNext(ErrorResponseComplete events) {
-//                if (events.errors != null || events.errors.size() > 0)
-//                    getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_failed));
-//                else
-//                    getViewLayer().showLoading(false);
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_success));
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                getViewLayer().showLoading(false);
-//                if (e instanceof UnknownHostException) {
-//                    getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.network_not_accessible));
-//                } else {
-//                    getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_failed));
-//                }
-//            }
-//        };
-//
-//        rx.Observable<ErrorResponseComplete> eventStream = eventManager.createEvent(event, imageFile);
-//        eventStream.subscribe(eventObserver);
-
-
 
         Observer<ImgurResponse> eventObserver = new Observer<ImgurResponse>() {
             @Override
             public void onNext(ImgurResponse imgurResponse) {
-                Timber.i(String.valueOf(imgurResponse.status));
+
+                event.setImage(imgurResponse.data.link);
+                createEvent(event);
+
+            }
+
+            @Override
+            public void onCompleted() {
+                //getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_success));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getViewLayer().showLoading(false);
+                if (e instanceof UnknownHostException) {
+                    getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.network_not_accessible));
+                } else {
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_failed));
+                }
+            }
+        };
+
+        rx.Observable<ImgurResponse> eventStream = eventManager.uploadImage(imageFile);
+        eventStream.subscribe(eventObserver);
+    }
+
+    public void createEvent(Event event) {
+        Observer<ErrorResponseComplete> eventObserver = new Observer<ErrorResponseComplete>() {
+            @Override
+            public void onNext(ErrorResponseComplete events) {
+                if (events.errors != null || events.errors.size() > 0)
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_failed));
+                else
+                    getViewLayer().showLoading(false);
             }
 
             @Override
@@ -93,7 +98,7 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
             }
         };
 
-        rx.Observable<ImgurResponse> eventStream = eventManager.uploadImage(imageFile);
+        rx.Observable<ErrorResponseComplete> eventStream = eventManager.createEvent(event);
         eventStream.subscribe(eventObserver);
     }
 }

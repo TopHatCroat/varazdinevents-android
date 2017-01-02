@@ -1,5 +1,6 @@
 package hr.foi.varazdinevents.injection.modules;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
@@ -11,7 +12,10 @@ import hr.foi.varazdinevents.ImgurService;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.api.UserManager;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -62,6 +66,18 @@ public class NetworkModule {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(httpLoggingInterceptor);
+
+//        builder.addInterceptor(new Interceptor() {
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Request original = chain.request();
+//
+//                // Request customization: add request headers
+//                Request.Builder requestBuilder = original.newBuilder().addHeader("Client-ID", "d66aa7705e07d67");
+//                Request request  = requestBuilder.build();
+//                return chain.proceed(request);
+//            }
+//        });
 
         builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS).readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
 

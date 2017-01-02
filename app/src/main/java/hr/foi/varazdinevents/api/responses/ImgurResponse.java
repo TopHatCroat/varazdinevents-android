@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Created by Antonio Martinović on 02.01.17.
  */
 public class ImgurResponse {
-    public JSONObject data;
+    public ImgurImageResponse data;
     public Integer status;
     public boolean success;
 }

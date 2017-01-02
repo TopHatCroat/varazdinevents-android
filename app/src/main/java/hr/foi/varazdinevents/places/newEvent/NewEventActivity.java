@@ -3,6 +3,9 @@ package hr.foi.varazdinevents.places.newEvent;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +43,7 @@ import hr.foi.varazdinevents.injection.modules.NewEventModule;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
+import hr.foi.varazdinevents.util.FileUtils;
 import hr.foi.varazdinevents.util.PickerHelper;
 
 /**
@@ -74,7 +79,7 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @BindView(R.id.official_link_new_event)
     EditText officialLink;
     @BindView(R.id.image_new_event)
-    EditText image;
+    ImageView image;
     @BindView(R.id.facebook_new_event)
     EditText facebook;
     @BindView(R.id.offers_new_event)
@@ -161,8 +166,8 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         eventManager.getNewEvent().setOfficialLink(editText.toString());
     }
 
-    @OnTextChanged(value = R.id.image_new_event)
-    public void onChangeImage(CharSequence editText) {
+    @OnClick(value = R.id.image_new_event)
+    public void onChangeImage() {
         startImagePicker();
 //        eventManager.getNewEvent().setImage(editText.toString());
     }
@@ -194,10 +199,10 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {
         showLoading(true);
-        if(dataValid()) {
+//        if(dataValid()) {
             eventManager.getNewEvent().setHost(user.getApiId().toString());
-            presenter.createEvent(eventManager.getNewEvent(), chosenImage);
-        }
+            presenter.uploadImage(eventManager.getNewEvent(), chosenImage);
+//        }
     }
 
     private boolean dataValid() {
@@ -301,6 +306,13 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data != null) {
             chosenImage = data.getData();
+            if(chosenImage != null) {
+                Bitmap myImg = BitmapFactory.decodeFile(FileUtils.getPath(this, chosenImage));
+                Matrix matrix = new Matrix();
+                Bitmap rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
+                        matrix, true);
+                image.setImageBitmap(rotated);
+            }
         }
     }
 
