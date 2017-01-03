@@ -1,6 +1,5 @@
 package hr.foi.varazdinevents.injection.modules;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
@@ -8,14 +7,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import hr.foi.varazdinevents.ImgurService;
+import hr.foi.varazdinevents.api.ImgurService;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.api.UserManager;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;

@@ -4,7 +4,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
-import hr.foi.varazdinevents.ImgurService;
+import hr.foi.varazdinevents.api.ImgurService;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.injection.UserScope;

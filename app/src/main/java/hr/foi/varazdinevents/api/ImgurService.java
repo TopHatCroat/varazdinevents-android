@@ -1,4 +1,4 @@
-package hr.foi.varazdinevents;
+package hr.foi.varazdinevents.api;
 
 import hr.foi.varazdinevents.api.responses.ImgurResponse;
 import okhttp3.RequestBody;
