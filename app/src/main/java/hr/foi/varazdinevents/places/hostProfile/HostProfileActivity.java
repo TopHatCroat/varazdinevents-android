@@ -1,11 +1,16 @@
 package hr.foi.varazdinevents.places.hostProfile;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
@@ -17,11 +22,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -50,10 +58,12 @@ import static hr.foi.varazdinevents.util.Constants.ARG_EVENT;
  * Created by Valentin Magdić on 26.12.16..
  */
 
-public class HostProfileActivity extends BaseNavigationActivity{
+public class HostProfileActivity extends BaseNavigationActivity implements OnMapReadyCallback {
     private static final String ARG_EVENT = "arg_event";
-//    private GoogleMap mMap;
+    private GoogleMap mMap;
     private Event event;
+    Double latitude, longitude;
+    String locationTitle, locationCategory;
     @Inject
     User user;
     @Inject
@@ -87,22 +97,22 @@ public class HostProfileActivity extends BaseNavigationActivity{
     @BindView(R.id.host_profile_phone)
     TextView phone;
 
-    @BindView(R.id.awesome_home)
-    TextView awesomeHome;
-    @BindView(R.id.awesome_calendar)
-    TextView awesomeCalendar;
+    @BindView(R.id.awesome_web)
+    TextView awesomeWeb;
+    @BindView(R.id.awesome_phone)
+    TextView awesomePhone;
     @BindView(R.id.awesome_clock)
     TextView awesomeClock;
     @BindView(R.id.awesome_facebook)
-    TextView awesomeFaceboot;
-    @BindView(R.id.awesome_host)
-    TextView awesomeHost;
+    TextView awesomeFacebook;
+    @BindView(R.id.awesome_address)
+    TextView awesomeAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rx.Observable<List<User>> userStream = userManager.getUsers();
-        userStream.subscribe();
+//        rx.Observable<List<User>> userStream = userManager.getUsers();
+//        userStream.subscribe();
 //        collapsingToolbarLayout.setTitle(event.getTitle());
 //        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 //        toolbar.setTitle(event.getTitle());
@@ -114,10 +124,14 @@ public class HostProfileActivity extends BaseNavigationActivity{
 
         Typeface iconFont = FontManager.getFontAwesome(getApplicationContext());
         FontManager.markAsIconContainer(awesomeClock, iconFont);
-        FontManager.markAsIconContainer(awesomeHome, iconFont);
-        FontManager.markAsIconContainer(awesomeCalendar, iconFont);
-        FontManager.markAsIconContainer(awesomeFaceboot, iconFont);
-        FontManager.markAsIconContainer(awesomeHost, iconFont);
+        FontManager.markAsIconContainer(awesomeWeb, iconFont);
+        FontManager.markAsIconContainer(awesomePhone, iconFont);
+        FontManager.markAsIconContainer(awesomeFacebook, iconFont);
+        FontManager.markAsIconContainer(awesomeAddress, iconFont);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -136,6 +150,32 @@ public class HostProfileActivity extends BaseNavigationActivity{
 //        this.image.setImageAlpha(user.getImage());
 
         showLoading(false);
+        String location = "Julija Merlića 9, 42000 Varaždin";
+        this.workingTime.setText("0-24");
+        this.address.setText(location);
+        this.phone.setText("099 12345678");
+        this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
+        this.web.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //Google map information
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(location, 1);
+            if (addressList.size()!=0) {
+                Address address = addressList.get(0);
+                this.latitude = address.getLatitude();
+                this.longitude = address.getLongitude();
+            }else {
+                this.latitude = 46.309079;
+                this.longitude = 16.347674;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.locationTitle = "VarazdinEvents";
+        this.locationCategory = location;
 
     }
 
@@ -156,15 +196,25 @@ public class HostProfileActivity extends BaseNavigationActivity{
         startingActivity.startActivity(intent);
     }
 
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        LatLng latlong = new LatLng(latitude, longitude);
-//        Marker marker = mMap.addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
-//        marker.showInfoWindow();
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong,17));
-//        mMap.setMyLocationEnabled(true);
-//    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng latlong = new LatLng(latitude, longitude);
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
+        marker.showInfoWindow();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+    }
 //    @Override
 //    public void onItemClicked(Object item) {
 //

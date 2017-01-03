@@ -213,7 +213,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         this.offers.setText(event.getOffers());
 
         //Google map information
-        String location = "731 Market St, San Francisco, CA 94103";
+        String location = "Pavlinska 2, 42000 Varaždin";
         Geocoder geocoder = new Geocoder(this);
         List<Address> addressList;
         try {
@@ -223,7 +223,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
                 this.latitude = address.getLatitude();
                 this.longitude = address.getLongitude();
             }else {
-                //testni primjer - Pavlinska 2 FOI
                 this.latitude = 46.307819;
                 this.longitude = 16.338159;
             }

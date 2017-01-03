@@ -55,7 +55,13 @@
                     android:id="@+id/awesome_clock" />
 
                 <TextView
-                android:text="0-24"
+                    android:text="@string/host_work_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+
+                <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/host_profile_time"
@@ -74,14 +80,21 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     style="@style/awesome"
-                    android:text="@string/fa_home"
-                    android:id="@+id/awesome_home"/>
+                    android:text="@string/fa_address"
+                    android:id="@+id/awesome_address"/>
 
                 <TextView
-                    android:text="Julija Merlića 9"
+                    android:text="@string/host_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_address"
+                    android:layout_marginBottom="3dp"
                     style="@style/dark_grey_text"/>
 
             </LinearLayout>
@@ -101,13 +114,19 @@
                     android:text="@string/fa_facebook"
                     android:id="@+id/awesome_facebook" />
 
+                <TextView
+                    android:text="@string/host_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
 
                 <TextView
-                    android:text="https://www.facebook.com/studentskizivotvarazdina"
+                    android:text="@string/varazdinevents_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_facebook"
-                    style="@style/dark_grey_text"/>
+                    style="@style/red_text_link"/>
 
 
             </LinearLayout>
@@ -136,15 +155,21 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     style="@style/awesome"
-                    android:text="@string/fa_calendar"
-                    android:id="@+id/awesome_calendar"/>
+                    android:text="@string/fa_web"
+                    android:id="@+id/awesome_web"/>
 
                 <TextView
-                    android:text="http://varazdinevents.cf"
+                    android:text="@string/host_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+                <TextView
+                    android:text="@string/varazdinevents_web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_web"
-                    style="@style/dark_grey_text"/>
+                    style="@style/red_text_link"/>
 
             </LinearLayout>
             <!-- <View
@@ -172,11 +197,17 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     style="@style/awesome"
-                    android:text="@string/fa_host"
-                    android:id="@+id/awesome_host" />
+                    android:text="@string/fa_phone"
+                    android:id="@+id/awesome_phone" />
 
                 <TextView
-                    android:text="0999999999"
+                    android:text="@string/host_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_phone"
