@@ -13,6 +13,7 @@ import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.util.SharedPrefs;
 import okhttp3.OkHttpClient;
+
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
