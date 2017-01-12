@@ -19,6 +19,4 @@ public class EventResponseComplete {
     public List<EventResponse> items = new ArrayList<EventResponse>();
     public LinksResponse links;
     public MetaResponse meta;
-
-
 }

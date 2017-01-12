@@ -166,7 +166,7 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         }
 //          +pass regex?
         else{
-            User user = new User(null, username, email, password, null);
+            User user = new User(null, username, email, password, null, null, null, null, null, null, null, null);
             user.setUsername(username);
             user.setPassword(password);
             user.setEmail(email);

@@ -2,21 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/very_light_gray"
     android:padding="0dp">
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp">
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="7dp"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:layout_marginLeft="@dimen/layout_margin"
+        android:layout_marginRight="@dimen/layout_margin">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/colorHostProfileGeneral"
             android:id="@+id/background_layout"
             android:paddingBottom="3dp"
             android:paddingLeft="10dp"
@@ -28,15 +30,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/host_profile_general_title"
-                android:textColor="#fff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="3dp" />
+                style="@style/event_card_title"
+                android:layout_marginTop="15dp" />
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="#80ffffff"
+                android:background="#80000000"
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="30dp" />
 
@@ -55,12 +54,18 @@
                     android:text="@string/fa_clock"
                     android:id="@+id/awesome_clock" />
 
-                <!--<TextView-->
-                <!--android:text="TextView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:id="@+id/host_profile_time"-->
-                <!--style="@style/white_text"/>-->
+                <TextView
+                    android:text="@string/host_work_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/host_profile_time"
+                style="@style/dark_grey_text"/>
 
             </LinearLayout>
 
@@ -75,14 +80,21 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     style="@style/awesome"
-                    android:text="@string/fa_home"
-                    android:id="@+id/awesome_home"/>
+                    android:text="@string/fa_address"
+                    android:id="@+id/awesome_address"/>
 
                 <TextView
-                    android:text="TextView"
+                    android:text="@string/host_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/host_profile_title"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/host_profile_address"
+                    android:layout_marginBottom="3dp"
                     style="@style/dark_grey_text"/>
 
             </LinearLayout>
@@ -102,13 +114,19 @@
                     android:text="@string/fa_facebook"
                     android:id="@+id/awesome_facebook" />
 
+                <TextView
+                    android:text="@string/host_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
 
                 <TextView
-                    android:text="TextView"
+                    android:text="@string/varazdinevents_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/host_profile_facebook"
-                    style="@style/dark_grey_text"/>
+                    style="@style/red_text_link"/>
 
 
             </LinearLayout>
@@ -137,15 +155,21 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     style="@style/awesome"
-                    android:text="@string/fa_calendar"
-                    android:id="@+id/awesome_calendar"/>
+                    android:text="@string/fa_web"
+                    android:id="@+id/awesome_web"/>
 
-                <!--<TextView-->
-                    <!--android:text="TextView"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/host_profile_date"-->
-                    <!--style="@style/white_text"/>-->
+                <TextView
+                    android:text="@string/host_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+                <TextView
+                    android:text="@string/varazdinevents_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/host_profile_web"
+                    style="@style/red_text_link"/>
 
             </LinearLayout>
             <!-- <View
@@ -173,15 +197,21 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     style="@style/awesome"
-                    android:text="@string/fa_host"
-                    android:id="@+id/awesome_host" />
+                    android:text="@string/fa_phone"
+                    android:id="@+id/awesome_phone" />
 
-                <!--<TextView-->
-                    <!--android:text="TextView"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/host_profile_host"-->
-                    <!--style="@style/white_text"/>-->
+                <TextView
+                    android:text="@string/host_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    style="@style/dark_grey_text"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/host_profile_phone"
+                    style="@style/dark_grey_text"/>
 
             </LinearLayout>
             <!-- <View

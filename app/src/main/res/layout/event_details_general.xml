@@ -173,7 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_details_host"
-            style="@style/blue_underlined_text"/>
+            style="@style/red_text_link"/>
         <!--android:onClick="onHostClick"-->
         <!--android:clickable="true"-->
 

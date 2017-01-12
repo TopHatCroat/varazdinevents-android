@@ -4,16 +4,25 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
 
 /**
  * Created by Antonio Martinović on 09.11.16.
  */
 public class User extends SugarRecord implements Parcelable{
-    private Integer apiId;
-    private String username;
-    private String email;
-    private String password;
-    private String token;
+    @Unique
+    public Integer apiId;
+    public String username;
+    public String email;
+    public String password;
+    public String token;
+    public String description;
+    public String workingTime;
+    public String address;
+    public String facebook;
+    public String web;
+    public String phone;
+    public String image;
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         public User createFromParcel(Parcel source) {
@@ -33,15 +42,22 @@ public class User extends SugarRecord implements Parcelable{
     }
 
     public User(String username, String email, String password) {
-        this(0, username, email, password, null);
+        this(0, username, email, password, null, null, null, null, null, null, null, null);
     }
 
-    public User(Integer apiId, String username, String email, String password, String token) {
+    public User(Integer apiId, String username, String email, String password, String token, String description, String workingTime, String address, String facebook, String web, String phone, String image) {
         this.apiId = apiId;
         this.username = username;
         this.email = email;
         this.password = password;
         this.token = token;
+        this.description = description;
+        this.workingTime = workingTime;
+        this.address = address;
+        this.facebook = facebook;
+        this.web = web;
+        this.phone = phone;
+        this.image = image;
     }
 
     protected User(Parcel in) {
@@ -50,6 +66,14 @@ public class User extends SugarRecord implements Parcelable{
         this.email = in.readString();
         this.password = in.readString();
         this.token = in.readString();
+        this.description = in.readString();
+        this.workingTime = in.readString();
+        this.address = in.readString();
+        this.facebook = in.readString();
+        this.web = in.readString();
+        this.phone = in.readString();
+        this.image = in.readString();
+
     }
 
     @Override
@@ -64,6 +88,13 @@ public class User extends SugarRecord implements Parcelable{
         dest.writeString(this.email);
         dest.writeString(this.password);
         dest.writeString(this.token);
+        dest.writeString(this.description);
+        dest.writeString(this.workingTime);
+        dest.writeString(this.address);
+        dest.writeString(this.facebook);
+        dest.writeString(this.web);
+        dest.writeString(this.phone);
+        dest.writeString(this.image);
     }
 
     public Integer getApiId() {
@@ -103,4 +134,60 @@ public class User extends SugarRecord implements Parcelable{
     }
 
     public void setToken(String token) { this.token = token; }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getWeb() {
+        return web;
+    }
+
+    public void setWeb(String web) {
+        this.web = web;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWorkingTime() {
+        return workingTime;
+    }
+
+    public void setWorkingTime(String workingTime) {
+        this.workingTime = workingTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

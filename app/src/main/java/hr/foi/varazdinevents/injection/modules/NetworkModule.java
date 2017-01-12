@@ -11,6 +11,7 @@ import hr.foi.varazdinevents.api.ImgurService;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.api.RestService;
 import hr.foi.varazdinevents.api.UserManager;
+import hr.foi.varazdinevents.util.SharedPrefs;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
@@ -63,18 +64,6 @@ public class NetworkModule {
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(httpLoggingInterceptor);
 
-//        builder.addInterceptor(new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                Request original = chain.request();
-//
-//                // Request customization: add request headers
-//                Request.Builder requestBuilder = original.newBuilder().addHeader("Client-ID", "d66aa7705e07d67");
-//                Request request  = requestBuilder.build();
-//                return chain.proceed(request);
-//            }
-//        });
-
         builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS).readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
 
         return builder.build();
@@ -100,8 +89,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public UserManager provideUserManager(@Named("vzservice") RestService restService){
-        return new UserManager(restService);
+    public UserManager provideUserManager(@Named("vzservice") RestService restService, SharedPrefs sharedPrefs) {
+        return new UserManager(restService, sharedPrefs);
     }
 
 //    @Provides
