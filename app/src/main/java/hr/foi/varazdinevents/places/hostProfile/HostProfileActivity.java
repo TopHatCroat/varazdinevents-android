@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,9 +12,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +37,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +56,9 @@ import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.places.events.MainPresenter;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
+import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
+import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.util.FontManager;
 import rx.Observer;
 
@@ -73,6 +83,27 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     Fade animation;
     @Inject
     UserManager userManager;
+
+    @BindView(R.id.item_recycler_view)
+    ItemRecyclerView recyclerView;
+    @Inject
+    GridLayoutManager gridLayoutManager;
+    @Inject
+    LinearLayoutManager linearLayoutManager;
+    @Inject
+    ItemListAdapter eventListAdapter;
+    ItemTouchHelper itemTouchHelper;
+    @Inject
+    @Nullable
+    Slide enterAnimation;
+    @Inject
+    @Nullable
+    Fade returnAnimation;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    List<Event> events = new ArrayList<>();
+
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -108,9 +139,26 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @BindView(R.id.awesome_address)
     TextView awesomeAddress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(enterAnimation);
+            getWindow().setReturnTransition(returnAnimation);
+        }
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.loadEvents();
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
 //        rx.Observable<List<User>> userStream = userManager.getUsers();
 //        userStream.subscribe();
 //        collapsingToolbarLayout.setTitle(event.getTitle());
@@ -132,6 +180,8 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
     @Override
@@ -240,5 +290,27 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @Override
     public void onItemClicked(Object item) {
 
+    }
+
+    public void showEvents(List<Event> events) {
+        setEvents(events);
+        recyclerView.setHasFixedSize(true);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(gridLayoutManager);
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
+
+        recyclerView.setAdapter(eventListAdapter);
+        eventListAdapter.setItems(events);
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(eventListAdapter);
+        itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }

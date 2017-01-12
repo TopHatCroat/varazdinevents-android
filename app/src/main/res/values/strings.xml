@@ -102,7 +102,7 @@
     </string-array>
 
     <string-array name="UserDetailsValues">
-        <item>"user"</item>
+        <item>"userManager"</item>
         <item>"pass"</item>
         <item>"email"</item>
     </string-array>

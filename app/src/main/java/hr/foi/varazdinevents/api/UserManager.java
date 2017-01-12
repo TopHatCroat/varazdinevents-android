@@ -106,7 +106,6 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-
     public Observable<JSONObject> registerFCMToken(String token) {
         return restService.sendFCMToken(token)
                 .subscribeOn(Schedulers.io())
