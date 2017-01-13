@@ -143,7 +143,7 @@ public class EventManager {
     }
 
     private Observable<List<Event>> fromNetwork() {
-        String lastUpdateValue = String.valueOf(sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
+        String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
         return restService.getEvents(lastUpdateValue)
                 .map(new Func1<EventResponseComplete, List<Event>>() {
@@ -165,9 +165,9 @@ public class EventManager {
                             event.setCategory(eventResponse.category);
                             events.add(event);
 
-                            int lastUpdate = sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
+                            int lastUpdate = SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
                             if(lastUpdate < eventResponse.lastUpdate)
-                                sharedPrefs.write(LAST_UPDATE_TIME_KEY, eventResponse.lastUpdate);
+                                SharedPrefs.write(LAST_UPDATE_TIME_KEY, eventResponse.lastUpdate);
                         }
                         return events;
                     }

@@ -29,9 +29,10 @@ import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
 
 /**
+ * An activity with navigation features should extend this class which
+ * will handle displaying the standard navigation interface to the user
  * Created by Antonio Martinović on 27.12.16.
  */
-
 public abstract class BaseNavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.drawer_layout)
     protected DrawerLayout drawerLayout;
@@ -71,8 +72,6 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -111,6 +110,10 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         return true;
     }
 
+    /**
+     * This method is only here because I didn't read Dagger documentation
+     * @return currently logged in user
+     */
     @Deprecated
     protected abstract User getUser();
 }

@@ -2,7 +2,6 @@ package hr.foi.varazdinevents.injection;
 
 import dagger.Subcomponent;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
-import hr.foi.varazdinevents.injection.modules.BundleModule;
 import hr.foi.varazdinevents.places.events.MainActivity;
 
 /**
@@ -10,12 +9,10 @@ import hr.foi.varazdinevents.places.events.MainActivity;
  */
 
 @Subcomponent(modules = {
-        MainActivityModule.class, BundleModule.class})
+        MainActivityModule.class})
 @ActivityScope
 public interface MainActivityComponent {
 
     MainActivity inject(MainActivity mainActivity);
-
-//    void inject(ItemViewHolder itemViewHolder);
 
 }

@@ -156,7 +156,7 @@ public class UserManager {
 
 
     private Observable<List<User>> fromNetwork() {
-        String lastUpdateValue = String.valueOf(sharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
+        String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
         return restService.getUsers(lastUpdateValue)
                 .map(new Func1<UserResponseComplete, List<User>>() {

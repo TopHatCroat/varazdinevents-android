@@ -6,8 +6,9 @@ import android.support.v4.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-
-
+/**
+ * Handles receiving push notifications by the Firebase API
+ */
 public class MessagingService extends FirebaseMessagingService {
     public static final String TAG = "FIREBASE_MESSAGE";
     public static boolean allowNotifications = true;
@@ -15,6 +16,10 @@ public class MessagingService extends FirebaseMessagingService {
     public MessagingService() {
     }
 
+    /**
+     * Creates a simple notification when a push notification is received
+     * @param remoteMessage
+     */
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // TODO(developer): Handle FCM messages here.
@@ -33,8 +38,5 @@ public class MessagingService extends FirebaseMessagingService {
             // Builds the notification and issues it.
             mNotifyMgr.notify(666, mBuilder.build());
         }
-
-
     }
-
 }

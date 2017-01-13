@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import hr.foi.varazdinevents.ui.base.PresenterLayer;
 import hr.foi.varazdinevents.ui.elements.ItemTouchHelperAdapter;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 import hr.foi.varazdinevents.ui.elements.Searchable;
@@ -17,13 +16,14 @@ import hr.foi.varazdinevents.ui.elements.Searchable;
 /**
  * Created by Antonio Martinović on 14.10.16.
  */
-public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerView.Adapter<ItemViewHolder> implements ItemTouchHelperAdapter {
-    protected PresenterLayer presenter;
+public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerView.Adapter<ItemViewHolder>
+        implements ItemTouchHelperAdapter {
+    protected ListListener listener;
     protected Map<Integer, ItemViewHolderFactory> viewHolderFactoryMap;
     protected List<T> items;
 
-    public ItemListAdapter(PresenterLayer presenter, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
-        this.presenter = presenter;
+    public ItemListAdapter(ListListener listener, Map<Integer, ItemViewHolderFactory> itemViewHolderFactoryMap) {
+        this.listener = listener;
         this.viewHolderFactoryMap = itemViewHolderFactoryMap;
         this.items = new ArrayList<>();
     }
@@ -66,7 +66,7 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
 
     @Override
     public void onItemClicked(int adapterPosition) {
-        presenter.itemClicked(items.get(adapterPosition));
+        listener.onItemClick(items.get(adapterPosition));
     }
 
     @Override

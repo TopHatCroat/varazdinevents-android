@@ -43,7 +43,7 @@
             android:layout_marginRight="@dimen/large_layout_side_padding"
             android:layout_marginTop="@dimen/action_bar_height">
 
-            <hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/item_recycler_view"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"

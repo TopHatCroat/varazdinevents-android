@@ -28,7 +28,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.app_preferences);
 
-        Preference languagePreference = (Preference) findPreference("pref_key_language");
+        Preference languagePreference = findPreference("pref_key_language");
 
         languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

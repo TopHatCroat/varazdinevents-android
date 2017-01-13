@@ -13,9 +13,4 @@ public class HostProfilePresenter extends BasePresenter<HostProfileActivity>{
 
     public HostProfilePresenter(User user){this.user = user;}
 
-    @Override
-    public void itemClicked(Object item) {
-
-    }
-
 }

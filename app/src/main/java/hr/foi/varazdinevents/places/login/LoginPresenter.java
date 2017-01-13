@@ -27,11 +27,6 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         this.userManager = userManager;
     }
 
-    @Override
-    public void itemClicked(Object item) {
-
-    }
-
     public void tryLogin(String username, String password) {
         long count = User.count(User.class);
         if (count > 0) {

@@ -1,9 +1,9 @@
 package hr.foi.varazdinevents.places.events;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.ui.elements.list.ListListener;
 import rx.Observer;
 
 import hr.foi.varazdinevents.api.EventManager;
@@ -14,13 +14,12 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
  * Created by Antonio Martinović on 12.10.16.
  */
 
-public class MainPresenter extends BasePresenter<MainActivity> {
+public class MainPresenter extends BasePresenter<MainActivity> implements ListListener{
     private EventManager eventManager;
 
     public MainPresenter(EventManager eventManager) {
         this.eventManager = eventManager;
     }
-
 
     public void loadEvents(){
         checkViewAttached();
@@ -39,9 +38,10 @@ public class MainPresenter extends BasePresenter<MainActivity> {
 
             @Override
             public void onError(Throwable e) {
-                getViewLayer().showLoading(false);
-                getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
-                e.printStackTrace();
+                if(isViewAttached()) {
+                    getViewLayer().showLoading(false);
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+                }
             }
         };
 
@@ -50,8 +50,8 @@ public class MainPresenter extends BasePresenter<MainActivity> {
     }
 
     @Override
-    public void itemClicked(Object item) {
+    public void onItemClick(Object item) {
         getViewLayer().onItemClicked(item);
-    }
 
+    }
 }

@@ -14,11 +14,6 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity>{
         this.userManager = userManager;
     }
 
-    @Override
-    public void itemClicked(Object item) {
-
-    }
-
     public void tryRegister (String username, String email, String password, String password2) {
 
         if (!email.matches("[a-zA-Z][a-zA-Z0-9.]{1,}[a-zA-Z0-9]{1}[@]{1}[a-zA-Z]{1}[a-zA-Z.-]{2,}[a-zA-Z]")) {

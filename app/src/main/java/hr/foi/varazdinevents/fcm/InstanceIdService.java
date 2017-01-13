@@ -6,9 +6,10 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import timber.log.Timber;
 
 /**
+ * Handles Firebase token changes, currently it does not do anything useful
+ * as the token registration is done on log in
  * Created by Antonio Martinović on 23.12.16.
  */
-
 public class InstanceIdService extends FirebaseInstanceIdService {
     public static String TAG = "FIREBASE_SERVICE";
 

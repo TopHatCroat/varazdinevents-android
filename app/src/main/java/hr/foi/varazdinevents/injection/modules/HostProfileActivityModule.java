@@ -2,13 +2,11 @@ package hr.foi.varazdinevents.injection.modules;
 
 import android.app.Activity;
 import android.content.Context;
-//import android.support.test.espresso.core.deps.dagger.Module;
 
 import dagger.Module;
 import dagger.Provides;
 import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.models.User;
-import hr.foi.varazdinevents.places.eventDetails.EventDetailsPresenter;
 import hr.foi.varazdinevents.places.hostProfile.HostProfilePresenter;
 
 /**

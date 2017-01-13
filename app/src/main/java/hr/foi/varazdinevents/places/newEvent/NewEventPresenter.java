@@ -28,11 +28,6 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
         this.eventManager = eventManager;
     }
 
-    @Override
-    public void itemClicked(Object item) {
-
-    }
-
     public void uploadImage(final Event event, Uri image) {
         File imageFile = null;
         if(image != null) {

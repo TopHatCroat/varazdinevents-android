@@ -14,10 +14,6 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity>{
         this.user = user;
     }
 
-    @Override
-    public void itemClicked(Object item) {
-
-    }
 
     public void itemFavorited(){
 

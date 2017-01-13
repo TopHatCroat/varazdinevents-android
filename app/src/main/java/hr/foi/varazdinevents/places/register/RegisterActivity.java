@@ -22,7 +22,7 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
  */
 
 
-public class RegisterActivity extends BaseActivity implements RegisterViewLayer {
+public class RegisterActivity extends BaseActivity {
     @BindView(R.id.TFusername_register)
     TextView username;
 
@@ -70,14 +70,12 @@ public class RegisterActivity extends BaseActivity implements RegisterViewLayer 
         startingActivity.startActivity(intent);
     }
 
-    @Override
     public void onSuccess() {
         showLoading(false);
         LoginActivity.start(this);
         this.finish();
     }
 
-    @Override
     public void onFailure(String message) {
         showLoading(false);
         showBasicError(message);

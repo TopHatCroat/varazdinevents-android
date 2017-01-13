@@ -71,7 +71,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Nullable
     Fade returnAnimation;
     @BindView(R.id.item_recycler_view)
-    ItemRecyclerView recyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.progresBar)
     ProgressBar progressBar;
     @BindView(R.id.swipeContainer)
@@ -327,8 +327,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-
-        listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        if (recyclerView.getLayoutManager() != null) {
+            listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        }
         state.putParcelable(LIST_STATE_KEY, listState);
     }
 

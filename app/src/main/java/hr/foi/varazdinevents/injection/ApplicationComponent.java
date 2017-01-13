@@ -12,6 +12,8 @@ import hr.foi.varazdinevents.injection.modules.RegisterActivityModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 
 /**
+ * Base component class specifying the exact subcomponent that will have
+ * access objects provided by {@link ApplicationModule} and {@link NetworkModule};
  * Created by Antonio Martinović on 15.10.16.
  */
 @Singleton

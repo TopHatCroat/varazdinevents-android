@@ -2,10 +2,7 @@ package hr.foi.varazdinevents.injection.modules;
 
 import dagger.Module;
 import dagger.Provides;
-import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.ActivityScope;
-import hr.foi.varazdinevents.places.register.RegisterActivity;
-import hr.foi.varazdinevents.places.register.RegisterPresenter;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
 import hr.foi.varazdinevents.places.settings.SettingsFragment;
 import hr.foi.varazdinevents.places.settings.SettingsPresenter;

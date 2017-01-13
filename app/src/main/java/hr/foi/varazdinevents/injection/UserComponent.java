@@ -11,9 +11,10 @@ import hr.foi.varazdinevents.injection.modules.SettingsActivityModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 
 /**
+ * Component class specifying the exact subcomponent that will have
+ * access objects provided by {@link UserModule};
  * Created by Antonio Martinović on 09.11.16.
  */
-
 @UserScope
 @Subcomponent(
         modules = {

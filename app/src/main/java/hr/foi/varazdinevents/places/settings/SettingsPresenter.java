@@ -12,9 +12,4 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
  */
 public class SettingsPresenter extends BasePresenter<SettingsActivity>{
 
-    @Override
-    public void itemClicked(Object item) {
-
-    }
-
 }

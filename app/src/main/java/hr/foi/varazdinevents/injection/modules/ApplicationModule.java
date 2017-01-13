@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 /**
+ * Contains methods for instantiating classes that get injected into activities
+ * The same job every class suffixed with 'Module' has
  * Created by Antonio Martinović on 15.10.16.
  */
 @Module
