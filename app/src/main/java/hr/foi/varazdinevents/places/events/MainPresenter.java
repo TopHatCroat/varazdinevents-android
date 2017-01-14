@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.events;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import java.util.List;
 
 import hr.foi.varazdinevents.R;

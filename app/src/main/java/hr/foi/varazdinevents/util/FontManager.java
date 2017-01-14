@@ -2,6 +2,8 @@ package hr.foi.varazdinevents.util;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +29,14 @@ public class FontManager {
             }
         } else if (v instanceof TextView) {
             ((TextView) v).setTypeface(typeface);
+        }
+    }
+
+    public static String parseHTML(String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString();
+        } else {
+            return String.valueOf(Html.fromHtml(text));
         }
     }
 }

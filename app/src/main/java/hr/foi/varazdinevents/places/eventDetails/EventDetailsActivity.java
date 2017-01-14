@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -53,14 +54,14 @@ import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.Constants;
 import hr.foi.varazdinevents.util.FontManager;
+import rx.Observer;
 
 /**
  * Created by Antonio Martinović on 08.11.16.
  */
 
-public class EventDetailsActivity extends BaseNavigationActivity implements OnMapReadyCallback {
+public class EventDetailsActivity extends BaseNavigationActivity {
     private static final String ARG_EVENT = "arg_event";
-    private GoogleMap mMap;
     private Event event;
     Double latitude, longitude;
     String locationTitle, locationCategory;
@@ -168,9 +169,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
             getWindow().setEnterTransition(animation);
         }
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -188,6 +186,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         super.onStart();
         presenter.attachView(this);
         showLoading(true);
+        presenter.parseEventData(event, this.text);
 
         Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -199,50 +198,31 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         this.title.setText(event.getTitle());
         this.host.setText(event.getHost());
         this.host.setPaintFlags(this.host.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        this.host.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newIntent = new Intent(EventDetailsActivity.this, HostProfileActivity.class);
-                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                EventDetailsActivity.this.startActivity(newIntent);
-            }
-        });
         this.category.setText(event.getCategory());
-        this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
-        String text = "<a href='" + event.getFacebook() + "'><b>Poveznica na event</b></a>";
         this.offers.setText(event.getOffers());
 
-        //Google map information
-        String location = "Pavlinska 2, 42000 Varaždin";
-        Geocoder geocoder = new Geocoder(this);
-        List<Address> addressList;
-        try {
-            addressList = geocoder.getFromLocationName(location, 1);
-            if (addressList.size()!=0) {
-                Address address = addressList.get(0);
-                this.latitude = address.getLatitude();
-                this.longitude = address.getLongitude();
-            }else {
-                this.latitude = 46.307819;
-                this.longitude = 16.338159;
+        Observer<Void> mapObserver = new Observer<Void>() {
+            @Override
+            public void onCompleted() {
+                LatLng latlong = new LatLng(presenter.getLatitude(), presenter.getLongitude());
+                Marker marker = presenter.getMap().addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
+                marker.showInfoWindow();
+                presenter.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
+                EventDetailsActivity.this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
+                showLoading(false);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        this.locationTitle = event.getTitle();
-        this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate) + " u " + timeFormat.format(eventDate) + " sati";
+            @Override
+            public void onError(Throwable e) {
+                showBasicError("Error displaying something");
+            }
 
-//        this.officialLink.setText(event.getOfficialLink());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            this.text.setText(Html.fromHtml(event.getText(), Html.FROM_HTML_MODE_LEGACY).toString());
-            this.facebook.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            this.text.setText(Html.fromHtml(event.getText()).toString());
-            this.facebook.setText(Html.fromHtml(text));
-        }
-        showLoading(false);
+            @Override
+            public void onNext(Void aVoid) {}
+        };
 
+        rx.Observable<Void> eventStream = presenter.parseEventData(event, this.text);
+        eventStream.subscribe(mapObserver);
     }
 
     @Override
@@ -280,6 +260,13 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
         toggleFavoriteIcon(this.event.isFavorite);
     }
 
+    @OnClick(R.id.event_details_facebook)
+    public void onFacebookClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(event.getFacebook()));
+        startActivity(intent);
+    }
+
     public void toggleFavoriteIcon(boolean isFavorite) {
         if (isFavorite)
             fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
@@ -287,31 +274,10 @@ public class EventDetailsActivity extends BaseNavigationActivity implements OnMa
             fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
     }
 
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng latlong = new LatLng(latitude, longitude);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
-        marker.showInfoWindow();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
+    @OnClick(R.id.event_details_host)
+    public void onClick(View view) {
+        Intent newIntent = new Intent(EventDetailsActivity.this, HostProfileActivity.class);
+        newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        EventDetailsActivity.this.startActivity(newIntent);
     }
-
-//    public void onHostClick(View hostProfile){
-//        Intent intent = new Intent(this, HostProfileActivity.class);
-//        startActivity(intent);
-//    }
-
-
 }

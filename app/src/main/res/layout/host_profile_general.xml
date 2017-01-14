@@ -1,226 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/very_light_gray"
-    android:padding="0dp">
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="@dimen/elevation_amount"
+    app:cardUseCompatPadding="true"
+    android:layout_marginTop="@dimen/layout_margin"
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:layout_marginRight="@dimen/layout_margin">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardElevation="7dp"
-        app:cardUseCompatPadding="true"
-        android:layout_marginTop="@dimen/layout_margin"
-        android:layout_marginLeft="@dimen/layout_margin"
-        android:layout_marginRight="@dimen/layout_margin">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/background_layout"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/host_profile_general_title"
+            style="@style/event_card_title"
+            android:layout_marginTop="15dp" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/background_layout"
-            android:paddingBottom="3dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="3dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="25dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/host_profile_general_title"
-                style="@style/event_card_title"
-                android:layout_marginTop="15dp" />
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:background="#80000000"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp" />
+                style="@style/awesome"
+                android:text="@string/fa_clock"
+                android:id="@+id/awesome_clock" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp">
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    style="@style/awesome"
-                    android:text="@string/fa_clock"
-                    android:id="@+id/awesome_clock" />
-
-                <TextView
-                    android:text="@string/host_work_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    style="@style/dark_grey_text"/>
-
-                <TextView
+            <TextView
+                android:text="@string/host_work_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/host_profile_time"
+                android:layout_marginRight="3dp"
                 style="@style/dark_grey_text"/>
 
-            </LinearLayout>
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/host_profile_time"
+            style="@style/dark_grey_text"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="25dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="4dp">
+                style="@style/awesome"
+                android:text="@string/fa_address"
+                android:id="@+id/awesome_address"/>
 
-                <TextView
-                    android:layout_width="25dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    style="@style/awesome"
-                    android:text="@string/fa_address"
-                    android:id="@+id/awesome_address"/>
-
-                <TextView
-                    android:text="@string/host_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    style="@style/dark_grey_text"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/host_profile_address"
-                    android:layout_marginBottom="3dp"
-                    style="@style/dark_grey_text"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:text="@string/host_address"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp">
+                android:layout_marginRight="3dp"
+                style="@style/dark_grey_text"/>
 
-                <TextView
-                    android:layout_width="25dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    style="@style/awesome"
-                    android:text="@string/fa_facebook"
-                    android:id="@+id/awesome_facebook" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/host_profile_address"
+                android:layout_marginBottom="3dp"
+                style="@style/dark_grey_text"/>
 
-                <TextView
-                    android:text="@string/host_facebook"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    style="@style/dark_grey_text"/>
+        </LinearLayout>
 
-                <TextView
-                    android:text="@string/varazdinevents_facebook"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/host_profile_facebook"
-                    style="@style/red_text_link"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="25dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                style="@style/awesome"
+                android:text="@string/fa_facebook"
+                android:id="@+id/awesome_facebook" />
+
+            <TextView
+                android:text="@string/host_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                style="@style/dark_grey_text"/>
+
+            <TextView
+                android:text="@string/varazdinevents_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/host_profile_facebook"
+                style="@style/red_text_link"/>
 
 
-            </LinearLayout>
-            <!-- <View
-                 android:layout_width="match_parent"
-                 android:layout_height="1dp"
-                 android:background="#80D9534F"
-                 android:layout_marginRight="22dp"
-                 android:layout_marginLeft="22dp" /> -->
-
-
-            <!-- <View
+        </LinearLayout>
+        <!-- <View
              android:layout_width="match_parent"
              android:layout_height="1dp"
              android:background="#80D9534F"
              android:layout_marginRight="22dp"
              android:layout_marginLeft="22dp" /> -->
-            <LinearLayout
-                android:layout_width="wrap_content"
+
+
+        <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:background="#80D9534F"
+         android:layout_marginRight="22dp"
+         android:layout_marginLeft="22dp" /> -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="25dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="4dp">
+                style="@style/awesome"
+                android:text="@string/fa_web"
+                android:id="@+id/awesome_web"/>
 
-                <TextView
-                    android:layout_width="25dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    style="@style/awesome"
-                    android:text="@string/fa_web"
-                    android:id="@+id/awesome_web"/>
-
-                <TextView
-                    android:text="@string/host_web"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    style="@style/dark_grey_text"/>
-                <TextView
-                    android:text="@string/varazdinevents_web"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/host_profile_web"
-                    style="@style/red_text_link"/>
-
-            </LinearLayout>
-            <!-- <View
-                 android:layout_width="match_parent"
-                 android:layout_height="1dp"
-                 android:background="#80D9534F"
-                 android:layout_marginRight="22dp"
-                 android:layout_marginLeft="22dp" /> -->
-
-            <!-- <View
-                 android:layout_width="match_parent"
-                 android:layout_height="1dp"
-                 android:background="#80D9534F"
-                 android:layout_marginRight="22dp"
-                 android:layout_marginLeft="22dp" /> -->
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:text="@string/host_web"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp">
-
-                <TextView
-                    android:layout_width="25dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    style="@style/awesome"
-                    android:text="@string/fa_phone"
-                    android:id="@+id/awesome_phone" />
-
-                <TextView
-                    android:text="@string/host_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    style="@style/dark_grey_text"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/host_profile_phone"
-                    style="@style/dark_grey_text"/>
-
-            </LinearLayout>
-            <!-- <View
-                 android:layout_width="match_parent"
-                 android:layout_height="1dp"
-                 android:background="#80D9534F"
-                 android:layout_marginRight="22dp"
-                 android:layout_marginLeft="22dp" /> -->
+                android:layout_marginRight="3dp"
+                style="@style/dark_grey_text"/>
+            <TextView
+                android:text="@string/varazdinevents_web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/host_profile_web"
+                style="@style/red_text_link"/>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-</RelativeLayout>
+        <!-- <View
+             android:layout_width="match_parent"
+             android:layout_height="1dp"
+             android:background="#80D9534F"
+             android:layout_marginRight="22dp"
+             android:layout_marginLeft="22dp" /> -->
+
+        <!-- <View
+             android:layout_width="match_parent"
+             android:layout_height="1dp"
+             android:background="#80D9534F"
+             android:layout_marginRight="22dp"
+             android:layout_marginLeft="22dp" /> -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="25dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                style="@style/awesome"
+                android:text="@string/fa_phone"
+                android:id="@+id/awesome_phone" />
+
+            <TextView
+                android:text="@string/host_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                style="@style/dark_grey_text"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/host_profile_phone"
+                style="@style/dark_grey_text"/>
+
+        </LinearLayout>
+        <!-- <View
+             android:layout_width="match_parent"
+             android:layout_height="1dp"
+             android:background="#80D9534F"
+             android:layout_marginRight="22dp"
+             android:layout_marginLeft="22dp" /> -->
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

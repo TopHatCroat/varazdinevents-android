@@ -55,7 +55,7 @@
                         xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:orientation="vertical"
                         app:cardBackgroundColor="@android:color/white"
-                        app:cardElevation="7dp"
+                        app:cardElevation="@dimen/elevation_amount"
                         app:cardUseCompatPadding="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

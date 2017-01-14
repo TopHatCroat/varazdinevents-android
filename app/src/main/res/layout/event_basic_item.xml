@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/white"
-    app:cardElevation="7dp"
+    app:cardElevation="@dimen/elevation_amount"
     app:cardUseCompatPadding="true"
     android:layout_marginLeft="@dimen/layout_margin"
     android:layout_marginRight="@dimen/layout_margin">
