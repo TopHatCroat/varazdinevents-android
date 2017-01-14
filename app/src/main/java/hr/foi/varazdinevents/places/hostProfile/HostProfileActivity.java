@@ -16,7 +16,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
 import android.transition.Slide;
@@ -33,12 +32,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -48,21 +44,15 @@ import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
-import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.injection.modules.HostProfileActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
-import hr.foi.varazdinevents.places.events.MainPresenter;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
-import hr.foi.varazdinevents.ui.base.BasePresenter;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.util.FontManager;
-import rx.Observer;
-
-import static hr.foi.varazdinevents.util.Constants.ARG_EVENT;
 
 /**
  * Created by Valentin Magdić on 26.12.16..
@@ -84,6 +74,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @Inject
     UserManager userManager;
 
+    @Nullable
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
     @Inject
@@ -99,15 +90,13 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @Inject
     @Nullable
     Fade returnAnimation;
-    @BindView(R.id.swipeContainer)
-    SwipeRefreshLayout swipeRefreshLayout;
 
     List<Event> events = new ArrayList<>();
 
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.progresBar)
+    @BindView(R.id.host_progressBar)
     ProgressBar progressBar;
     @BindView(R.id.host_profile_content_holder)
     LinearLayout contentHolder;
@@ -144,20 +133,12 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        super.onCreate(savedInstanceState);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setExitTransition(enterAnimation);
             getWindow().setReturnTransition(returnAnimation);
         }
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadEvents();
-            }
-        });
-
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
 //        rx.Observable<List<User>> userStream = userManager.getUsers();
 //        userStream.subscribe();
@@ -180,7 +161,6 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
     }
 
@@ -227,6 +207,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         this.locationTitle = "VarazdinEvents";
         this.locationCategory = location;
 
+        if (events.size() == 0) presenter.loadEvents();
     }
 
     @Override

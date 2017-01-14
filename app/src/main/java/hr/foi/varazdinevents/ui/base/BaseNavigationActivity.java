@@ -2,7 +2,6 @@ package hr.foi.varazdinevents.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,9 +15,6 @@ import com.google.common.base.Strings;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Optional;
-import dagger.BindsOptionalOf;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
@@ -33,9 +29,9 @@ import hr.foi.varazdinevents.places.settings.SettingsActivity;
  */
 
 public abstract class BaseNavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.drawer_layout)
+    @BindView(R.id.host_drawer_layout)
     protected DrawerLayout drawerLayout;
-    @BindView(R.id.navigation_view)
+    @BindView(R.id.host_navigation_view)
     protected NavigationView navigationView;
 
     @Inject

@@ -7,8 +7,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -21,13 +19,7 @@ import android.transition.Fade;
 import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.google.firebase.messaging.RemoteMessage;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +34,6 @@ import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
-import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
@@ -72,9 +63,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     Fade returnAnimation;
     @BindView(R.id.item_recycler_view)
     ItemRecyclerView recyclerView;
-    @BindView(R.id.progresBar)
+    @BindView(R.id.host_progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.swipeContainer)
+    @BindView(R.id.host_swipeContainer)
     SwipeRefreshLayout swipeRefreshLayout;
 
     ItemTouchHelper itemTouchHelper;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/host_drawer_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true">
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context=".places.events.MainActivity"
-        android:id="@+id/coordinator_layout"
+        android:id="@+id/host_coordinator_layout"
         android:background="@color/very_light_gray">
 
         <android.support.design.widget.AppBarLayout
@@ -23,7 +23,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/host_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -36,7 +36,7 @@
 
         <android.support.v4.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swipeContainer"
+            android:id="@+id/host_swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/large_layout_side_padding"
@@ -60,7 +60,7 @@
             android:layout_height="match_parent"
             android:gravity="center">
             <ProgressBar
-                android:id="@+id/progresBar"
+                android:id="@+id/host_progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
@@ -70,7 +70,7 @@
 
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
+        android:id="@+id/host_navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
