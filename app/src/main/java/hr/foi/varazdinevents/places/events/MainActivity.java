@@ -64,12 +64,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     GridLayoutManager gridLayoutManager;
     @Inject
     User user;
-    @Inject
-    @Nullable
-    Slide enterAnimation;
-    @Inject
-    @Nullable
-    Fade returnAnimation;
     @BindView(R.id.item_recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.progresBar)
@@ -86,10 +80,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setExitTransition(enterAnimation);
-            getWindow().setReturnTransition(returnAnimation);
-        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -151,11 +141,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         itemTouchHelper.startDrag(viewHolder);
-    }
-
-    @Override
-    public void onItemClicked(Object item) {
-        EventDetailsActivity.startWithEvent((Event)item, this);
     }
 
     @Override
@@ -241,7 +226,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         startingActivity.startActivity(intent);
     }
 
-    private static long back_pressed;
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -312,17 +296,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         }
         return filteredList;
     }
-//
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            recyclerView.setLayoutManager(gridLayoutManager);
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            recyclerView.setLayoutManager(linearLayoutManager);
-//        }
-//    }
 
     @Override
     protected void onSaveInstanceState(Bundle state) {
@@ -338,5 +311,13 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         super.onRestoreInstanceState(state);
 
         listState = state.getParcelable(LIST_STATE_KEY);
+    }
+
+    public void animateOut() {
+        recyclerView.animate().alpha(0f).yBy(-100).setDuration(500);
+    }
+
+    public void animateIn() {
+        recyclerView.animate().alpha(1f).yBy(100).setDuration(500);
     }
 }

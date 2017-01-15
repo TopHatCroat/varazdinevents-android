@@ -1,5 +1,6 @@
 package hr.foi.varazdinevents.ui.elements.list;
 
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import hr.foi.varazdinevents.ui.elements.Searchable;
  */
 public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerView.Adapter<ItemViewHolder>
         implements ItemTouchHelperAdapter {
-    protected ListListener listener;
+    protected ListListener<T> listener;
     protected Map<Integer, ItemViewHolderFactory> viewHolderFactoryMap;
     protected List<T> items;
 
@@ -34,7 +35,7 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClicked(itemViewHolder.getAdapterPosition());
+                onItemClicked(itemViewHolder.getAdapterPosition(), itemViewHolder.getAnimationTarget());
             }
         });
         return itemViewHolder;
@@ -65,8 +66,12 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
     }
 
     @Override
-    public void onItemClicked(int adapterPosition) {
-        listener.onItemClick(items.get(adapterPosition));
+    public void onItemClicked(int adapterPosition, View view) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && view != null) {
+            listener.onItemClick(items.get(adapterPosition), view);
+        } else {
+            listener.onItemClick(items.get(adapterPosition));
+        }
     }
 
     @Override

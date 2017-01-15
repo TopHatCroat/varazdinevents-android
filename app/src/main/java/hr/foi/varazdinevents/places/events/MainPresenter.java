@@ -1,10 +1,11 @@
 package hr.foi.varazdinevents.places.events;
 
-import com.google.android.gms.maps.GoogleMap;
+import android.view.View;
 
 import java.util.List;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.elements.list.ListListener;
 import rx.Observer;
 
@@ -16,7 +17,7 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
  * Created by Antonio Martinović on 12.10.16.
  */
 
-public class MainPresenter extends BasePresenter<MainActivity> implements ListListener{
+public class MainPresenter extends BasePresenter<MainActivity> implements ListListener<Event>{
     private EventManager eventManager;
 
     public MainPresenter(EventManager eventManager) {
@@ -36,6 +37,7 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
             @Override
             public void onCompleted() {
                 getViewLayer().showLoading(false);
+                getViewLayer().animateIn();
             }
 
             @Override
@@ -52,8 +54,13 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
     }
 
     @Override
-    public void onItemClick(Object item) {
-        getViewLayer().onItemClicked(item);
+    public void onItemClick(Event item) {
+        EventDetailsActivity.startWithEvent(item, getViewLayer());
+    }
 
+    @Override
+    public void onItemClick(Event item, View view) {
+        getViewLayer().animateOut();
+        EventDetailsActivity.startWithEventAnimated(item, getViewLayer(), view);
     }
 }

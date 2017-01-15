@@ -20,5 +20,7 @@ public abstract class ItemViewHolder extends RecyclerView.ViewHolder {
 
     public abstract void unbind();
 
+    public abstract View getAnimationTarget();
+
 }
 

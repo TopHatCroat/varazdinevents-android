@@ -69,9 +69,6 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @Inject
     HostProfilePresenter presenter;
     @Inject
-    @Nullable
-    Fade animation;
-    @Inject
     UserManager userManager;
 
     @BindView(R.id.collapsingToolbarLayout)
@@ -237,8 +234,4 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
                 .inject(this);
     }
 
-    @Override
-    public void onItemClicked(Object item) {
-
-    }
 }

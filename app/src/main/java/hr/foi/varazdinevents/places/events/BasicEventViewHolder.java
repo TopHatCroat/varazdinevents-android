@@ -82,5 +82,10 @@ public class BasicEventViewHolder extends ItemViewHolder {
         unbinder.unbind();
     }
 
+    @Override
+    public View getAnimationTarget() {
+        return image;
+    }
+
 
 }

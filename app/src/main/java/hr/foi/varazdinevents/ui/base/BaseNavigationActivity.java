@@ -107,6 +107,7 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 MainActivity.start(this);
                 break;
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

@@ -77,7 +77,13 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
 //                return true;
 //            }
 //        });
+        overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
     }
 
     @Override
@@ -95,11 +101,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
 
     @Override
     public void showBasicError(String message) {
-
-    }
-
-    @Override
-    public void onItemClicked(Object item) {
 
     }
 

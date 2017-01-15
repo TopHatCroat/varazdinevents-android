@@ -48,6 +48,13 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
             user2.save();
         }
 
+        overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
     }
 
     @Override
@@ -64,11 +71,6 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
                 .plus(new LoginActivityModule(this))
                 .inject(this);
         //Debug.stopMethodTracing();
-    }
-
-    @Override
-    public void onItemClicked(Object item) {
-        // !!!!!!
     }
 
     public void showLoading(boolean loading) {

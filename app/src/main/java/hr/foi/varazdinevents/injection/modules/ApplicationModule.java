@@ -31,28 +31,6 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Nullable
-    Fade provideFade() {
-        Fade fade = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            fade = new Fade();
-            fade.setDuration(1000);
-        }
-        return fade;
-    }
-
-    @Provides
-    @Nullable
-    Slide provideSlide() {
-        Slide slide = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            slide = new Slide();
-            slide.setDuration(1000);
-        }
-        return slide;
-    }
-
-    @Provides
     @Singleton
     SharedPrefs provideSharedPrefs() {
         return new SharedPrefs(application);

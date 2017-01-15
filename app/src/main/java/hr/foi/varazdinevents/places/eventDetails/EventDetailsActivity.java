@@ -1,22 +1,19 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
-import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
 import android.view.View;
@@ -26,18 +23,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -70,11 +62,6 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     User user;
     @Inject
     EventDetailsPresenter presenter;
-    @Inject
-    @Nullable
-    Fade animation;
-//    @Inject
-//    EventManager eventManager;
 
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
@@ -101,16 +88,11 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     TextView facebook;
     @BindView(R.id.event_details_offers)
     TextView offers;
-    //    @BindView(R.id.event_details_officialLink)
-//    TextView officialLink;
     @BindView(R.id.event_details_text)
     TextView text;
 
     @BindView(R.id.fab_detailed_favorite)
     FloatingActionButton fab_detailed_favorite;
-//    @BindView(R.id.fab_basic_favorite)
-//    FloatingActionButton fab_basic_favorite;
-
 
     @BindView(R.id.awesome_title)
     TextView awesomeTitle;
@@ -165,10 +147,6 @@ public class EventDetailsActivity extends BaseNavigationActivity {
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setEnterTransition(animation);
-        }
-
     }
 
     @Override
@@ -204,17 +182,14 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         Observer<Void> mapObserver = new Observer<Void>() {
             @Override
             public void onCompleted() {
-                LatLng latlong = new LatLng(presenter.getLatitude(), presenter.getLongitude());
-                Marker marker = presenter.getMap().addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
-                marker.showInfoWindow();
-                presenter.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
-                EventDetailsActivity.this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
+                contentHolder.animate().alpha(1.0f).yBy(-100).setDuration(500);
+
                 showLoading(false);
             }
 
             @Override
             public void onError(Throwable e) {
-                showBasicError("Error displaying something");
+                showBasicError(getString(R.string.error_display));
             }
 
             @Override
@@ -242,6 +217,15 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         startingActivity.startActivity(intent);
     }
 
+    @TargetApi(21)
+    public static void startWithEventAnimated(Event event, Activity startingActivity, View view) {
+        Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
+        intent.putExtra(ARG_EVENT, event);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(startingActivity, view, "event_image_anim_target");
+        startingActivity.startActivity(intent, options.toBundle());
+    }
+
     @Override
     public void setupActivityComponent() {
         MainApplication.get(this).getUserComponent()
@@ -249,10 +233,6 @@ public class EventDetailsActivity extends BaseNavigationActivity {
                 .inject(this);
     }
 
-    @Override
-    public void onItemClicked(Object item) {
-
-    }
 
     @OnClick(R.id.fab_detailed_favorite)
     public void onFavoriteClicked() {

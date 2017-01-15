@@ -102,6 +102,14 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
                 R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(adapter);
+
+        overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
     }
 
     @Override
@@ -120,11 +128,6 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
                 .getUserComponent()
                 .plus(new NewEventModule(this))
                 .inject(this);
-    }
-
-    @Override
-    public void onItemClicked(Object item) {
-
     }
 
     public void showLoading(boolean loading) {

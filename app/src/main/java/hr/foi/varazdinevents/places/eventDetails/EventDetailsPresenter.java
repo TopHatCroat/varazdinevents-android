@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.ActivityCompat;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,6 +42,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
     private String locationTitle;
     private String locationCategory;
     private GoogleMap map;
+    private int counter = 0;
 
 
     public EventDetailsPresenter(User user) {
@@ -83,6 +85,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
                 this.latitude = 46.307819;
                 this.longitude = 16.338159;
             }
+            resolveMapPosition();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,9 +102,20 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         return null;
     }
 
+    private void resolveMapPosition() {
+        this.counter += 1;
+        if(this.counter % 2 == 0) {
+            LatLng latlong = new LatLng(getLatitude(), getLongitude());
+            Marker marker = getMap().addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
+            marker.showInfoWindow();
+            getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+
         if (ActivityCompat.checkSelfPermission(getViewLayer(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(
@@ -117,6 +131,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
             return;
         }
         map.setMyLocationEnabled(true);
+        resolveMapPosition();
     }
 
     public GoogleMap getMap() {

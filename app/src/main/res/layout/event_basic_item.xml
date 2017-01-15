@@ -22,6 +22,7 @@
             android:id="@+id/basic_item_picture"
             android:scaleType="centerCrop"
             android:layout_alignParentTop="true"
+            android:transitionName="event_image_anim_target"
             android:adjustViewBounds="true"/>
 
         <RelativeLayout

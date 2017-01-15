@@ -7,6 +7,4 @@ package hr.foi.varazdinevents.ui.base;
 public interface ViewLayer {
 
     void showBasicError(String message);
-
-    void onItemClicked(Object item);
 }

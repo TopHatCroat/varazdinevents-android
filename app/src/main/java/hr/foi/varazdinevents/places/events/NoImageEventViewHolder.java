@@ -1,6 +1,7 @@
 package hr.foi.varazdinevents.places.events;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -70,6 +71,11 @@ public class NoImageEventViewHolder extends ItemViewHolder {
     @Override
     public void unbind() {
         unbinder.unbind();
+    }
+
+    @Override
+    public View getAnimationTarget() {
+        return null;
     }
 
 

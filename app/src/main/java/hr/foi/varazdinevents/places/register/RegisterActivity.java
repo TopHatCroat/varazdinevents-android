@@ -56,11 +56,6 @@ public class RegisterActivity extends BaseActivity {
                 .inject(this);
     }
 
-    @Override
-    public void onItemClicked(Object item) {
-        // !!!!!!
-    }
-
     public void showLoading(boolean loading) {
         // !!!!!!
     }
