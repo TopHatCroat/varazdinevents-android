@@ -18,6 +18,7 @@ import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
+import hr.foi.varazdinevents.util.ScreenUtils;
 
 /**
  * Created by Antonio Martinović on 31.10.16.
@@ -58,9 +59,11 @@ public class BasicEventViewHolder extends ItemViewHolder {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         this.date.setText(dateFormat.format(eventDate));
 
+        int screenSize = ScreenUtils.getScreenWidth(itemView.getContext());
+
         Picasso.with(itemView.getContext())
                 .load(event.getImage())
-                .resize(380, 380)
+                .resize(screenSize, screenSize)
                 .centerCrop()
                 .into(image);
 

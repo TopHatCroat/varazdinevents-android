@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,6 +38,7 @@ import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.Constants;
 import hr.foi.varazdinevents.util.FontManager;
+import hr.foi.varazdinevents.util.ScreenUtils;
 import rx.Observer;
 
 /**
@@ -106,9 +110,11 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         if(event.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
+            int screenSize = ScreenUtils.getScreenWidth(this);
+
             Picasso.with(this)
                     .load(event.getImage())
-                    .resize(380, 380)
+                    .resize(screenSize, screenSize)
                     .centerCrop()
                     .into(image);
         } else {
@@ -167,7 +173,9 @@ public class EventDetailsActivity extends BaseNavigationActivity {
 
         Observer<Void> mapObserver = new Observer<Void>() {
             @Override
-            public void onCompleted() {}
+            public void onCompleted() {
+                animateFABIn();
+            }
 
             @Override
             public void onError(Throwable e) {
@@ -192,15 +200,50 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         presenter.detachView();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        animateFABOut();
+    }
+
     public void showLoading(boolean loading) {
         if(loading) {
             progressBar.setVisibility(View.VISIBLE);
-            contentHolder.animate().alpha(0.0f).setDuration(500);
+            contentHolder.animate().alpha(0.0f).setDuration(300);
         } else {
             progressBar.setVisibility(View.GONE);
-            contentHolder.animate().alpha(1.0f).setDuration(500);
+            contentHolder.setTranslationY(ScreenUtils.dpToPx(ScreenUtils.getScreenHeight(this) - ScreenUtils.dpToPx(380)));
+            contentHolder.animate()
+                    .translationY(0)
+                    .alpha(1.0f)
+                    .setInterpolator(new DecelerateInterpolator(3.0f))
+                    .setDuration(500)
+                    .start();
         }
 //        contentHolder.setVisibility(loading ? View.GONE : View.VISIBLE);
+    }
+
+    private void animateFABIn() {
+
+        fab_detailed_favorite.setTranslationX(ScreenUtils.dpToPx(200));
+        fab_detailed_favorite.animate()
+                .translationX(0)
+                .setStartDelay(300)
+                .setInterpolator(new DecelerateInterpolator(3.0f))
+                .setDuration(500)
+                .start();
+    }
+
+    private void animateFABOut() {
+
+        fab_detailed_favorite.animate()
+                .translationY(ScreenUtils.dpToPx(200))
+                .setInterpolator(new DecelerateInterpolator(3.0f))
+                .setDuration(500)
+                .start();
+        fab_detailed_favorite.setTranslationY(ScreenUtils.dpToPx(-200));
+
     }
 
     public static void startWithEvent(Event event, Context startingActivity) {

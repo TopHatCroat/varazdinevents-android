@@ -95,8 +95,15 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     protected void onStart() {
         super.onStart();
+        if (listState != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
         presenter.attachView(this);
-        presenter.loadEvents();
+        if (this.events.isEmpty()){
+            presenter.loadEvents();
+        } else {
+            animateIn();
+        }
     }
 
     @Override
@@ -317,10 +324,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     }
 
     public void animateOut() {
-        recyclerView.animate().alpha(0f).setDuration(500);
+//        recyclerView.animate().alpha(0f).setDuration(500);
     }
 
     public void animateIn() {
-        recyclerView.setAlpha(1f);
+//        recyclerView.setAlpha(1f);
     }
 }
