@@ -1,6 +1,5 @@
 package hr.foi.varazdinevents.places.events;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
-import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
-import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 
@@ -61,10 +58,11 @@ public class BasicEventViewHolder extends ItemViewHolder {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         this.date.setText(dateFormat.format(eventDate));
 
-        //this.time.setText(event.getTime());
-
-        Picasso.with(itemView.getContext()).load(event.getImage()).into(image);
-        //Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
+        Picasso.with(itemView.getContext())
+                .load(event.getImage())
+                .resize(380, 380)
+                .centerCrop()
+                .into(image);
 
         this.host.setText(event.getHost());
 //        this.host.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +84,4 @@ public class BasicEventViewHolder extends ItemViewHolder {
     public View getAnimationTarget() {
         return image;
     }
-
-
 }

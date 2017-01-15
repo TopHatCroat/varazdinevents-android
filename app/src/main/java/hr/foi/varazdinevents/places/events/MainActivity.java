@@ -44,6 +44,7 @@ import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
+import hr.foi.varazdinevents.ui.elements.list.ItemAnimator;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
@@ -89,20 +90,18 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         });
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
-        if (events.size() == 0) presenter.loadEvents();
+        presenter.loadEvents();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         if (listState != null) {
             recyclerView.getLayoutManager().onRestoreInstanceState(listState);
         }
@@ -115,9 +114,12 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     }
 
     public void showLoading(boolean loading) {
-//        recyclerView.setVisibility(loading ? View.GONE : View.VISIBLE);
-//        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-        swipeRefreshLayout.setRefreshing(loading);
+        if(loading) {
+            swipeRefreshLayout.setRefreshing(true);
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+            animateIn();
+        }
     }
 
     public void showEvents(List<Event> events) {
@@ -136,6 +138,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
                 new SimpleItemTouchHelperCallback(eventListAdapter);
         itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setItemAnimator(new ItemAnimator());
     }
 
     @Override
@@ -314,10 +317,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     }
 
     public void animateOut() {
-        recyclerView.animate().alpha(0f).yBy(-100).setDuration(500);
+        recyclerView.animate().alpha(0f).setDuration(500);
     }
 
     public void animateIn() {
-        recyclerView.animate().alpha(1f).yBy(100).setDuration(500);
+        recyclerView.setAlpha(1f);
     }
 }

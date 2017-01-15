@@ -33,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setupActivityComponent();
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);

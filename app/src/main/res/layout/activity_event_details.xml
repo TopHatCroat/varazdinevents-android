@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:clipToPadding="false"
-            android:layout_marginTop="-100px"
+            android:translationY="0px"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -111,6 +111,7 @@
             android:layout_height="match_parent"
             android:gravity="center">
             <ProgressBar
+                android:visibility="gone"
                 android:id="@+id/progresBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

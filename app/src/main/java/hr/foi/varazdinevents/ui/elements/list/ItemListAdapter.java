@@ -72,6 +72,7 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         } else {
             listener.onItemClick(items.get(adapterPosition));
         }
+
     }
 
     @Override

@@ -32,12 +32,12 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
             @Override
             public void onNext(List<Event> events) {
                 getViewLayer().showEvents(events);
+                getViewLayer().showLoading(false);
             }
 
             @Override
             public void onCompleted() {
-                getViewLayer().showLoading(false);
-                getViewLayer().animateIn();
+
             }
 
             @Override

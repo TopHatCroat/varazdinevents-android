@@ -67,7 +67,6 @@ public class EventManager {
     public Observable<List<Event>> getEvents() {
         return Observable.concat(fromMemory(), fromDatabase(), fromNetwork())
                 .cache()
-
                 .map(new Func1<List<Event>, List<Event>>() {
                     @Override
                     public List<Event> call(List<Event> events) {

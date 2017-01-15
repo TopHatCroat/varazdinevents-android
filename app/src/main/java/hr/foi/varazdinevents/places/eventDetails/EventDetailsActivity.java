@@ -7,33 +7,22 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.method.LinkMovementMethod;
-import android.transition.Fade;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
@@ -55,8 +44,6 @@ import rx.Observer;
 public class EventDetailsActivity extends BaseNavigationActivity {
     private static final String ARG_EVENT = "arg_event";
     private Event event;
-    Double latitude, longitude;
-    String locationTitle, locationCategory;
 
     @Inject
     User user;
@@ -164,7 +151,6 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         super.onStart();
         presenter.attachView(this);
         showLoading(true);
-        presenter.parseEventData(event, this.text);
 
         Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -181,11 +167,7 @@ public class EventDetailsActivity extends BaseNavigationActivity {
 
         Observer<Void> mapObserver = new Observer<Void>() {
             @Override
-            public void onCompleted() {
-                contentHolder.animate().alpha(1.0f).yBy(-100).setDuration(500);
-
-                showLoading(false);
-            }
+            public void onCompleted() {}
 
             @Override
             public void onError(Throwable e) {
@@ -193,10 +175,14 @@ public class EventDetailsActivity extends BaseNavigationActivity {
             }
 
             @Override
-            public void onNext(Void aVoid) {}
+            public void onNext(Void aVoid) {
+                presenter.resolveMapPosition();
+                text.setText(presenter.getParsedEventDescription());
+                showLoading(false);
+            }
         };
 
-        rx.Observable<Void> eventStream = presenter.parseEventData(event, this.text);
+        rx.Observable<Void> eventStream = presenter.parseEventData(event);
         eventStream.subscribe(mapObserver);
     }
 
@@ -207,8 +193,14 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     }
 
     public void showLoading(boolean loading) {
-        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-        contentHolder.setVisibility(loading ? View.GONE : View.VISIBLE);
+        if(loading) {
+            progressBar.setVisibility(View.VISIBLE);
+            contentHolder.animate().alpha(0.0f).setDuration(500);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            contentHolder.animate().alpha(1.0f).setDuration(500);
+        }
+//        contentHolder.setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
     public static void startWithEvent(Event event, Context startingActivity) {

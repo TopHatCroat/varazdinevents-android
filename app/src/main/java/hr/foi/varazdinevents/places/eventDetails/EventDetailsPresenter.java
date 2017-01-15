@@ -28,6 +28,7 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
 import hr.foi.varazdinevents.util.FontManager;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
@@ -43,6 +44,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
     private String locationCategory;
     private GoogleMap map;
     private int counter = 0;
+    private String parsedEventDescription;
 
 
     public EventDetailsPresenter(User user) {
@@ -54,7 +56,8 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     }
 
-    public Observable<Void> parseEventData(final Event event, final TextView textView) {
+    public Observable<Void> parseEventData(final Event event) {
+        this.counter = 0;
         SupportMapFragment mapFragment = (SupportMapFragment) getViewLayer().getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -63,14 +66,14 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         return Observable.defer(new Func0<Observable<Void>>() {
             @Override
             public Observable<Void> call() {
-                return Observable.just(parseEvent(event, textView));
+                return Observable.just(parseEvent(event));
             }
         })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private Void parseEvent(Event event, TextView textView) {
+    private Void parseEvent(Event event) {
         //Google map information
         String location = "Pavlinska 2, 42000 Varaždin";
         Geocoder geocoder = new Geocoder(getViewLayer());
@@ -85,7 +88,6 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
                 this.latitude = 46.307819;
                 this.longitude = 16.338159;
             }
-            resolveMapPosition();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,7 +96,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        textView.setText(FontManager.parseHTML(event.getText()));
+        this.parsedEventDescription = FontManager.parseHTML(event.getText());
 
         this.locationTitle = event.getTitle();
         this.locationCategory = event.getCategory() + " - " + dateFormat.format(eventDate) + " u " + timeFormat.format(eventDate) + " sati";
@@ -102,9 +104,9 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         return null;
     }
 
-    private void resolveMapPosition() {
+    public void resolveMapPosition() {
         this.counter += 1;
-        if(this.counter % 2 == 0) {
+        if(this.counter >= 2) {
             LatLng latlong = new LatLng(getLatitude(), getLongitude());
             Marker marker = getMap().addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
             marker.showInfoWindow();
@@ -144,5 +146,9 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public String getParsedEventDescription() {
+        return parsedEventDescription;
     }
 }
