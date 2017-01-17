@@ -1,7 +1,5 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -9,13 +7,18 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +27,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import butterknife.BindView;
@@ -34,6 +39,7 @@ import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.util.Constants;
@@ -101,6 +107,30 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            postponeEnterTransition();
+
+            final View decor = getWindow().getDecorView();
+            decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                        startPostponedEnterTransition();
+                    }
+                    return true;
+                }
+            });
+        }
+
+        setExitSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+        });
+
         this.event = getIntent().getParcelableExtra(ARG_EVENT);
         toggleFavoriteIcon(this.event.isFavorite);
 
@@ -174,7 +204,6 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         Observer<Void> mapObserver = new Observer<Void>() {
             @Override
             public void onCompleted() {
-                animateFABIn();
             }
 
             @Override
@@ -200,32 +229,23 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         presenter.detachView();
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        animateFABOut();
-    }
-
     public void showLoading(boolean loading) {
         if(loading) {
-            progressBar.setVisibility(View.VISIBLE);
-            contentHolder.animate().alpha(0.0f).setDuration(300);
+            animateOut();
         } else {
-            progressBar.setVisibility(View.GONE);
-            contentHolder.setTranslationY(ScreenUtils.dpToPx(ScreenUtils.getScreenHeight(this) - ScreenUtils.dpToPx(380)));
-            contentHolder.animate()
-                    .translationY(0)
-                    .alpha(1.0f)
-                    .setInterpolator(new DecelerateInterpolator(3.0f))
-                    .setDuration(500)
-                    .start();
+            animateIn();
         }
-//        contentHolder.setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
-    private void animateFABIn() {
-
+    private void animateIn() {
+        progressBar.setVisibility(View.GONE);
+        contentHolder.setTranslationY(ScreenUtils.getScreenHeight(this));
+        contentHolder.animate()
+                .translationY(0)
+                .alpha(1.0f)
+                .setInterpolator(new DecelerateInterpolator(3.0f))
+                .setDuration(700)
+                .start();
         fab_detailed_favorite.setTranslationX(ScreenUtils.dpToPx(200));
         fab_detailed_favorite.animate()
                 .translationX(0)
@@ -235,15 +255,16 @@ public class EventDetailsActivity extends BaseNavigationActivity {
                 .start();
     }
 
-    private void animateFABOut() {
-
-        fab_detailed_favorite.animate()
-                .translationY(ScreenUtils.dpToPx(200))
+    private void animateOut() {
+        progressBar.setVisibility(View.VISIBLE);
+        contentHolder.animate()
+                .translationY(ScreenUtils.getScreenHeight(this))
+                .alpha(1.0f)
                 .setInterpolator(new DecelerateInterpolator(3.0f))
                 .setDuration(500)
                 .start();
-        fab_detailed_favorite.setTranslationY(ScreenUtils.dpToPx(-200));
-
+        fab_detailed_favorite.setTranslationX(ScreenUtils.dpToPx(200));
+        contentHolder.setTranslationY(ScreenUtils.dpToPx(ScreenUtils.getScreenHeight(this) - ScreenUtils.dpToPx(380)));
     }
 
     public static void startWithEvent(Event event, Context startingActivity) {
@@ -253,11 +274,19 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     }
 
     @TargetApi(21)
-    public static void startWithEventAnimated(Event event, Activity startingActivity, View view) {
+    public static void startWithEventAnimated(Event event, MainActivity startingActivity, View view) {
         Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
         intent.putExtra(ARG_EVENT, event);
+        View decor = startingActivity.getWindow().getDecorView();
+        View statusBar = decor.findViewById(android.R.id.statusBarBackground);
+        View navBar = decor.findViewById(android.R.id.navigationBarBackground);
+
+        Pair<View, String> p1 = Pair.create(view, "event_image_anim_target");
+        Pair<View, String> p2 = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> p3 = Pair.create(navBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+
         ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(startingActivity, view, "event_image_anim_target");
+                makeSceneTransitionAnimation(startingActivity, p2, p3, p1);
         startingActivity.startActivity(intent, options.toBundle());
     }
 

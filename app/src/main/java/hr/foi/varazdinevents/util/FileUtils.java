@@ -11,10 +11,17 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 /**
+ * Helper class containing methods for resolving raw path from Uri
  * Created by Antonio Martinović on 02.01.17.
  */
-
 public class FileUtils {
+    /**
+     * Resolves absolute file path on the user system, should make sure you have the
+     * permission to read/write data on user device before using the path returned
+     * @param context calling activity's context
+     * @param uri to resolve
+     * @return file path
+     */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String getPath(final Context context, final Uri uri) {
 

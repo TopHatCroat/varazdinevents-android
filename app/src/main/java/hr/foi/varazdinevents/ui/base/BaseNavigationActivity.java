@@ -81,7 +81,6 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         } else {
             super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     @Override

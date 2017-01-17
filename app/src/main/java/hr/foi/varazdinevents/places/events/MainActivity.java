@@ -110,7 +110,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     protected void onResume() {
         super.onResume();
         if (listState != null) {
-            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+            try {
+                recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+            } catch (Exception e) {}
         }
     }
 

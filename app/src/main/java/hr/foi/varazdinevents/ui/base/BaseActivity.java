@@ -71,4 +71,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewLaye
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
+    @Nullable
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
 }
