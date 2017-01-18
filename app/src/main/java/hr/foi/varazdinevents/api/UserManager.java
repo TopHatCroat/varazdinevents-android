@@ -69,12 +69,12 @@ public class UserManager {
      * @return User class with token added
      */
     public Observable<User> login(final String username, String password) {
-        List<User> users = new ArrayList<>();
 
         return restService.loginUser(username, password)
                 .map(new Func1<UserResponse, User>() {
                     @Override
                     public User call(UserResponse userResponse) {
+                        User user = new User(username, null);
                         user.setApiId(userResponse.id);
                         user.setToken(userResponse.token);
                         user.save();
