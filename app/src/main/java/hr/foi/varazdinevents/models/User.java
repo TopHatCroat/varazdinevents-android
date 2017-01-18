@@ -14,6 +14,7 @@ public class User extends SugarRecord implements Parcelable{
     public Integer apiId;
     public String username;
     public String email;
+    @Deprecated
     public String password;
     public String token;
     public String description;
@@ -121,10 +122,12 @@ public class User extends SugarRecord implements Parcelable{
         this.email = email;
     }
 
+    @Deprecated
     public String getPassword() {
         return password;
     }
 
+    @Deprecated
     public void setPassword(String password) {
         this.password = password;
     }

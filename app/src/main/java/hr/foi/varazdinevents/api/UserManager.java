@@ -1,21 +1,25 @@
 package hr.foi.varazdinevents.api;
 
+import android.support.test.espresso.core.deps.guava.base.Strings;
+
+import com.orm.SugarContext;
+import com.orm.SugarDb;
+import com.orm.SugarRecord;
 import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.orm.util.SugarConfig;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import hr.foi.varazdinevents.api.responses.EventResponse;
-import hr.foi.varazdinevents.api.responses.EventResponseComplete;
 import hr.foi.varazdinevents.api.responses.UserResponse;
 import hr.foi.varazdinevents.api.responses.UserResponseComplete;
-import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.util.SharedPrefs;
 import rx.Observable;
@@ -66,12 +70,7 @@ public class UserManager {
      */
     public Observable<User> login(final String username, String password) {
         List<User> users = new ArrayList<>();
-        users = User.find(User.class, "username= ? and password= ? ", username, password);
-        if (users.size() > 0) {
-            this.user = users.get(0);
-        } else {
-            this.user = new User(username, password);
-        }
+
         return restService.loginUser(username, password)
                 .map(new Func1<UserResponse, User>() {
                     @Override
@@ -96,16 +95,14 @@ public class UserManager {
                 .map(new Func1<UserResponse, Boolean>() {
                     @Override
                     public Boolean call(UserResponse userResponse) {
-//                        User user = new User();
-//                        user.setUsername(username);
-//                        user.setToken(userResponse.token);
+                        UserManager.this.user.setToken(null);
+                        user.save();
                         return Boolean.TRUE;
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
 
     public Observable<JSONObject> registerFCMToken(String token) {
         return restService.sendFCMToken(token)
@@ -116,7 +113,6 @@ public class UserManager {
     public Observable<List<User>> getUsers() {
         return Observable.concat(fromMemory(), fromDatabase(), fromNetwork())
                 .cache()
-
                 .map(new Func1<List<User>, List<User>>() {
                     @Override
                     public List<User> call(List<User> users) {
@@ -154,7 +150,6 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-
     private Observable<List<User>> fromNetwork() {
         String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
@@ -168,8 +163,8 @@ public class UserManager {
                             user.setApiId(userResponse.id);
                             user.setUsername(userResponse.username);
                             user.setEmail(userResponse.email);
-                            user.setPassword(userResponse.password);
-                            user.setToken(userResponse.token);
+//                            user.setPassword(userResponse.password);
+//                            user.setToken(userResponse.token);
                             user.setImage(userResponse.image);
                             user.setDescription(userResponse.description);
                             user.setWorkingTime(userResponse.workingTime);
@@ -222,4 +217,22 @@ public class UserManager {
         }
     }
 
+    public static void logout() {
+        Iterator<User> users = SugarRecord.findAll(User.class);
+        while(users.hasNext()) {
+            User user = users.next();
+            user.setToken("");
+            user.save();
+        }
+    }
+
+    public static User getLoggedInUser() {
+        List<User> users = User.find(User.class, "token != '' ");
+        if (users.size() > 0) {
+            if( ! Strings.isNullOrEmpty(users.get(0).getToken())){
+                return users.get(0);
+            }
+        }
+        return getStubUser("test");
+    }
 }

@@ -99,6 +99,7 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 LoginActivity.start(this);
                 break;
             case R.id.menu_logout:
+                UserManager.logout();
                 MainApplication.get(this).createUserComponent(UserManager.getStubUser("test"));
                 MainActivity.start(this);
                 break;

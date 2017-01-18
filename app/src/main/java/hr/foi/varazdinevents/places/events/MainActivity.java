@@ -38,6 +38,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
@@ -49,6 +50,7 @@ import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+import rx.Observer;
 
 import static hr.foi.varazdinevents.util.Constants.LIST_STATE_KEY;
 
@@ -65,6 +67,8 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     GridLayoutManager gridLayoutManager;
     @Inject
     User user;
+    @Inject
+    UserManager userManager;
     @BindView(R.id.item_recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.progresBar)

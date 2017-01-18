@@ -1,6 +1,8 @@
 package hr.foi.varazdinevents;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.multidex.MultiDexApplication;
 
 import com.orm.SugarContext;
@@ -65,8 +67,8 @@ public class MainApplication extends MultiDexApplication {
         this.applicationComponent = applicationComponent;
     }
 
-    public UserComponent createUserComponent() { //for testing only
-        if (userComponent == null) createUserComponent(UserManager.getStubUser("test"));
+    public UserComponent createUserComponent() {
+        if (userComponent == null) createUserComponent(UserManager.getLoggedInUser());
         return userComponent;
     }
 
