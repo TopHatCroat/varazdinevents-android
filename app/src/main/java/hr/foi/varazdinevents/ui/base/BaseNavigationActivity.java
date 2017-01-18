@@ -23,6 +23,7 @@ import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
+import hr.foi.varazdinevents.places.about.AboutActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.login.LoginActivity;
 import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
@@ -52,23 +53,23 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         View hView =  navigationView.getHeaderView(0);
         TextView username = (TextView)hView.findViewById(R.id.user_username);
         TextView email = (TextView)hView.findViewById(R.id.user_email);
-        if (Strings.isNullOrEmpty(user.getToken())) {
-            username.setText(R.string.nav_header_title);
-            email.setText(R.string.nav_header_info);
-        }
-        else {
-            username.setText("Korisnik: " + user.getUsername());
-            email.setText("Email: " + user.getEmail());
-        }
+        if(user != null) {
+            if (Strings.isNullOrEmpty(user.getToken())) {
+                username.setText(R.string.nav_header_title);
+                email.setText(R.string.nav_header_info);
+            } else {
+                username.setText("Korisnik: " + user.getUsername());
+                email.setText("Email: " + user.getEmail());
+            }
 
-        if( ! Strings.isNullOrEmpty(user.getToken())) {
-            navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
-            navigationView.getMenu().findItem(R.id.menu_logout).setVisible(true);
-        } else {
-            navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(false);
-            navigationView.getMenu().findItem(R.id.menu_login).setVisible(true);
+            if (!Strings.isNullOrEmpty(user.getToken())) {
+                navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
+                navigationView.getMenu().findItem(R.id.menu_logout).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(false);
+                navigationView.getMenu().findItem(R.id.menu_login).setVisible(true);
+            }
         }
-
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -93,7 +94,7 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 NewEventActivity.start(this);
                 break;
             case R.id.menu_about:
-//                AboutActivity.start(this);
+                AboutActivity.start(this);
                 break;
             case R.id.menu_login:
                 LoginActivity.start(this);
