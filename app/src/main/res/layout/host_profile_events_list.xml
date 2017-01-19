@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/host_profile_events_list"
+        style="@style/event_card_title"
+        android:layout_marginTop="15dp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#80000000"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp" />
+
+    <hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView
+        android:id="@+id/item_recycler_view"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

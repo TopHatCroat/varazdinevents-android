@@ -100,16 +100,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-
-                <hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView
-                    android:id="@+id/item_recycler_view"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:showIn="@layout/activity_main"
+                <include layout="@layout/host_profile_events_list"
+                    android:id="@+id/host_profile_events_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
+
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

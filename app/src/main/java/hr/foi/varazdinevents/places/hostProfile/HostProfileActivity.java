@@ -190,18 +190,21 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 //        this.title.setText(user.getUsername());
         if(host.getDescription().equals("")){this.text.setText("N/A");}
         else this.text.setText(host.getDescription());
+
         if(host.getWorkingTime().equals("")){this.workingTime.setText("N/A");}
         else this.workingTime.setText(host.getWorkingTime());
+
         if(host.getAddress().equals("")){this.address.setText("N/A");}
         else this.address.setText(host.getAddress());
+
         if(host.getFacebook().equals("")){this.facebook.setText("N/A");}
         else this.facebook.setText(host.getFacebook());
+
         if(host.getWeb().equals("")){this.web.setText("N/A");}
         else this.web.setText(host.getWeb());
+
         if(host.getPhone().equals("")){this.phone.setText("N/A");}
         else this.phone.setText(host.getPhone());
-//        this.image.setImageAlpha(user.getImage());
-
 
         String location = "Julija Merlića 9, 42000 Varaždin";
 //        this.workingTime.setText("0-24");
@@ -294,11 +297,13 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 
     @Override
     public void onItemClicked(Object item) {
-
+        EventDetailsActivity.startWithEvent((Event)item, this);
     }
 
     public void showEvents(List<Event> events) {
-        setEvents(events);
+        List<Event> hostsEvents = filterHostEvents(events);
+
+        setEvents(hostsEvents);
         recyclerView.setHasFixedSize(true);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -308,7 +313,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         }
 
         recyclerView.setAdapter(eventListAdapter);
-        eventListAdapter.setItems(events);
+        eventListAdapter.setItems(hostsEvents);
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(eventListAdapter);
         itemTouchHelper = new ItemTouchHelper(callback);
@@ -317,5 +322,14 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    private List<Event> filterHostEvents(List<Event> events){
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : events){
+            if(event.host.equals(host.getUsername()))
+                filteredList.add(event);
+        }
+        return filteredList;
     }
 }

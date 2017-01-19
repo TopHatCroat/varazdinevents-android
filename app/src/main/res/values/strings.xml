@@ -83,6 +83,7 @@
     <string name="host_web">Web: </string>
     <string name="host_phone">Phone: </string>
     <string name="host_profile_title">defaultPlaceHolderHostProfileTitle</string>
+    <string name="host_profile_events_list">Incoming events</string>
 
     <string-array name="Language">
         <item>English</item>
