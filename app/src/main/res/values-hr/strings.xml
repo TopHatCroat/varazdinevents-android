@@ -20,7 +20,7 @@
     <string name="category_culture">Kultura</string>
     <string name="application">Aplikacija</string>
     <string name="settings">Postavke</string>
-    <string name="about">O nama</string>
+    <string name="about">O aplikaciji</string>
 
     <string-array name="Language">
         <item>English</item>

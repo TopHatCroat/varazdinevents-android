@@ -90,6 +90,9 @@
         Jedan od glavnih aspekata ove inicijative prikaz je svih aktualnih događanja na području grada Varaždina i okolice te
         njihova kategorizacija prema željenim kriterijima.
     </string>
+    <string name="app_exit">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string-array name="Language">
         <item>English</item>

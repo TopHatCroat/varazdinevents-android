@@ -23,6 +23,7 @@ import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.register.RegisterActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 
 /**
  * Created by Antonio Martinović on 09.11.16.
@@ -41,6 +42,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle(R.string.login);
         if (User.count(User.class) < 2) {
             User user = new User("a", "a", "a");
             user.save();
@@ -125,7 +127,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
+                .setMessage(R.string.app_exit)
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -135,4 +137,5 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
                 .setNegativeButton("No", null)
                 .show();
     }
+
 }
