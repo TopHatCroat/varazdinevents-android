@@ -162,6 +162,8 @@ public class EventManager {
                             event.setFacebook(eventResponse.facebook);
                             event.setOffers(eventResponse.offers);
                             event.setCategory(eventResponse.category);
+                            event.setDateUpdated(eventResponse.lastUpdate);
+                            event.setHostApiId(eventResponse.hostApiId);
                             events.add(event);
 
                             int lastUpdate = SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
@@ -207,6 +209,9 @@ public class EventManager {
                     .first();
             if(tmp == null) {
                 Event.save(event);
+            } else if(event.getDateUpdated() > tmp.getDateUpdated()) {
+                tmp = event;
+                tmp.save();
             }
         }
     }

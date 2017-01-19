@@ -1,5 +1,7 @@
 package hr.foi.varazdinevents.places.login;
 
+import android.support.test.espresso.core.deps.guava.base.Strings;
+
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.net.UnknownHostException;
@@ -28,32 +30,32 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
     }
 
     public void tryLogin(String username, String password) {
-        long count = User.count(User.class);
-        if (count > 0) {
-            userManager.login(username, password).subscribe(new Observer<User>() {
-                @Override
-                public void onCompleted() {
-                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                    userManager.registerFCMToken(refreshedToken).subscribe();
+        getViewLayer().showLoading(true);
+        userManager.login(username, password).subscribe(new Observer<User>() {
+            @Override
+            public void onCompleted() {
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                userManager.registerFCMToken(refreshedToken).subscribe();
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof UnknownHostException) {
+                    getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.network_not_accessible));
                 }
+                getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.loginError));
+            }
 
-                @Override
-                public void onError(Throwable e) {
-                    if (e instanceof UnknownHostException) {
-                        getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.network_not_accessible));
-                    }
+            @Override
+            public void onNext(User user) {
+                if(Strings.isNullOrEmpty(user.getToken())) {
                     getViewLayer().onFailure(getViewLayer().getResources().getString(R.string.loginError));
-                }
-
-                @Override
-                public void onNext(User user) {
+                } else {
                     getViewLayer().onSuccess(user);
                 }
-            });
-        } else {
-            getViewLayer().showBasicError(getViewLayer().getResources().getString(R.string.loginDatabaseError));
-        }
+            }
+        });
     }
 
 }

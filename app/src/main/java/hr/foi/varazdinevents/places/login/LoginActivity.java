@@ -41,12 +41,6 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (User.count(User.class) < 2) {
-            User user = new User("a", "a", "a");
-            user.save();
-            User user2 = new User("", "", "");
-            user2.save();
-        }
 
         overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
     }

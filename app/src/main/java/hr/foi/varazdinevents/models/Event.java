@@ -23,11 +23,13 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     public Long date;
     public Long dateTo;
     public String host;
+    public Integer hostApiId;
     public String officialLink;
     public String image;
     public String facebook;
     public String offers;
     public String category;
+    public Integer dateUpdated;
 
     @Ignore
     public boolean isHidden = false;
@@ -193,6 +195,22 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     public boolean isNotified() { return isNotified; }
 
     public void setNotified(boolean notified) { this.isNotified = notified; }
+
+    public Integer getHostApiId() {
+        return hostApiId;
+    }
+
+    public void setHostApiId(Integer hostApiId) {
+        this.hostApiId = hostApiId;
+    }
+
+    public Integer getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Integer dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
 
     @Override
     public boolean isMatching(String query) {

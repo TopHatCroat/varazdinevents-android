@@ -25,4 +25,6 @@ public class EventResponse {
     public String category;
     @SerializedName("date_updated")
     public Integer lastUpdate;
+    @SerializedName("author")
+    public Integer hostApiId;
 }
