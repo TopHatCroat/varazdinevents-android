@@ -321,6 +321,7 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     @OnClick(R.id.event_details_host)
     public void onClick(View view) {
         Intent newIntent = new Intent(EventDetailsActivity.this, HostProfileActivity.class);
+        newIntent.putExtra("hostname", event.getHost());
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         EventDetailsActivity.this.startActivity(newIntent);
     }

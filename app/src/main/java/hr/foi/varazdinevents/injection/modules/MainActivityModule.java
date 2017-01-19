@@ -12,6 +12,7 @@ import dagger.Provides;
 import dagger.multibindings.IntKey;
 import dagger.multibindings.IntoMap;
 import hr.foi.varazdinevents.api.EventManager;
+import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.places.events.BasicEventViewHolderFactory;
 import hr.foi.varazdinevents.places.events.MainPresenter;
@@ -45,8 +46,8 @@ public class MainActivityModule {
     }
 
     @Provides
-    MainPresenter provideMainPresenter(EventManager eventManager){
-        this.presenterLayer = new MainPresenter(eventManager);
+    MainPresenter provideMainPresenter(EventManager eventManager, UserManager userManager){
+        this.presenterLayer = new MainPresenter(eventManager, userManager);
         return this.presenterLayer;
     }
 

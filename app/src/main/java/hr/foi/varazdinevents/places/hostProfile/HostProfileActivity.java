@@ -4,16 +4,22 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
-import android.text.Html;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,11 +33,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.orm.SugarContext;
+import com.orm.SugarRecord;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -41,18 +50,16 @@ import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
-import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.injection.modules.HostProfileActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
-import hr.foi.varazdinevents.places.events.MainPresenter;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
-import hr.foi.varazdinevents.ui.base.BasePresenter;
+import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
+import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
+import hr.foi.varazdinevents.util.Constants;
 import hr.foi.varazdinevents.util.FontManager;
-import rx.Observer;
-
-import static hr.foi.varazdinevents.util.Constants.ARG_EVENT;
 
 /**
  * Created by Valentin Magdić on 26.12.16..
@@ -61,7 +68,7 @@ import static hr.foi.varazdinevents.util.Constants.ARG_EVENT;
 public class HostProfileActivity extends BaseNavigationActivity implements OnMapReadyCallback {
     private static final String ARG_EVENT = "arg_event";
     private GoogleMap mMap;
-    private Event event;
+    private User host;
     Double latitude, longitude;
     String locationTitle, locationCategory;
     @Inject
@@ -71,9 +78,29 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @Inject
     UserManager userManager;
 
+    @Nullable
+    @BindView(R.id.item_recycler_view)
+    ItemRecyclerView recyclerView;
+    @Inject
+    GridLayoutManager gridLayoutManager;
+    @Inject
+    LinearLayoutManager linearLayoutManager;
+    @Inject
+    ItemListAdapter eventListAdapter;
+    ItemTouchHelper itemTouchHelper;
+    @Inject
+    @Nullable
+    Slide enterAnimation;
+    @Inject
+    @Nullable
+    Fade returnAnimation;
+
+    List<Event> events = new ArrayList<>();
+
+
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.progresBar)
+    @BindView(R.id.host_progressBar)
     ProgressBar progressBar;
     @BindView(R.id.host_profile_content_holder)
     LinearLayout contentHolder;
@@ -93,6 +120,8 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     TextView web;
     @BindView(R.id.host_profile_phone)
     TextView phone;
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
 
     @BindView(R.id.awesome_web)
     TextView awesomeWeb;
@@ -105,19 +134,36 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @BindView(R.id.awesome_address)
     TextView awesomeAddress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        rx.Observable<List<User>> userStream = userManager.getUsers();
-//        userStream.subscribe();
-//        collapsingToolbarLayout.setTitle(event.getTitle());
-//        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-//        toolbar.setTitle(event.getTitle());
-//        Picasso.with(this)
-//                .load(event.getImage())
-//                .resize(380, 380)
-//                .centerCrop()
-//                .into(image);
+        String hostname = getIntent().getStringExtra("hostname");
+        this.host = Select.from(User.class)
+                .where(Condition.prop("USERNAME").eq(hostname))
+                .first();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(enterAnimation);
+            getWindow().setReturnTransition(returnAnimation);
+        }
+
+        collapsingToolbarLayout.setTitle(host.getUsername());
+        toolbar.setTitle(host.getUsername());
+
+        if(host.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
+            collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+
+            Picasso.with(this)
+                    .load(host.getImage())
+                    .resize(380, 380)
+                    .centerCrop()
+                    .into(image);
+        } else {
+            appBarLayout.setExpanded(false);
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        }
 
         Typeface iconFont = FontManager.getFontAwesome(getApplicationContext());
         FontManager.markAsIconContainer(awesomeClock, iconFont);
@@ -129,6 +175,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     @Override
@@ -138,21 +185,30 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         showLoading(true);
 
 //        this.title.setText(user.getUsername());
-//        this.text.setText(user.getDescription());
-//        this.workingTime.setText(user.getWorkingTime());
-//        this.address.setText(user.getAddress());
-//        this.facebook.setText(user.getFacebook());
-//        this.web.setText(user.getWeb());
-//        this.phone.setText(user.getPhone());
-//        this.image.setImageAlpha(user.getImage());
+        if(host.getDescription().equals("")){this.text.setText("N/A");}
+        else this.text.setText(host.getDescription());
 
-        showLoading(false);
+        if(host.getWorkingTime().equals("")){this.workingTime.setText("N/A");}
+        else this.workingTime.setText(host.getWorkingTime());
+
+        if(host.getAddress().equals("")){this.address.setText("N/A");}
+        else this.address.setText(host.getAddress());
+
+        if(host.getFacebook().equals("")){this.facebook.setText("N/A");}
+        else this.facebook.setText(host.getFacebook());
+
+        if(host.getWeb().equals("")){this.web.setText("N/A");}
+        else this.web.setText(host.getWeb());
+
+        if(host.getPhone().equals("")){this.phone.setText("N/A");}
+        else this.phone.setText(host.getPhone());
+
         String location = "Julija Merlića 9, 42000 Varaždin";
-        this.workingTime.setText("0-24");
-        this.address.setText(location);
-        this.phone.setText("099 12345678");
-        this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
-        this.web.setMovementMethod(LinkMovementMethod.getInstance());
+//        this.workingTime.setText("0-24");
+//        this.address.setText(location);
+//        this.phone.setText("099 12345678");
+//        this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
+//        this.web.setMovementMethod(LinkMovementMethod.getInstance());
 
         //Google map information
         Geocoder geocoder = new Geocoder(this);
@@ -174,6 +230,8 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         this.locationTitle = "VarazdinEvents";
         this.locationCategory = location;
 
+        if (events.size() == 0) presenter.loadEvents();
+        showLoading(false);
     }
 
     @Override
@@ -234,4 +292,40 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
                 .inject(this);
     }
 
+    public void onItemClicked(Object item) {
+        EventDetailsActivity.startWithEvent((Event)item, this);
+    }
+
+    public void showEvents(List<Event> events) {
+        List<Event> hostsEvents = filterHostEvents(events);
+
+        setEvents(hostsEvents);
+        recyclerView.setHasFixedSize(true);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(gridLayoutManager);
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
+
+        recyclerView.setAdapter(eventListAdapter);
+        eventListAdapter.setItems(hostsEvents);
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(eventListAdapter);
+        itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    private List<Event> filterHostEvents(List<Event> events){
+        final List<Event> filteredList = new ArrayList<>();
+        for(Event event : events){
+            if(event.host.equals(host.getUsername()))
+                filteredList.add(event);
+        }
+        return filteredList;
+    }
 }

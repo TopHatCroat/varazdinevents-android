@@ -24,7 +24,6 @@ import com.google.common.base.Strings;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -88,9 +87,9 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     Spinner category;
     @BindView(R.id.create_new_event)
     FloatingActionButton createButton;
-    @BindView(R.id.progresBar)
+    @BindView(R.id.host_progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.toolbar)
+    @BindView(R.id.host_toolbar)
     Toolbar toolbar;
     private Uri chosenImage;
 
