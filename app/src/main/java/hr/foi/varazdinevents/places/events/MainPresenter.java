@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.UserManager;
+import hr.foi.varazdinevents.models.User;
+import rx.Observable;
 import rx.Observer;
 
 import hr.foi.varazdinevents.api.EventManager;
@@ -16,9 +19,11 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
 
 public class MainPresenter extends BasePresenter<MainActivity> {
     private EventManager eventManager;
+    private UserManager userManager;
 
-    public MainPresenter(EventManager eventManager) {
+    public MainPresenter(EventManager eventManager, UserManager userManager) {
         this.eventManager = eventManager;
+        this.userManager = userManager;
     }
 
 
@@ -54,4 +59,22 @@ public class MainPresenter extends BasePresenter<MainActivity> {
         getViewLayer().onItemClicked(item);
     }
 
+    public void loadUsers() {
+
+        Observer<List<User>> hostObserver = new Observer<List<User>>() {
+            @Override
+            public void onNext(List<User> users) {}
+
+            @Override
+            public void onCompleted() {}
+
+            @Override
+            public void onError(Throwable e) {
+                getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+            }
+        };
+
+        rx.Observable<List<User>> hostStream = userManager.getUsers();
+        hostStream.subscribe(hostObserver);
+    }
 }

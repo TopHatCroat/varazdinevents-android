@@ -70,7 +70,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     ItemTouchHelper itemTouchHelper;
     List<Event> events = new ArrayList<>();
-
+    List<User> users = new ArrayList<>();
     boolean favoriteListChecked = false;
     private Parcelable listState;
 
@@ -98,6 +98,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         super.onStart();
         presenter.attachView(this);
         if (events.size() == 0) presenter.loadEvents();
+        presenter.loadUsers();
     }
 
     @Override
@@ -266,6 +267,8 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+    public void setUser(User user) { this.user = user;}
 
     private List<Event> filter(String query) {
         query = query.toLowerCase();

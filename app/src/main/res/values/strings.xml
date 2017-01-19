@@ -82,6 +82,7 @@
     <string name="host_facebook">Facebook: </string>
     <string name="host_web">Web: </string>
     <string name="host_phone">Phone: </string>
+    <string name="host_profile_title">defaultPlaceHolderHostProfileTitle</string>
 
     <string-array name="Language">
         <item>English</item>

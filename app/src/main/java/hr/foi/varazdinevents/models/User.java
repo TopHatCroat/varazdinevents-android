@@ -2,9 +2,12 @@ package hr.foi.varazdinevents.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.test.espresso.core.deps.guava.base.Strings;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Unique;
+
+import hr.foi.varazdinevents.util.Constants;
 
 /**
  * Created by Antonio Martinović on 09.11.16.
@@ -95,6 +98,14 @@ public class User extends SugarRecord implements Parcelable{
         dest.writeString(this.web);
         dest.writeString(this.phone);
         dest.writeString(this.image);
+    }
+
+//    @Override
+    public int getType() {
+        if(Strings.isNullOrEmpty(this.image) || this.image.equals("http://cms.varazdinevents.cf")) {
+            return Constants.EVENTS_NO_IMAGE_CARD;
+        }
+        return Constants.EVENTS_SIMPLE_CARD;
     }
 
     public Integer getApiId() {
