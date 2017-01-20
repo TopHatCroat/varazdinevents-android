@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.ActivityCompat;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +33,8 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
+import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATION_REQUEST;
+
 /**
  * Created by Antonio Martinović on 08.11.16.
  */
@@ -52,7 +55,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
     }
 
 
-    public void itemFavorited(){
+    public void itemFavorited() {
 
     }
 
@@ -69,8 +72,8 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
                 return Observable.just(parseEvent(event));
             }
         })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Void parseEvent(Event event) {
@@ -80,11 +83,11 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         List<Address> addressList;
         try {
             addressList = geocoder.getFromLocationName(location, 1);
-            if (addressList.size()!=0) {
+            if (addressList.size() != 0) {
                 Address address = addressList.get(0);
                 this.latitude = address.getLatitude();
                 this.longitude = address.getLongitude();
-            }else {
+            } else {
                 this.latitude = 46.307819;
                 this.longitude = 16.338159;
             }
@@ -106,7 +109,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     public void resolveMapPosition() {
         this.counter += 1;
-        if(this.counter >= 2) {
+        if (this.counter >= 2) {
             LatLng latlong = new LatLng(getLatitude(), getLongitude());
             Marker marker = getMap().addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
             marker.showInfoWindow();
@@ -116,24 +119,8 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-
-        if (ActivityCompat.checkSelfPermission(getViewLayer(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                        getViewLayer(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        map.setMyLocationEnabled(true);
-        resolveMapPosition();
+        this.map = googleMap;
+        setMap();
     }
 
     public GoogleMap getMap() {
@@ -150,5 +137,21 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     public String getParsedEventDescription() {
         return parsedEventDescription;
+    }
+
+    public void setMap() {
+        if (ActivityCompat.checkSelfPermission(getViewLayer(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getViewLayer(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getViewLayer(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSION_ACCESS_FINE_LOCATION_REQUEST);
+            return;
+        } else {
+            getMap().setMyLocationEnabled(true);
+            resolveMapPosition();
+            getViewLayer().mapContainer.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -1,9 +1,9 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -46,6 +47,8 @@ import hr.foi.varazdinevents.util.Constants;
 import hr.foi.varazdinevents.util.FontManager;
 import hr.foi.varazdinevents.util.ScreenUtils;
 import rx.Observer;
+
+import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATION_REQUEST;
 
 /**
  * Created by Antonio Martinović on 08.11.16.
@@ -103,6 +106,9 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     TextView awesomeHost;
     @BindView(R.id.awesome_rocket)
     TextView awesomeRocket;
+
+    @BindView(R.id.event_details_map)
+    View mapContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -323,5 +329,24 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         Intent newIntent = new Intent(EventDetailsActivity.this, HostProfileActivity.class);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         EventDetailsActivity.this.startActivity(newIntent);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_ACCESS_FINE_LOCATION_REQUEST: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.setMap();
+                } else {
+                    showBasicError("Unable to show map");
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

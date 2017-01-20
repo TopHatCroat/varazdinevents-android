@@ -11,6 +11,9 @@ public class Constants {
     public static final Integer EVENTS_SIMPLE_CARD = 100;
     public static final Integer EVENTS_NO_IMAGE_CARD = 101;
 
+    public static final int PERMISSION_ACCESS_FINE_LOCATION_REQUEST = 200;
+    public static final int PERMISSION_ACCESS_COARSE_LOCATION_REQUEST = 201;
+
     public static final String ARG_EVENT = "arg_event";
     public static final String PREF_LANG_KEY = "pref_key_language";
 
