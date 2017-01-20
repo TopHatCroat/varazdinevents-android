@@ -54,7 +54,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     UserManager userManager;
     @BindView(R.id.item_recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.progresBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeRefreshLayout;

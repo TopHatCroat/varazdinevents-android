@@ -31,9 +31,9 @@ import hr.foi.varazdinevents.places.settings.SettingsActivity;
  * Created by Antonio Martinović on 27.12.16.
  */
 public abstract class BaseNavigationActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.host_drawer_layout)
+    @BindView(R.id.drawer_layout)
     protected DrawerLayout drawerLayout;
-    @BindView(R.id.host_navigation_view)
+    @BindView(R.id.navigation_view)
     protected NavigationView navigationView;
 
     @Inject

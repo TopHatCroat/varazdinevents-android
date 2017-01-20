@@ -88,19 +88,13 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     @Inject
     ItemListAdapter eventListAdapter;
     ItemTouchHelper itemTouchHelper;
-    @Inject
-    @Nullable
-    Slide enterAnimation;
-    @Inject
-    @Nullable
-    Fade returnAnimation;
 
     List<Event> events = new ArrayList<>();
 
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.host_progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.host_profile_content_holder)
     LinearLayout contentHolder;
@@ -142,11 +136,6 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         this.host = Select.from(User.class)
                 .where(Condition.prop("USERNAME").eq(hostname))
                 .first();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setExitTransition(enterAnimation);
-            getWindow().setReturnTransition(returnAnimation);
-        }
 
         collapsingToolbarLayout.setTitle(host.getUsername());
         toolbar.setTitle(host.getUsername());

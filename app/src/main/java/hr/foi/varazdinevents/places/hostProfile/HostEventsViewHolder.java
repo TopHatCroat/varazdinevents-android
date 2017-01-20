@@ -66,4 +66,9 @@ public class HostEventsViewHolder extends ItemViewHolder {
     public void unbind() {
         unbinder.unbind();
     }
+
+    @Override
+    public View getAnimationTarget() {
+        return image;
+    }
 }

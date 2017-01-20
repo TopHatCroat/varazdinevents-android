@@ -87,9 +87,9 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     Spinner category;
     @BindView(R.id.create_new_event)
     FloatingActionButton createButton;
-    @BindView(R.id.host_progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.host_toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private Uri chosenImage;
 
