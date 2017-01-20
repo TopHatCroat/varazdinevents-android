@@ -5,12 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.annotation.NonNull;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import javax.inject.Inject;
 
@@ -41,6 +37,13 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle(R.string.login);
+        if (User.count(User.class) < 2) {
+            User user = new User("a", "a", "a");
+            user.save();
+            User user2 = new User("", "", "");
+            user2.save();
+        }
 
         overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
     }
@@ -119,7 +122,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
+                .setMessage(R.string.app_exit)
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

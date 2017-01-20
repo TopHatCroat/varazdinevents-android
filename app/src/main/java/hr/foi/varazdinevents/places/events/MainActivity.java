@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -17,24 +14,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.google.firebase.messaging.RemoteMessage;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Nullable;
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
@@ -43,14 +29,11 @@ import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
-import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 import hr.foi.varazdinevents.ui.elements.list.ItemAnimator;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
-import hr.foi.varazdinevents.ui.elements.list.ItemRecyclerView;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
-import rx.Observer;
 
 import static hr.foi.varazdinevents.util.Constants.LIST_STATE_KEY;
 
@@ -71,14 +54,14 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     UserManager userManager;
     @BindView(R.id.item_recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.progresBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeRefreshLayout;
 
     ItemTouchHelper itemTouchHelper;
     List<Event> events = new ArrayList<>();
-
+    List<User> users = new ArrayList<>();
     boolean favoriteListChecked = false;
     private Parcelable listState;
 
@@ -108,6 +91,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         } else {
             animateIn();
         }
+        presenter.loadUsers();
     }
 
     @Override
@@ -245,14 +229,14 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
+                .setMessage(R.string.app_exit)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         MainActivity.this.finish();
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(R.string.no, null)
                 .show();
 
         /*super.onBackPressed();
@@ -275,6 +259,8 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+    public void setUser(User user) { this.user = user;}
 
     private List<Event> filter(String query) {
         query = query.toLowerCase();
