@@ -43,7 +43,7 @@
                     android:scaleType="centerCrop"
                     android:transitionName="event_image_anim_target"
                     android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax">
+                    app:layout_collapseMode="pin">
                 </ImageView>
 
                 <android.support.v7.widget.Toolbar
@@ -52,8 +52,8 @@
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                     app:titleTextColor="@color/white" />
-                <!--app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"-->
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

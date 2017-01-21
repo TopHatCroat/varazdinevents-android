@@ -16,10 +16,14 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.CardView;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -54,7 +58,7 @@ import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATI
  * Created by Antonio Martinović on 08.11.16.
  */
 
-public class EventDetailsActivity extends BaseNavigationActivity {
+public class EventDetailsActivity extends BaseNavigationActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final String ARG_EVENT = "arg_event";
     private Event event;
 
@@ -110,6 +114,8 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     @BindView(R.id.event_details_map)
     View mapContainer;
 
+    private boolean shouldInvalidateAnimation = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +147,7 @@ public class EventDetailsActivity extends BaseNavigationActivity {
         toggleFavoriteIcon(this.event.isFavorite);
 
         collapsingToolbarLayout.setTitle(event.getTitle());
+        appBarLayout.addOnOffsetChangedListener(this);
         toolbar.setTitle(event.getTitle());
 
         if(event.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
@@ -348,6 +355,39 @@ public class EventDetailsActivity extends BaseNavigationActivity {
 
             // other 'case' lines to check for other
             // permissions this app might request
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setExitTransition(null);
+            }
+
+            Animation slideDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.activity_slide_down);
+            getWindow().getDecorView()
+                    .findViewById(android.R.id.statusBarBackground)
+                    .setAlpha(0f);
+            contentHolder.startAnimation(slideDownAnimation);
+            if(shouldInvalidateAnimation) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    image.setVisibility(View.INVISIBLE);
+                    getWindow().setSharedElementReturnTransition(null);
+                }
+            }
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if(verticalOffset < -5) {
+            shouldInvalidateAnimation = true;
         }
     }
 }
