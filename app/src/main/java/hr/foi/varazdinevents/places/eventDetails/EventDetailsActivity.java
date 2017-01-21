@@ -203,7 +203,6 @@ public class EventDetailsActivity extends BaseNavigationActivity {
 
         this.title.setText(event.getTitle());
         this.host.setText(event.getHost());
-        this.host.setPaintFlags(this.host.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         this.category.setText(event.getCategory());
         this.offers.setText(event.getOffers());
 
@@ -215,14 +214,14 @@ public class EventDetailsActivity extends BaseNavigationActivity {
             @Override
             public void onError(Throwable e) {
                 showBasicError(getString(R.string.error_display));
-            }
+        }
 
-            @Override
-            public void onNext(Void aVoid) {
-                presenter.resolveMapPosition();
-                text.setText(presenter.getParsedEventDescription());
-                showLoading(false);
-            }
+        @Override
+        public void onNext(Void aVoid) {
+            presenter.resolveMapPosition();
+            text.setText(presenter.getParsedEventDescription());
+            showLoading(false);
+        }
         };
 
         rx.Observable<Void> eventStream = presenter.parseEventData(event);

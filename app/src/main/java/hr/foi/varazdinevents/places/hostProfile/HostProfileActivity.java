@@ -2,18 +2,21 @@ package hr.foi.varazdinevents.places.hostProfile;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -25,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,6 +51,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
@@ -100,7 +105,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     LinearLayout contentHolder;
     @BindView(R.id.host_profile_image)
     ImageView image;
-//    @BindView(R.id.host_profile_title)
+    //    @BindView(R.id.host_profile_title)
 //    TextView title;
     @BindView(R.id.host_profile_time)
     TextView workingTime;
@@ -140,7 +145,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         collapsingToolbarLayout.setTitle(host.getUsername());
         toolbar.setTitle(host.getUsername());
 
-        if(host.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
+        if (host.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
             Picasso.with(this)
@@ -174,25 +179,31 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         showLoading(true);
 
 //        this.title.setText(user.getUsername());
-        if(host.getDescription().equals("")){this.text.setText("N/A");}
-        else this.text.setText(host.getDescription());
+        if (host.getDescription().equals("")) {
+            this.text.setText("N/A");
+        } else this.text.setText(host.getDescription());
 
-        if(host.getWorkingTime().equals("")){this.workingTime.setText("N/A");}
-        else this.workingTime.setText(host.getWorkingTime());
+        if (host.getWorkingTime().equals("")) {
+            this.workingTime.setText("N/A");
+        } else this.workingTime.setText(host.getWorkingTime());
 
-        if(host.getAddress().equals("")){this.address.setText("N/A");}
-        else this.address.setText(host.getAddress());
+        if (host.getAddress().equals("")) {
+            this.address.setText("N/A");
+        } else this.address.setText(host.getAddress());
 
-        if(host.getFacebook().equals("")){this.facebook.setText("N/A");}
-        else this.facebook.setText(host.getFacebook());
+        if (host.getFacebook().equals("")) {
+            this.facebook.setText("N/A");
+        }
 
-        if(host.getWeb().equals("")){this.web.setText("N/A");}
-        else this.web.setText(host.getWeb());
+        if (host.getWeb().equals("")) {
+            this.web.setText("N/A");
+        }
 
-        if(host.getPhone().equals("")){this.phone.setText("N/A");}
-        else this.phone.setText(host.getPhone());
+        if (host.getPhone().equals("")) {
+            this.phone.setText("N/A");
+        } else this.phone.setText(host.getPhone());
 
-        String location = "Julija Merlića 9, 42000 Varaždin";
+
 //        this.workingTime.setText("0-24");
 //        this.address.setText(location);
 //        this.phone.setText("099 12345678");
@@ -200,15 +211,16 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 //        this.web.setMovementMethod(LinkMovementMethod.getInstance());
 
         //Google map information
+        String location = host.getAddress();
         Geocoder geocoder = new Geocoder(this);
         List<Address> addressList;
         try {
             addressList = geocoder.getFromLocationName(location, 1);
-            if (addressList.size()!=0) {
+            if (addressList.size() != 0) {
                 Address address = addressList.get(0);
                 this.latitude = address.getLatitude();
                 this.longitude = address.getLongitude();
-            }else {
+            } else {
                 this.latitude = 46.309079;
                 this.longitude = 16.347674;
             }
@@ -216,7 +228,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
             e.printStackTrace();
         }
 
-        this.locationTitle = "VarazdinEvents";
+        this.locationTitle = host.getUsername();
         this.locationCategory = location;
 
         if (events.size() == 0) presenter.loadEvents();
@@ -224,7 +236,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         presenter.detachView();
     }
@@ -282,7 +294,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     }
 
     public void onItemClicked(Object item) {
-        EventDetailsActivity.startWithEvent((Event)item, this);
+        EventDetailsActivity.startWithEvent((Event) item, this);
     }
 
     public void showEvents(List<Event> events) {
@@ -293,7 +305,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             recyclerView.setLayoutManager(gridLayoutManager);
-        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setLayoutManager(linearLayoutManager);
         }
 
@@ -309,12 +321,48 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         this.events = events;
     }
 
-    private List<Event> filterHostEvents(List<Event> events){
+    private List<Event> filterHostEvents(List<Event> events) {
         final List<Event> filteredList = new ArrayList<>();
-        for(Event event : events){
-            if(event.host.equals(host.getUsername()))
+        for (Event event : events) {
+            if (event.host.equals(host.getUsername()))
                 filteredList.add(event);
         }
         return filteredList;
     }
+
+    @OnClick(R.id.host_profile_facebook)
+    public void onFacebookClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(host.getFacebook()));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.host_profile_web)
+    public void onWebClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(host.getWeb()));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.host_profile_phone)
+    public void onPhoneClicked() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.callHost)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + host.getPhone()));
+                        try{
+                            startActivity(intent);
+                        }
+                        catch (android.content.ActivityNotFoundException ex){
+                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.event_create_failed),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
+    }
+
 }
