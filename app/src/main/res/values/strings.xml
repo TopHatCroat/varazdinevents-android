@@ -75,8 +75,6 @@
     <string name="category_all">All Events</string>
     <string name="touch_to_set">Touch to set</string>
     <string name="network_not_accessible">Network unavailable</string>
-    <string name="varazdinevents_facebook"><a href="https://www.facebook.com/studentskizivotvarazdina">Poveznica na facebook</a></string>
-    <string name="varazdinevents_web"><a href="http://varazdinevents.cf">Poveznica na web</a></string>
     <string name="host_work_time">Work time: </string>
     <string name="host_address">Host address: </string>
     <string name="host_facebook">Facebook: </string>
@@ -95,6 +93,10 @@
     <string name="no">No</string>
     <string name="host_profile_title">defaultPlaceHolderHostProfileTitle</string>
     <string name="host_profile_events_list">Incoming events</string>
+    <string name="show_web">Show Web profile</string>
+    <string name="callHost">Do you want to make a call?</string>
+    <string name="show_facebook">Show Facebook profile</string>
+    <string name="welcome">Welcome</string>
 
     <string-array name="Language">
         <item>English</item>

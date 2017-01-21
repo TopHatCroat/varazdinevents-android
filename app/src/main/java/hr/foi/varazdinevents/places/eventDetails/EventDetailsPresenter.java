@@ -14,6 +14,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -45,6 +47,7 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
     private GoogleMap map;
     private int counter = 0;
     private String parsedEventDescription;
+    private User hostData;
 
 
     public EventDetailsPresenter(User user) {
@@ -75,7 +78,10 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     private Void parseEvent(Event event) {
         //Google map information
-        String location = "Pavlinska 2, 42000 Varaždin";
+        this.hostData = Select.from(User.class)
+                .where(Condition.prop("USERNAME").eq(event.getHost()))
+                .first();
+        String location = hostData.getAddress();
         Geocoder geocoder = new Geocoder(getViewLayer());
         List<Address> addressList;
         try {

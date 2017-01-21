@@ -104,4 +104,9 @@ public class RegisterActivity extends BaseActivity {
         super.onBackPressed();
         finish();
     }
+
+    @OnClick(R.id.cancel_button)
+    public void onCancelButtonClicked() {
+        LoginActivity.start(this);
+    }
 }

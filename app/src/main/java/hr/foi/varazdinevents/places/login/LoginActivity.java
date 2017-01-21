@@ -101,6 +101,11 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         RegisterActivity.start(this);
     }
 
+    @OnClick(R.id.cancel_button)
+    public void onCancelButtonClicked() {
+        MainActivity.start(this);
+    }
+
 
     @Override
     protected void onStart() {

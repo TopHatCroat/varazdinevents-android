@@ -117,7 +117,7 @@
                 style="@style/dark_grey_text"/>
 
             <TextView
-                android:text="@string/varazdinevents_facebook"
+                android:text="@string/show_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/host_profile_facebook"
@@ -160,7 +160,7 @@
                 android:layout_marginRight="3dp"
                 style="@style/dark_grey_text"/>
             <TextView
-                android:text="@string/varazdinevents_web"
+                android:text="@string/show_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/host_profile_web"
@@ -206,7 +206,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/host_profile_phone"
-                style="@style/dark_grey_text"/>
+                style="@style/red_text_link"/>
 
         </LinearLayout>
         <!-- <View

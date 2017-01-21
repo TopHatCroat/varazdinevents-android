@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/event_details_facebook"
-                style="@style/dark_grey_text"/>
+                style="@style/red_text_link"/>
 
         </LinearLayout>
 

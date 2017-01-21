@@ -108,19 +108,27 @@
                     android:background="@color/colorPrimary"
                     android:text="@string/login"
                     android:id="@+id/login_button"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_margin="20dp"
                     android:textAllCaps="false"
                     style="@style/white_title"/>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:id="@+id/signup_button"
                     android:background="@color/colorPrimary"
                     android:text="@string/signup"
+                    android:textAllCaps="false"
+                    style="@style/white_title"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:id="@+id/cancel_button"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/mdtp_cancel"
                     android:textAllCaps="false"
                     style="@style/white_title"/>
 
@@ -132,14 +140,5 @@
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_menu" />
 
 </android.support.v4.widget.DrawerLayout>

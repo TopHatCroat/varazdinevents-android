@@ -72,7 +72,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @Nullable
-    @BindView(R.id.progresBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.details_content_holder)
     LinearLayout contentHolder;
@@ -210,7 +210,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
         this.title.setText(event.getTitle());
         this.host.setText(event.getHost());
-        this.host.setPaintFlags(this.host.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         this.category.setText(event.getCategory());
         this.offers.setText(event.getOffers());
 
@@ -222,14 +221,14 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
             @Override
             public void onError(Throwable e) {
                 showBasicError(getString(R.string.error_display));
-            }
+        }
 
-            @Override
-            public void onNext(Void aVoid) {
-                presenter.resolveMapPosition();
-                text.setText(presenter.getParsedEventDescription());
-                showLoading(false);
-            }
+        @Override
+        public void onNext(Void aVoid) {
+            presenter.resolveMapPosition();
+            text.setText(presenter.getParsedEventDescription());
+            showLoading(false);
+        }
         };
 
         rx.Observable<Void> eventStream = presenter.parseEventData(event);
