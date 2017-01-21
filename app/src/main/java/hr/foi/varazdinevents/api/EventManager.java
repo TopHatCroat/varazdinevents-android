@@ -76,7 +76,6 @@ public class EventManager {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 
     public Observable<ErrorResponseComplete> createEvent(Event event) {
@@ -127,8 +126,10 @@ public class EventManager {
 
     private Observable<List<Event>> fromDatabase() {
         return Observable.just(
-                //Event.listAll(Event.class)
-                Select.from(Event.class).where(Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list()
+                Select.from(Event.class)
+                        .where(Condition.prop("DATE_TO")
+                        .gt(System.currentTimeMillis()))
+                        .list()
                 )
                 .doOnNext(new Action1<List<Event>>() {
                     @Override
@@ -145,11 +146,11 @@ public class EventManager {
         String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
         return restService.getEvents(lastUpdateValue)
-                .map(new Func1<EventResponseComplete, List<Event>>() {
+                .map(new Func1<EventResponse[], List<Event>>() {
                     @Override
-                    public List<Event> call(EventResponseComplete eventResponses) {
+                    public List<Event> call(EventResponse[] eventResponses) {
                         List<Event> events = new LinkedList<>();
-                        for(EventResponse eventResponse : eventResponses.items){
+                        for(EventResponse eventResponse : eventResponses){
                             Event event = new Event();
                             event.setApiId(eventResponse.id);
                             event.setTitle(eventResponse.title);
@@ -163,7 +164,7 @@ public class EventManager {
                             event.setOffers(eventResponse.offers);
                             event.setCategory(eventResponse.category);
                             event.setDateUpdated(eventResponse.lastUpdate);
-                            event.setHostApiId(eventResponse.hostApiId);
+                            if(eventResponse.hostApiId != null) event.setHostApiId(eventResponse.hostApiId);
                             events.add(event);
 
                             int lastUpdate = SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
@@ -203,7 +204,7 @@ public class EventManager {
     private void toDatabase(List<Event> events) {
         Timber.w("Saving to database...");
         Event tmp;
-        for (Event event : this.events) {
+        for (Event event : events) {
             tmp = Select.from(Event.class)
                     .where(Condition.prop("API_ID").eq(event.apiId))
                     .first();

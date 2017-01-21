@@ -351,9 +351,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -387,6 +384,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if(verticalOffset < -5) {
             shouldInvalidateAnimation = true;
+        } else {
+            shouldInvalidateAnimation = false;
         }
     }
 }

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="@dimen/no_image_item_card_height"
     android:layout_alignParentBottom="true"
-    android:layout_margin="@dimen/layout_margin"
-    >
+    app:cardElevation="@dimen/elevation_amount"
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:layout_marginRight="@dimen/layout_margin">
 
     <RelativeLayout
         android:layout_width="match_parent"
