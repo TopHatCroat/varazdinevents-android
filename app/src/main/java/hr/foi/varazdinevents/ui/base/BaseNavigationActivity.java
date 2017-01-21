@@ -54,8 +54,8 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 username.setText(R.string.nav_header_title);
                 email.setText(R.string.nav_header_info);
             } else {
-                username.setText("Korisnik: " + user.getUsername());
-                email.setText("Email: " + user.getEmail());
+                username.setText(R.string.welcome);
+                email.setText(user.getUsername());
             }
 
             if (!Strings.isNullOrEmpty(user.getToken())) {

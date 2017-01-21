@@ -68,7 +68,7 @@ public class EventDetailsActivity extends BaseNavigationActivity {
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @Nullable
-    @BindView(R.id.progresBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.details_content_holder)
     LinearLayout contentHolder;

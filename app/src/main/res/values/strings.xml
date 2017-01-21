@@ -93,8 +93,10 @@
     <string name="no">No</string>
     <string name="host_profile_title">defaultPlaceHolderHostProfileTitle</string>
     <string name="host_profile_events_list">Incoming events</string>
-    <string name="show_web">Show web</string>
+    <string name="show_web">Show Web profile</string>
     <string name="callHost">Do you want to make a call?</string>
+    <string name="show_facebook">Show Facebook profile</string>
+    <string name="welcome">Welcome</string>
 
     <string-array name="Language">
         <item>English</item>

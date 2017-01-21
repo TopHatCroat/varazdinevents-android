@@ -111,7 +111,7 @@
             <ProgressBar
                 android:paddingTop="150dp"
                 android:visibility="gone"
-                android:id="@+id/progresBar"
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

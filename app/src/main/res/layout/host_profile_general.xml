@@ -117,7 +117,7 @@
                 style="@style/dark_grey_text"/>
 
             <TextView
-                android:text="@string/show_event"
+                android:text="@string/show_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/host_profile_facebook"
