@@ -5,15 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.auto.factory.AutoFactory;
 import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
@@ -21,9 +19,9 @@ import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 import hr.foi.varazdinevents.util.ScreenUtils;
 
 /**
+ * View holder for the basic event item with an image
  * Created by Antonio Martinović on 31.10.16.
  */
-
 @AutoFactory(implementing = ItemViewHolderFactory.class)
 public class BasicEventViewHolder extends ItemViewHolder {
     private static final int ITEM_LAYOUT = R.layout.event_basic_item;

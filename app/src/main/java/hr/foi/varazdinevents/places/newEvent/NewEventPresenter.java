@@ -1,11 +1,9 @@
 package hr.foi.varazdinevents.places.newEvent;
 
 import android.net.Uri;
-
-import org.json.JSONException;
-
 import java.io.File;
 import java.net.UnknownHostException;
+import rx.Observer;
 
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.EventManager;
@@ -14,9 +12,6 @@ import hr.foi.varazdinevents.api.responses.ImgurResponse;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 import hr.foi.varazdinevents.util.FileUtils;
-import rx.Observer;
-import timber.log.Timber;
-
 /**
  * Created by Antonio Martinović on 03.12.16.
  */
@@ -28,12 +23,18 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
         this.eventManager = eventManager;
     }
 
-    public void uploadImage(final Event event, Uri image) {
+    /**
+     * Uploads the image to Imgur service and when completed calls the
+     * {@link NewEventPresenter#createEvent(Event)} to try creating the event
+     * with the image link attribute updated with the link of the image
+     * @param event event to create
+     * @param image image associated with event
+     */
+    void uploadImage(final Event event, Uri image) {
         File imageFile = null;
         if(image != null) {
             imageFile = new File(FileUtils.getPath(getViewLayer(), image));
         }
-
 
         checkViewAttached();
         getViewLayer().showLoading(true);
@@ -41,15 +42,14 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
         Observer<ImgurResponse> eventObserver = new Observer<ImgurResponse>() {
             @Override
             public void onNext(ImgurResponse imgurResponse) {
-
                 event.setImage(imgurResponse.data.link);
                 createEvent(event);
-
             }
 
             @Override
             public void onCompleted() {
-                //getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_success));
+                getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_success));
+                getViewLayer().onBackPressed();
             }
 
             @Override
@@ -67,7 +67,13 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
         eventStream.subscribe(eventObserver);
     }
 
-    public void createEvent(Event event) {
+    /**
+     * Makes a new request to the API with data for event creation, when completed
+     * it shows the status messages on the view layer and exists the activity
+     * if successful
+     * @param event event to create
+     */
+    private void createEvent(Event event) {
         Observer<ErrorResponseComplete> eventObserver = new Observer<ErrorResponseComplete>() {
             @Override
             public void onNext(ErrorResponseComplete events) {

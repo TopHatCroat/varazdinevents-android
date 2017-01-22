@@ -3,23 +3,20 @@ package hr.foi.varazdinevents.places.events;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.auto.factory.AutoFactory;
-import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.ui.elements.ItemViewHolderFactory;
 import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
 
 /**
+ * View holder for the basic event item with no image to display
  * Created by Antonio Martinović on 31.10.16.
  */
 
@@ -77,6 +74,4 @@ public class NoImageEventViewHolder extends ItemViewHolder {
     public View getAnimationTarget() {
         return null;
     }
-
-
 }
