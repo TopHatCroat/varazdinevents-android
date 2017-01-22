@@ -3,6 +3,7 @@ package hr.foi.varazdinevents.injection;
 import android.support.annotation.NonNull;
 
 import dagger.Subcomponent;
+import hr.foi.varazdinevents.injection.modules.AboutModule;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.injection.modules.HostProfileActivityModule;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
@@ -33,4 +34,6 @@ public interface UserComponent {
     NewEventComponent plus(@NonNull NewEventModule newEventModule);
     @NonNull
     HostProfileActivityComponent plus(@NonNull HostProfileActivityModule hostProfileActivityModule);
+    @NonNull
+    AboutActivityComponent plus(@NonNull AboutModule aboutModule);
 }

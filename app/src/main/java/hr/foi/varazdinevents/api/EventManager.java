@@ -194,7 +194,7 @@ public class EventManager {
             eventsMap.put(event.apiId, event);
         }
         for (Event event : events) {
-            if(!eventsMap.containsKey(event.apiId))
+            if(!eventsMap.containsKey(event.apiId) && event.getDateTo() > System.currentTimeMillis())
                 eventsMap.put(event.apiId, event);
         }
 
