@@ -84,10 +84,21 @@
     <string name="show_event">Show event</string>
     <string name="error_display">Error displaying something</string>
     <string name="about_app">About VarazdinEvents</string>
-    <string name="about_app_text">
-        VarazinEvents postojeća je inicijativa čija je glavna svrha podizanje društvenog i kulturološkog standarda grada Varaždina.
-        Jedan od glavnih aspekata ove inicijative prikaz je svih aktualnih događanja na području grada Varaždina i okolice te
-        njihova kategorizacija prema željenim kriterijima.
+    <string name="about_app_text_1">
+        \tOva inicijativa nastala je davnog 10. listopada 2014. godine osnivanjem Facebook stranice „Studentski život Varaždina“ gdje smo nastojali objediniti sva događanja
+        s područja grada Varaždina te ih približiti studentskoj populaciji, ali i svima onima koji su bili zainteresirani sadržajem koji pružamo.
+        Veliki početni uspjeh te mnogobrojne riječi pohvale ubrzo su ovu jednostavnu ideju pretvorile u ambiciju, koja nas kroz sve ove godine drži na istom putu ka
+        ostvarenju konačnog cilja – <b>podizanju društvenog i kulturološkog standarda grada Varaždina.</b>
+    </string>
+    <string name="about_app_text_2">
+        \tUnatoč brojnim preprekama, korak po korak uspjeli smo realizirati još jednu točku naše inicijative te izraditi web stranicu te Android i iOS aplikaciju, <b>VaraždinEvents</b>.
+        Web stranica i aplikacije su zamišljene kao pregledniji supstitut sadržaja koji smo pružali putem Facebooka te je direktan posrednik između Vas i
+        potencijalnih događaja i aktivnosti na području grada Varaždina i njegove okolice.
+    </string>
+    <string name="about_app_text_3">
+        \tNadamo se da ćete se i VI uključiti u ovaj projekt jednostavnim sudjelovanjem u aktivnostima i događajima koji se svakodnevno provode.
+        Ukoliko se imate želju neposredno uključiti u realizaciju ove inicijative, slobodno nam se javite sa svojim prijedlozima, primjedbama,
+        ali i idejama za nove pothvate.
     </string>
     <string name="app_exit">Are you sure you want to exit?</string>
     <string name="yes">Yes</string>
@@ -101,6 +112,7 @@
     <string name="new_facebook_event">Import event</string>
     <string name="facebook_input_id">Enter event ID</string>
 
+    <string name="callSupport">Call Support</string>
 
     <string-array name="Language">
         <item>English</item>

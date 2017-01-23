@@ -1,9 +1,12 @@
 package hr.foi.varazdinevents.places.eventDetails;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
@@ -54,7 +57,6 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         this.user = user;
     }
 
-
     public void itemFavorited() {
 
     }
@@ -72,8 +74,8 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
                 return Observable.just(parseEvent(event));
             }
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Void parseEvent(Event event) {
@@ -81,23 +83,23 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         this.hostData = Select.from(User.class)
                 .where(Condition.prop("USERNAME").eq(event.getHost()))
                 .first();
-        String location = hostData.getAddress();
-        Geocoder geocoder = new Geocoder(getViewLayer());
         List<Address> addressList;
-        try {
-            addressList = geocoder.getFromLocationName(location, 1);
-            if (addressList.size() != 0) {
-                Address address = addressList.get(0);
-                this.latitude = address.getLatitude();
-                this.longitude = address.getLongitude();
-            } else {
-                this.latitude = 46.307819;
-                this.longitude = 16.338159;
+        if(isOnline()) {
+            try {
+                String location = this.hostData.getAddress();
+                Geocoder geocoder = new Geocoder(getViewLayer());
+                addressList = geocoder.getFromLocationName(location, 1);
+                if (addressList.size() != 0) {
+                    Address address = addressList.get(0);
+                    this.latitude = address.getLatitude();
+                    this.longitude = address.getLongitude();
+                } else {
+                    this.latitude = 46.307819;
+                    this.longitude = 16.338159;
+                }
+            } catch (Exception e) {
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
         Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -112,11 +114,12 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
 
     public void resolveMapPosition() {
         this.counter += 1;
-        if (this.counter >= 2) {
+        if (this.counter >= 2 && (getLatitude() != 0 && getLongitude() != 0)) {
             LatLng latlong = new LatLng(getLatitude(), getLongitude());
             Marker marker = getMap().addMarker(new MarkerOptions().position(latlong).title(locationTitle).snippet(locationCategory));
             marker.showInfoWindow();
             getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17));
+            getViewLayer().mapContainer.setVisibility(View.VISIBLE);
         }
     }
 
@@ -154,7 +157,13 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         } else {
             getMap().setMyLocationEnabled(true);
             resolveMapPosition();
-            getViewLayer().mapContainer.setVisibility(View.VISIBLE);
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getViewLayer().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

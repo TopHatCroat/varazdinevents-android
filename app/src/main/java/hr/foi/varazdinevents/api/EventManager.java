@@ -13,7 +13,6 @@ import java.util.Map;
 
 import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
 import hr.foi.varazdinevents.api.responses.EventResponse;
-import hr.foi.varazdinevents.api.responses.EventResponseComplete;
 import hr.foi.varazdinevents.api.responses.ImgurResponse;
 import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.models.Event;
@@ -76,9 +75,13 @@ public class EventManager {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 
+    /**
+     * Creates an event by sending event data to the API
+     * @param event to create
+     * @return error code and description if any
+     */
     public Observable<ErrorResponseComplete> createEvent(Event event) {
         NewEventPojo createEvent = new NewEventPojo();
         createEvent.title = event.getTitle();
@@ -99,6 +102,11 @@ public class EventManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Uploads an image to the Imgur service and returns image data which includes a link to it
+     * @param image loaded File containing the image
+     * @return ImgurResponse with status code and response data
+     */
     public Observable<ImgurResponse> uploadImage(File image) {
         String type;
         if (image.getAbsolutePath().endsWith("png")) {
@@ -116,6 +124,10 @@ public class EventManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Loads data from memory
+     * @return all events loaded in memory
+     */
     private Observable<List<Event>> fromMemory(){
         return Observable.just(events).doOnNext(new Action1<List<Event>>() {
             @Override
@@ -125,10 +137,16 @@ public class EventManager {
         });
     }
 
+    /**
+     * Loads event data from database that has the DATE_TO attribute set to lesser than now
+     * @return events from database
+     */
     private Observable<List<Event>> fromDatabase() {
         return Observable.just(
-                //Event.listAll(Event.class)
-                Select.from(Event.class).where(Condition.prop("DATE_TO").lt(System.currentTimeMillis()/1000)).list()
+                Select.from(Event.class)
+                        .where(Condition.prop("DATE_TO")
+                        .gt(System.currentTimeMillis()))
+                        .list()
                 )
                 .doOnNext(new Action1<List<Event>>() {
                     @Override
@@ -141,15 +159,19 @@ public class EventManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Loads all new events from the API and stores the new ones to the database and the memory
+     * @return all recently changed or new events
+     */
     private Observable<List<Event>> fromNetwork() {
         String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
         return restService.getEvents(lastUpdateValue)
-                .map(new Func1<EventResponseComplete, List<Event>>() {
+                .map(new Func1<EventResponse[], List<Event>>() {
                     @Override
-                    public List<Event> call(EventResponseComplete eventResponses) {
+                    public List<Event> call(EventResponse[] eventResponses) {
                         List<Event> events = new LinkedList<>();
-                        for(EventResponse eventResponse : eventResponses.items){
+                        for(EventResponse eventResponse : eventResponses){
                             Event event = new Event();
                             event.setApiId(eventResponse.id);
                             event.setTitle(eventResponse.title);
@@ -163,7 +185,7 @@ public class EventManager {
                             event.setOffers(eventResponse.offers);
                             event.setCategory(eventResponse.category);
                             event.setDateUpdated(eventResponse.lastUpdate);
-                            event.setHostApiId(eventResponse.hostApiId);
+                            if(eventResponse.hostApiId != null) event.setHostApiId(eventResponse.hostApiId);
                             events.add(event);
 
                             int lastUpdate = SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);
@@ -185,6 +207,10 @@ public class EventManager {
                .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Stores events into memory
+     * @param events to save
+     */
     private void toMemory(List<Event> events) {
         Timber.w("Saving to memory...");
 
@@ -193,17 +219,21 @@ public class EventManager {
             eventsMap.put(event.apiId, event);
         }
         for (Event event : events) {
-            if(!eventsMap.containsKey(event.apiId))
+            if(!eventsMap.containsKey(event.apiId) && event.getDateTo() > System.currentTimeMillis())
                 eventsMap.put(event.apiId, event);
         }
 
         this.events = new ArrayList<Event>(eventsMap.values());
     }
 
+    /**
+     * Stores events into the database
+     * @param events to save
+     */
     private void toDatabase(List<Event> events) {
         Timber.w("Saving to database...");
         Event tmp;
-        for (Event event : this.events) {
+        for (Event event : events) {
             tmp = Select.from(Event.class)
                     .where(Condition.prop("API_ID").eq(event.apiId))
                     .first();

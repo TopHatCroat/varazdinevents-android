@@ -143,7 +143,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
                 new SimpleItemTouchHelperCallback(eventListAdapter);
         itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        recyclerView.setItemAnimator(new ItemAnimator());
+//        recyclerView.setItemAnimator(new ItemAnimator());
     }
 
     @Override

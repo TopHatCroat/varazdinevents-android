@@ -351,9 +351,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -364,14 +361,14 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setExitTransition(null);
+                Animation slideDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                        R.anim.activity_slide_down);
+                getWindow().getDecorView()
+                        .findViewById(android.R.id.statusBarBackground)
+                        .setAlpha(0f);
+                contentHolder.startAnimation(slideDownAnimation);
             }
 
-            Animation slideDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.activity_slide_down);
-            getWindow().getDecorView()
-                    .findViewById(android.R.id.statusBarBackground)
-                    .setAlpha(0f);
-            contentHolder.startAnimation(slideDownAnimation);
             if(shouldInvalidateAnimation) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     image.setVisibility(View.INVISIBLE);
@@ -387,6 +384,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if(verticalOffset < -5) {
             shouldInvalidateAnimation = true;
+        } else {
+            shouldInvalidateAnimation = false;
         }
     }
 }
