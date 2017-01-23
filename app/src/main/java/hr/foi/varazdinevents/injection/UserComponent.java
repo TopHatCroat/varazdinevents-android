@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import dagger.Subcomponent;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
+import hr.foi.varazdinevents.injection.modules.FacebookActivityModule;
 import hr.foi.varazdinevents.injection.modules.HostProfileActivityModule;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
 import hr.foi.varazdinevents.injection.modules.NewEventModule;
@@ -33,4 +34,6 @@ public interface UserComponent {
     NewEventComponent plus(@NonNull NewEventModule newEventModule);
     @NonNull
     HostProfileActivityComponent plus(@NonNull HostProfileActivityModule hostProfileActivityModule);
+    @NonNull
+    FacebookActivityComponent plus(@NonNull FacebookActivityModule facebookActivityModule);
 }

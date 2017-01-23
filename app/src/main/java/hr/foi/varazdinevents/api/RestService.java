@@ -60,7 +60,9 @@ public interface RestService {
     @GET("firebase/add/{token}")
     Observable<JSONObject> sendFCMToken(@Path("token") String token);
 
-
+    //varazdinevents.cf/api/events/facebook/{eventId}?token={token}&oauth={oauth_token}
+    @GET("events/facebook/{eventId}")
+    Observable<JSONObject> importEvent(@Path("eventId") String eventToken, @Query("token") String userToken, @Query("oauth") String facebookToken);
 
 
 }

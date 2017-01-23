@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.FacebookSdk;
 import com.orm.SugarContext;
 
 import hr.foi.varazdinevents.api.UserManager;
@@ -32,6 +33,7 @@ public class MainApplication extends MultiDexApplication {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        FacebookSdk.sdkInitialize(this);
 
         getApplicationComponent();
         createUserComponent();

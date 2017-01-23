@@ -1,6 +1,10 @@
 package hr.foi.varazdinevents.places.login;
 
+import android.os.Bundle;
 import android.support.test.espresso.core.deps.guava.base.Strings;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 

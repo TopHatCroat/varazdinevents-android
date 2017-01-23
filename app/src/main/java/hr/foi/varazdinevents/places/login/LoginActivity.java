@@ -3,10 +3,26 @@ package hr.foi.varazdinevents.places.login;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import javax.inject.Inject;
 
@@ -19,6 +35,7 @@ import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.register.RegisterActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
+import hr.foi.varazdinevents.util.SharedPrefs;
 
 /**
  * Created by Antonio Martinović on 09.11.16.
@@ -34,6 +51,14 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @Inject
     LoginPresenter presenter;
 
+//    CallbackManager callbackManager;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+//    private LoginButton fbLoginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +70,46 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
             user2.save();
         }
 
-        overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
+//        AppEventsLogger.activateApp(this);
+
+//        fbLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+//
+//        callbackManager = CallbackManager.Factory.create();
+//        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                SharedPrefs.write("FACEBOOK_TOKEN", loginResult.getAccessToken().getToken());
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//
+//            }
+//        });
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
+//    }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
+        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
     @Override
@@ -96,6 +154,7 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         presenter.tryLogin(user_username, user_pass);
     }
 
+
     @OnClick(R.id.signup_button)
     public void onSignUpButtonClicked() {
         RegisterActivity.start(this);
@@ -109,14 +168,24 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
 
     @Override
     protected void onStart() {
-        super.onStart();
+        super.onStart();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
         presenter.attachView(this);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
     @Override
-    protected void onStop(){
-        super.onStop();
+    protected void onStop() {
+        super.onStop();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
         presenter.detachView();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.disconnect();
     }
 
     public static void start(Context startingActivity) {
@@ -136,5 +205,21 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Login Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
     }
 }

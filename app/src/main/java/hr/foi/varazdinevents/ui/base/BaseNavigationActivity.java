@@ -21,6 +21,7 @@ import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.about.AboutActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.facebook.FacebookActivity;
 import hr.foi.varazdinevents.places.login.LoginActivity;
 import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
@@ -102,6 +103,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 break;
             case R.id.menu_all_events:
                 MainActivity.start(this);
+                break;
+            case R.id.menu_facebook_import:
+                FacebookActivity.start(this);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

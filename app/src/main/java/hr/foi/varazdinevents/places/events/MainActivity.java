@@ -16,7 +16,14 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ProgressBar;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +71,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     List<User> users = new ArrayList<>();
     boolean favoriteListChecked = false;
     private Parcelable listState;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
