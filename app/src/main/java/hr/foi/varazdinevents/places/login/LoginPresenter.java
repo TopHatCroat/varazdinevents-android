@@ -26,6 +26,9 @@ import rx.schedulers.Schedulers;
  * Created by Antonio Martinović on 09.11.16.
  */
 
+/**
+ * Contains additional methods for logging into application
+ */
 public class LoginPresenter extends BasePresenter<LoginActivity> {
     UserManager userManager;
 
@@ -33,6 +36,12 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         this.userManager = userManager;
     }
 
+    /**
+     * Checks entered username and password and logs the user into the application or
+     * shows error messages if the entered information is incorrect
+     * @param username
+     * @param password
+     */
     public void tryLogin(String username, String password) {
         getViewLayer().showLoading(true);
         userManager.login(username, password).subscribe(new Observer<User>() {

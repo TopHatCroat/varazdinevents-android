@@ -21,7 +21,9 @@ import hr.foi.varazdinevents.ui.base.BaseActivity;
  * Created by Bruno on 10.11.16.
  */
 
-
+/**
+ * Contains all activity regarding the registration of a new user
+ */
 public class RegisterActivity extends BaseActivity {
     @BindView(R.id.TFusername_register)
     TextView username;
@@ -89,6 +91,9 @@ public class RegisterActivity extends BaseActivity {
         presenter.detachView();
     }
 
+    /**
+     * Gets all entered data if the register button is clicked and calls method for registration
+     */
     @OnClick(R.id.register_button)
     public void onRegisterButtonClicked() {
         String user_username = username.getText().toString();

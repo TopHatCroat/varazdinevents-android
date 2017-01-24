@@ -93,6 +93,10 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     Toolbar toolbar;
     private Uri chosenImage;
 
+    /**
+     * Creates "New event" activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +109,9 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
     }
 
+    /**
+     * Crates animation on screen transition
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -133,16 +140,27 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * Monitors if inputed text has changed
+     * @param editText
+     */
     @OnTextChanged(value = R.id.text_new_event)
     public void onChangeText(CharSequence editText) {
         eventManager.getNewEvent().setText(editText.toString());
     }
 
+    /**
+     * Monitors if inputed text has changed
+     * @param editText
+     */
     @OnTextChanged(value = R.id.title_new_event)
     public void onChangeTitle(CharSequence editText) {
         eventManager.getNewEvent().setTitle(editText.toString());
     }
 
+    /**
+     * Shows date picker if clicked
+     */
     @OnClick(R.id.start_date_new_event)
     public void onChangeDate() {
         PickerHelper.createDatePicker(START_DATE_PICKER_TAG, this, this);
@@ -174,6 +192,9 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
 //        eventManager.getNewEvent().setImage(editText.toString());
     }
 
+    /**
+     * Starts image picker
+     */
     private void startImagePicker() {
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (result == PackageManager.PERMISSION_GRANTED) {
@@ -207,6 +228,10 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
 //        }
     }
 
+    /**
+     * Checks if the entered data is valid
+     * @return True if data is valid, otherwise false
+     */
     private boolean dataValid() {
         List<EditText> editTexts = Arrays.asList(title, text, startDate, startTime, endDate, endTime);
 
@@ -240,6 +265,13 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         presenter.detachView();
     }
 
+    /**
+     * Sets the chosen date from the date picker
+     * @param view
+     * @param year
+     * @param monthOfYear
+     * @param dayOfMonth
+     */
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
@@ -263,6 +295,13 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         }
     }
 
+    /**
+     * Sets the chosen time from the time picker
+     * @param view
+     * @param hourOfDay
+     * @param minute
+     * @param second
+     */
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
         Calendar calendar = Calendar.getInstance();
@@ -290,6 +329,11 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         }
     }
 
+    /**
+     * Updates time format
+     * @param timeView
+     * @param calendar
+     */
     private void updateTimeField(TextView timeView, Calendar calendar) {
         Calendar cal = new GregorianCalendar();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -297,6 +341,11 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         timeView.setText(dateFormat.format(calendar.getTime()));
     }
 
+    /**
+     * Updates date format
+     * @param dateView
+     * @param calendar
+     */
     private void updateDateField(TextView dateView, Calendar calendar) {
         Calendar cal = new GregorianCalendar();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -304,6 +353,12 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         dateView.setText(dateFormat.format(calendar.getTime()));
     }
 
+    /**
+     * Converts image to bitmap, sets image if it's existent
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data != null) {
@@ -318,6 +373,12 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
         }
     }
 
+    /**
+     * Asks for permissions to pick image
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {

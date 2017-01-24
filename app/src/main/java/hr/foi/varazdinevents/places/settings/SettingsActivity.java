@@ -44,6 +44,10 @@ import static hr.foi.varazdinevents.util.Constants.PREF_EMAIL_KEY;
 /**
  * Created by Antonio Martinović on 12.11.16.
  */
+
+/**
+ * Contains all settings related activities in the application
+ */
 public class SettingsActivity extends BaseActivity implements ViewLayer, SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
     User user;
@@ -55,6 +59,11 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
     private SharedPreferences prefs;
     private ListPreference listPreference;
 
+    /**
+     * Creates "Settings" activity.
+     * Gets default shared preferences and sets default values
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +118,11 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         startingActivity.startActivity(intent);
     }
 
+    /**
+     * Checks which of the preferences was clicked, gets new input and updates values
+     * @param sharedPreferences
+     * @param key
+     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(PREF_LANG_KEY)) {
@@ -139,6 +153,10 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         changeLang(language);
     }
 
+    /**
+     * Edits new selected language
+     * @param lang
+     */
     public void saveLocale(String lang) {
         String langPref = PREF_LANG_KEY;
         SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
@@ -147,6 +165,10 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         editor.commit();
     }
 
+    /**
+     * Changes default local application language
+     * @param lang
+     */
     public void changeLang(String lang) {
         if (lang.equalsIgnoreCase(""))
             return;
@@ -158,6 +180,12 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
+    /**
+     * Updates entered user's details
+     * @param username
+     * @param password
+     * @param email
+     */
     public void updateUserDetails(String username, String password, String email){
         if (!email.matches("[a-zA-Z][a-zA-Z0-9.]{1,}[a-zA-Z0-9]{1}[@]{1}[a-zA-Z]{1}[a-zA-Z.-]{2,}[a-zA-Z]")) {
             alertView("Error", "Incorrect email!");
@@ -176,6 +204,11 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         }
     }
 
+    /**
+     * Prompts dialog with received parameters
+     * @param title
+     * @param message
+     */
     private void alertView(String title, String message ) {
         AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create();
         alertDialog.setTitle(title);

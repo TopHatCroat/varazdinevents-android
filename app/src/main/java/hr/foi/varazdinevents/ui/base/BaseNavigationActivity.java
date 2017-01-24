@@ -40,6 +40,11 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
     @Inject
     User user;
 
+    /**
+     * Creates base navigation, action bar drawer
+     * Gets and sets drawers details
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * An open drawer will close on "back" button pressed
+     */
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -81,6 +89,11 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         }
     }
 
+    /**
+     * Checks which item is selected in the drawer
+     * @param item
+     * @return True
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

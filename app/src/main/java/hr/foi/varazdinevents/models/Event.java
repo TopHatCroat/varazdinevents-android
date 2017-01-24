@@ -15,6 +15,7 @@ import hr.foi.varazdinevents.util.Constants;
 /**
  * Created by Antonio Martinović on 30.10.16.
  */
+
 public class Event extends SugarRecord implements Listable<Event>, Searchable, Parcelable{
     @Unique
     public Integer apiId;

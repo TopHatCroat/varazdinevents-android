@@ -17,12 +17,18 @@ import hr.foi.varazdinevents.injection.modules.AboutModule;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
 
-
+/**
+ * Class for "About" activity
+ */
 public class AboutActivity extends BaseNavigationActivity {
 
     @Inject
     User user;
 
+    /**
+     * Creates "About" activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +36,9 @@ public class AboutActivity extends BaseNavigationActivity {
         overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
     }
 
+    /**
+     * Crates animation on screen transition
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -41,6 +50,9 @@ public class AboutActivity extends BaseNavigationActivity {
         return user;
     }
 
+    /**
+     * Returns layout for activity
+     */
     @Override
     protected int getLayout() {
         return R.layout.activity_about;
@@ -54,11 +66,18 @@ public class AboutActivity extends BaseNavigationActivity {
                 .inject(this);
     }
 
+    /**
+     * Starts the "About" activity
+     * @param startingActivity
+     */
     public static void start(Context startingActivity) {
         Intent intent = new Intent(startingActivity, AboutActivity.class);
         startingActivity.startActivity(intent);
     }
 
+    /**
+     * Registers click on button, automatically calls customer service
+     */
     @OnClick(R.id.about_call_button)
     public void onPhoneClicked() {
         new AlertDialog.Builder(this)

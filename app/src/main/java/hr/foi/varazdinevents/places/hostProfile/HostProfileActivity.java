@@ -70,6 +70,10 @@ import hr.foi.varazdinevents.util.FontManager;
  * Created by Valentin Magdić on 26.12.16..
  */
 
+/**
+ * Contains methods related to host's profile.
+ * Shows host profile's details, host's location on google maps and list of upcoming events
+ */
 public class HostProfileActivity extends BaseNavigationActivity implements OnMapReadyCallback {
     private static final String ARG_EVENT = "arg_event";
     private GoogleMap mMap;
@@ -134,6 +138,12 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     TextView awesomeAddress;
 
 
+    /**
+     * Creates "Host Profile" activity.
+     * Assigns selected host from database, changes toolbar title to host name title,
+     * loads host's image if existent, pre loads icons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,6 +182,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 
     }
 
+    /**
+     * Starts "Host Profile" activity.
+     * Gets and sets host profile's details
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -241,6 +255,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         presenter.detachView();
     }
 
+    /**
+     * Toggles progress bar's and content holder's visibility on and off if loading
+     * @param loading
+     */
     public void showLoading(boolean loading) {
         progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
         contentHolder.setVisibility(loading ? View.GONE : View.VISIBLE);
@@ -252,6 +270,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         startingActivity.startActivity(intent);
     }
 
+    /**
+     * Adds marker of host's location on google map
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -297,6 +319,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         EventDetailsActivity.startWithEvent((Event) item, this);
     }
 
+    /**
+     * Shows list of upcoming events which are hosted by the selected host
+     * @param events
+     */
     public void showEvents(List<Event> events) {
         List<Event> hostsEvents = filterHostEvents(events);
 
@@ -321,6 +347,11 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         this.events = events;
     }
 
+    /**
+     * Filters all events list to match a single host
+     * @param events
+     * @return Filtered list of host's events
+     */
     private List<Event> filterHostEvents(List<Event> events) {
         final List<Event> filteredList = new ArrayList<>();
         for (Event event : events) {
@@ -330,6 +361,9 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         return filteredList;
     }
 
+    /**
+     * Starts new activity if the underlined Facebook text in host's details is clicked.
+     */
     @OnClick(R.id.host_profile_facebook)
     public void onFacebookClicked() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -337,6 +371,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         startActivity(intent);
     }
 
+    /**
+     * Starts new activity if the underlined website text in host's details is clicked.
+     * Opens host's website in default mobile browser.
+     */
     @OnClick(R.id.host_profile_web)
     public void onWebClicked() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -344,6 +382,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
         startActivity(intent);
     }
 
+    /**
+     * Registers click on host's phone number, automatically opens phone number in
+     * mobile's default calling application
+     */
     @OnClick(R.id.host_profile_phone)
     public void onPhoneClicked() {
         new AlertDialog.Builder(this)

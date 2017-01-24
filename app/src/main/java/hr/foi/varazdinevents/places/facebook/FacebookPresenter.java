@@ -14,6 +14,9 @@ import rx.Observer;
  * Created by Valentin Magdić on 23.01.17..
  */
 
+/**
+ * Contains additional methods for facebook event import
+ */
 public class FacebookPresenter extends BasePresenter<FacebookActivity> {
     private UserManager userManager;
 
@@ -21,6 +24,12 @@ public class FacebookPresenter extends BasePresenter<FacebookActivity> {
         this.userManager = userManager;
     }
 
+    /**
+     * Additional methods for facebook event import, calls method for import
+     * @param enteredId
+     * @param userToken
+     * @param facebookToken
+     */
     public void importEvent(String enteredId, String userToken, String facebookToken){
         checkViewAttached();
 

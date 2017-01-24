@@ -23,6 +23,9 @@ import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
  * Created by Valentin Magdić on 11.01.17..
  */
 
+/**
+ * View holder for the basic event item with no image to display
+ */
 @AutoFactory(implementing = ItemViewHolderFactory.class)
 public class NoImageHostEventsViewHolder extends ItemViewHolder {
     private static final int ITEM_LAYOUT = R.layout.event_no_image_item;
@@ -38,11 +41,19 @@ public class NoImageHostEventsViewHolder extends ItemViewHolder {
 
     private Event event;
 
+    /**
+     * Basic event view holder without image
+     * @param parent
+     */
     public NoImageHostEventsViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(ITEM_LAYOUT, parent, false));
         unbinder = ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * Gets and sets basic event details
+     * @param item data object
+     */
     @Override
     public void bind(Object item) {
         event = (Event) item;

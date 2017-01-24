@@ -33,6 +33,11 @@ public interface RestService {
     @GET("event/query") // /query/{timestamp}"
     Observable<EventResponse[]> getEvents(@Query("timestamp") String timestamp);
 
+    /**
+     * API call for getting event hosts
+     * @param timestamp
+     * @return Response containing a list of hosts and it's meta data
+     */
     @GET("hosts")
     Observable<UserResponseComplete> getUsers(@Query("timestamp") String timestamp);
     /**
@@ -54,12 +59,30 @@ public interface RestService {
     @GET("user/login")
     Observable<UserResponse> logoutUser(@Query("token") String token);
 
+    /**
+     * API call for a new event creation
+     * @param token
+     * @param json
+     * @return Event response with token
+     */
     @POST("events")
     Observable<ErrorResponseComplete> createEvent(@Query("token") String token, @Body NewEventPojo json);
 
+    /**
+     * API call for firebase implementation
+     * @param token
+     * @return Firebase response with token
+     */
     @GET("firebase/add/{token}")
     Observable<JSONObject> sendFCMToken(@Path("token") String token);
 
+    /**
+     * API call for importing a new event
+     * @param eventToken
+     * @param userToken
+     * @param facebookToken
+     * @return Event response with token
+     */
     //varazdinevents.cf/api/events/facebook/{eventId}?token={token}&oauth={oauth_token}
     @GET("events/facebook/{eventId}")
     Observable<JSONObject> importEvent(@Path("eventId") String eventToken, @Query("token") String userToken, @Query("oauth") String facebookToken);

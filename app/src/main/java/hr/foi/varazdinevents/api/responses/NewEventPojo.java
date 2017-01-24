@@ -4,6 +4,9 @@ package hr.foi.varazdinevents.api.responses;
  * Created by Antonio Martinović on 03.12.16.
  */
 
+/**
+ * API response for new event
+ */
 public class NewEventPojo {
     public Integer id;
     public String title;

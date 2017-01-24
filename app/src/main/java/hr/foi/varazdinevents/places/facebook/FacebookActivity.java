@@ -36,6 +36,9 @@ import rx.schedulers.Schedulers;
  * Created by Valentin Magdić on 23.01.17..
  */
 
+/**
+ * Contains methods for facebook login and import events from facebook
+ */
 public class FacebookActivity extends BaseNavigationActivity{
     @Inject
     User user;
@@ -50,6 +53,11 @@ public class FacebookActivity extends BaseNavigationActivity{
     private LoginButton fbLoginButton;
     private RestService restService;
 
+    /**
+     * Creates "Facebook" activity
+     * Binds facebook button from xml, creates callback for facebook login
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -79,6 +87,9 @@ public class FacebookActivity extends BaseNavigationActivity{
         return null;
     }
 
+    /**
+     * Returns layout for "Facebook" activity
+     */
     @Override
     protected int getLayout() {
         return R.layout.activity_facebook;
@@ -97,13 +108,22 @@ public class FacebookActivity extends BaseNavigationActivity{
         activity.startActivity(intent);
     }
 
-
+    /**
+     * Facebook's login activity result
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * If Import button is clicked, reads the entered event Id, gets user's token from database,
+     * gets facebook's token from shared preferences and calls method for event import
+     */
     @OnClick(R.id.fb_import_event_id)
     public void OnImportEventButtonClicked(){
         String enteredId = facebookEventId.getText().toString();
@@ -114,12 +134,18 @@ public class FacebookActivity extends BaseNavigationActivity{
 
     }
 
+    /**
+     * Attaches view from presenter
+     */
     @Override
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
     }
 
+    /**
+     * Detaches view from presenter
+     */
     @Override
     protected void onStop(){
         super.onStop();

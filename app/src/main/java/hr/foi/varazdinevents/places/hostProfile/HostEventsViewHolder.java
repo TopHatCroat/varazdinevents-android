@@ -24,6 +24,9 @@ import hr.foi.varazdinevents.ui.elements.list.ItemViewHolder;
  * Created by Valentin Magdić on 11.01.17..
  */
 
+/**
+ * Contains basic view holder for host's events
+ */
 @AutoFactory(implementing = ItemViewHolderFactory.class)
 public class HostEventsViewHolder extends ItemViewHolder {
     private static final int ITEM_LAYOUT = R.layout.event_basic_item;
@@ -42,11 +45,19 @@ public class HostEventsViewHolder extends ItemViewHolder {
 
     private Event event;
 
+    /**
+     * Basic view holder for events of a specific host
+     * @param parent
+     */
     public HostEventsViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(ITEM_LAYOUT, parent, false));
         unbinder = ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * Gets and sets basic event information
+     * @param item data object
+     */
     @Override
     public void bind(Object item) {
         event = (Event) item;

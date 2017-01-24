@@ -31,6 +31,9 @@ public class HostProfilePresenter extends BasePresenter<HostProfileActivity> imp
     public void itemClicked(Object item) {
     }
 
+    /**
+     * Gets and shows list of upcoming events
+     */
     public void loadEvents(){
         checkViewAttached();
         getViewLayer().showLoading(true);
@@ -58,11 +61,20 @@ public class HostProfilePresenter extends BasePresenter<HostProfileActivity> imp
         eventStream.subscribe(eventObserver);
     }
 
+    /**
+     * Starts new activity which show clicked event's detailed information
+     * @param item object of item clicked
+     */
     @Override
     public void onItemClick(Event item) {
         EventDetailsActivity.startWithEvent(item, getViewLayer());
     }
 
+    /**
+     * Starts new activity which show clicked event's detailed information with animations
+     * @param item object of item clicked
+     * @param view animation target
+     */
     @Override
     public void onItemClick(Event item, View view) {
         EventDetailsActivity.startWithEvent(item, getViewLayer());

@@ -246,6 +246,10 @@ public class EventManager {
         }
     }
 
+    /**
+     * Creates new event
+     * @return newEvent
+     */
     public Event getNewEvent() {
         if(this.newEvent == null) {
             this.newEvent = new Event();
@@ -253,9 +257,19 @@ public class EventManager {
         return newEvent;
     }
 
+    /**
+     * Sets new event
+     * @param newEvent
+     */
     public void setNewEvent(Event newEvent) {
         this.newEvent = newEvent;
     }
+
+    /**
+     * Toggles favorite event on/off
+     * @param event
+     * @return Is the event favorited
+     */
     public static boolean toggleFavorite(Event event){
         Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
         tmp.isFavorite = !tmp.isFavorite;

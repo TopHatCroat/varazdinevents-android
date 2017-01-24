@@ -43,11 +43,19 @@ public class BasicEventViewHolder extends ItemViewHolder {
 
     private Event event;
 
+    /**
+     * View holder for basic event
+     * @param parent
+     */
     public BasicEventViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(ITEM_LAYOUT, parent, false));
         unbinder = ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * Gets and sets basic event details
+     * @param item data object
+     */
     @Override
     public void bind(Object item) {
         event = (Event) item;

@@ -41,6 +41,9 @@ import hr.foi.varazdinevents.util.SharedPrefs;
  * Created by Antonio Martinović on 09.11.16.
  */
 
+/**
+ * Contains methods related to logging into application
+ */
 public class LoginActivity extends BaseActivity implements LoginViewLayer {
     @BindView(R.id.login_button)
     Button loginButton;
@@ -59,6 +62,10 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
     private GoogleApiClient client;
 //    private LoginButton fbLoginButton;
 
+    /**
+     * Creates "Login" activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,13 +112,18 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
 //        callbackManager.onActivityResult(requestCode, resultCode, data);
 //    }
 
-
+    /**
+     * Crates animation on screen transition
+     */
     @Override
     protected void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
+    /**
+     * Returns "Login" activity layout
+     */
     @Override
     protected int getLayout() {
         return R.layout.activity_login;
@@ -132,6 +144,10 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         // !!!!!!
     }
 
+    /**
+     * If login is successful, starts "Main" activity
+     * @param user
+     */
     @Override
     public void onSuccess(User user) {
         showLoading(false);
@@ -140,12 +156,20 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         this.finish();
     }
 
+    /**
+     * If login is not successful, shows error message
+     * @param message
+     */
     @Override
     public void onFailure(String message) {
         showLoading(false);
         showBasicError(message);
     }
 
+    /**
+     * If the login button is clicked, gets entered username and password
+     * and calls method for login
+     */
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
         String user_username = username.getText().toString();
@@ -154,17 +178,21 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         presenter.tryLogin(user_username, user_pass);
     }
 
-
+    /**
+     * If the sign up button is clicked, starts new activity for registration
+     */
     @OnClick(R.id.signup_button)
     public void onSignUpButtonClicked() {
         RegisterActivity.start(this);
     }
 
+    /**
+     * If the cancel button is clicked, returns to the main screen
+     */
     @OnClick(R.id.cancel_button)
     public void onCancelButtonClicked() {
         MainActivity.start(this);
     }
-
 
     @Override
     protected void onStart() {
@@ -188,11 +216,18 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         client.disconnect();
     }
 
+    /**
+     * Starts "Login" activity
+     * @param startingActivity
+     */
     public static void start(Context startingActivity) {
         Intent intent = new Intent(startingActivity, LoginActivity.class);
         startingActivity.startActivity(intent);
     }
 
+    /**
+     * Prompts dialog if "back" button is pressed
+     */
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)

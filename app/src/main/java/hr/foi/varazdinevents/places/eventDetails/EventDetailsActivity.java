@@ -58,6 +58,9 @@ import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATI
  * Created by Antonio Martinović on 08.11.16.
  */
 
+/**
+ * This class is used for displaying details about the selected event
+ */
 public class EventDetailsActivity extends BaseNavigationActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final String ARG_EVENT = "arg_event";
     private Event event;
@@ -116,6 +119,13 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     private boolean shouldInvalidateAnimation = false;
 
+    /**
+     * Creates "Event Details" activity.
+     * This method sets the decor, checks if the selected event is favorited,
+     * sets the toolbar title, grabs event image for toolbar,
+     * creates transition animations and pre loads needed icons.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,6 +205,10 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         return R.layout.activity_event_details;
     }
 
+    /**
+     * Starts "Event Details" activity.
+     * Gets and sets event details.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -235,12 +249,19 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         eventStream.subscribe(mapObserver);
     }
 
+    /**
+     * Detaches view from presenter on stop
+     */
     @Override
     protected void onStop() {
         super.onStop();
         presenter.detachView();
     }
 
+    /**
+     * Check which transition animation to load
+     * @param loading
+     */
     public void showLoading(boolean loading) {
         if(loading) {
             animateOut();
@@ -249,6 +270,9 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         }
     }
 
+    /**
+     * Shows animations for transitioning into activity
+     */
     private void animateIn() {
         progressBar.setVisibility(View.GONE);
         contentHolder.setTranslationY(ScreenUtils.getScreenHeight(this));
@@ -267,6 +291,9 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 .start();
     }
 
+    /**
+     * Shows animations for transitioning out of the activity
+     */
     private void animateOut() {
         progressBar.setVisibility(View.VISIBLE);
         contentHolder.animate()
@@ -279,12 +306,23 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         contentHolder.setTranslationY(ScreenUtils.dpToPx(ScreenUtils.getScreenHeight(this) - ScreenUtils.dpToPx(380)));
     }
 
+    /**
+     * Creates new intent, starts "Event Details" activity
+     * @param event
+     * @param startingActivity
+     */
     public static void startWithEvent(Event event, Context startingActivity) {
         Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
         intent.putExtra(ARG_EVENT, event);
         startingActivity.startActivity(intent);
     }
 
+    /**
+     * Shows integrated animations on transition to event details
+     * @param event
+     * @param startingActivity
+     * @param view
+     */
     @TargetApi(21)
     public static void startWithEventAnimated(Event event, MainActivity startingActivity, View view) {
         Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
@@ -309,13 +347,21 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 .inject(this);
     }
 
-
+    /**
+     * This method is started if heart shaped icon in event details is clicked.
+     * Calls methods to update clicked event's database attribute and
+     * changes icon's layout
+     */
     @OnClick(R.id.fab_detailed_favorite)
     public void onFavoriteClicked() {
         this.event.setFavorite(EventManager.toggleFavorite(this.event));
         toggleFavoriteIcon(this.event.isFavorite);
     }
 
+    /**
+     * Starts new activity if the underlined Facebook text in event's details is clicked.
+     * Opens event's facebook page in default mobile browser.
+     */
     @OnClick(R.id.event_details_facebook)
     public void onFacebookClicked() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -323,6 +369,10 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         startActivity(intent);
     }
 
+    /**
+     * Toggles event's heart shaped icon on and off, changes icon layout
+     * @param isFavorite
+     */
     public void toggleFavoriteIcon(boolean isFavorite) {
         if (isFavorite)
             fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
@@ -330,6 +380,10 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
             fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
     }
 
+    /**
+     * Starts new (Host Profile) activity if the underlined Host text in event's details is clicked.
+     * @param view
+     */
     @OnClick(R.id.event_details_host)
     public void onClick(View view) {
         Intent newIntent = new Intent(EventDetailsActivity.this, HostProfileActivity.class);
@@ -338,7 +392,12 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         EventDetailsActivity.this.startActivity(newIntent);
     }
 
-
+    /**
+     * Checks permissions to show location on map
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -354,6 +413,9 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         }
     }
 
+    /**
+     * Shows animations after "back" is pressed from Event's Details activity
+     */
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -380,6 +442,11 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     }
 
+    /**
+     * Changes flag if vertical offset is lower than -5
+     * @param appBarLayout
+     * @param verticalOffset
+     */
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if(verticalOffset < -5) {

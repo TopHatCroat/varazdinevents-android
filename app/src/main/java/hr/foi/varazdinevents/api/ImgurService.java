@@ -14,6 +14,9 @@ import rx.Observable;
  * Created by Antonio Martinović on 02.01.17.
  */
 
+/**
+ * Imgur service image upload
+ */
 public interface ImgurService {
     @Headers("Authorization: Client-ID d66aa7705e07d67")
     @POST("image")
