@@ -20,17 +20,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 import hr.foi.varazdinevents.util.FontManager;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func0;
 import rx.schedulers.Schedulers;
@@ -42,6 +46,7 @@ import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATI
  */
 public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> implements OnMapReadyCallback {
 
+    private final EventManager eventManager;
     private User user;
     private double latitude;
     private double longitude;
@@ -52,13 +57,33 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
     private String parsedEventDescription;
     private User hostData;
 
-
-    public EventDetailsPresenter(User user) {
+    public EventDetailsPresenter(EventManager eventManager, User user) {
         this.user = user;
+        this.eventManager = eventManager;
     }
 
-    public void itemFavorited() {
+    public void itemFavorited(final boolean value) {
+        Observer<JSONObject> favouriteObserver = new Observer<JSONObject>() {
+            @Override
+            public void onNext(JSONObject json) {
+                getViewLayer().refreshEvent();
+                getViewLayer().toggleFavoriteIcon(value);
+            }
 
+            @Override
+            public void onCompleted() {}
+
+            @Override
+            public void onError(Throwable e) {
+                if(isViewAttached()) {
+                    getViewLayer().showLoading(false);
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+                }
+            }
+        };
+
+        rx.Observable<JSONObject> favouriteStream = eventManager.setEventFavourite(getViewLayer().getEvent(), value);
+        favouriteStream.subscribe(favouriteObserver);
     }
 
     public Observable<Void> parseEventData(final Event event) {
