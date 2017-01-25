@@ -274,10 +274,10 @@ public class EventManager {
         return tmp.isFavorite;
     }
 
-    public Observable<JSONObject> setEventFavourite(final Event event, final boolean eventFavourite) {
+    public Observable<JSONObject> setEventFavourite(final Event event, final boolean favouriteState) {
         Observable<JSONObject> favouriteObservable;
         String firebaseToken = FirebaseInstanceId.getInstance().getToken();
-        if(eventFavourite) {
+        if(favouriteState) {
             favouriteObservable = restService.favouriteEvent(event.getApiId(), firebaseToken);
         } else {
             favouriteObservable = restService.unfavouriteEvent(event.getApiId(), firebaseToken);
@@ -287,7 +287,7 @@ public class EventManager {
             .doOnNext(new Action1<JSONObject>() {
                 @Override
                 public void call(JSONObject json) {
-                    setFavorite(event, eventFavourite);
+                    setFavorite(event, favouriteState);
                 }
             })
             .subscribeOn(Schedulers.io())

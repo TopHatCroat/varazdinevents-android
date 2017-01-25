@@ -22,7 +22,7 @@ import com.orm.query.Select;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +33,7 @@ import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BasePresenter;
 import hr.foi.varazdinevents.util.FontManager;
+import retrofit2.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -76,8 +77,14 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
             @Override
             public void onError(Throwable e) {
                 if(isViewAttached()) {
-                    getViewLayer().showLoading(false);
-                    getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+                    if(e instanceof UnknownHostException) {
+                        getViewLayer().showLoading(false);
+                        getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+                    } else if (e instanceof HttpException) {
+                        eventManager.setFavorite(getViewLayer().getEvent(), value);
+                        getViewLayer().refreshEvent();
+                        getViewLayer().toggleFavoriteIcon(value);
+                    }
                 }
             }
         };
