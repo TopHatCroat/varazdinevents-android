@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fa_title">&#xf1ae;</string>
-    <string name="fa_calendar">&#xf073;</string>
-    <string name="fa_clock">&#xf017;</string>
-    <string name="fa_facebook">&#xf09a;</string>
-    <string name="fa_host">&#xf015;</string>
-    <string name="fa_rocket">&#xf135;</string>
-    <string name="fa_home">&#xf1ae;</string>
-    <string name="fa_phone">&#xf095;</string>
-    <string name="fa_address">&#xf2b9;</string>
-    <string name="fa_web">&#xf0c1;</string>
+    <string name="fa_title" translatable="false">&#xf1ae;</string>
+    <string name="fa_calendar" translatable="false">&#xf073;</string>
+    <string name="fa_clock" translatable="false">&#xf017;</string>
+    <string name="fa_facebook" translatable="false">&#xf09a;</string>
+    <string name="fa_host" translatable="false">&#xf015;</string>
+    <string name="fa_rocket" translatable="false">&#xf135;</string>
+    <string name="fa_home" translatable="false">&#xf1ae;</string>
+    <string name="fa_phone" translatable="false">&#xf095;</string>
+    <string name="fa_address" translatable="false">&#xf2b9;</string>
+    <string name="fa_web" translatable="false">&#xf0c1;</string>
 
 </resources>

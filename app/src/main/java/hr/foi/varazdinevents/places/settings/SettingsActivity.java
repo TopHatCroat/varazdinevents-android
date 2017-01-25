@@ -32,6 +32,7 @@ import hr.foi.varazdinevents.fcm.MessagingService;
 import hr.foi.varazdinevents.injection.modules.SettingsActivityModule;
 import hr.foi.varazdinevents.models.User;
 
+import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.ViewLayer;
 
@@ -251,6 +252,10 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         });
 
         builder.show();
+    }
+    @Override
+    public void onBackPressed() {
+        MainActivity.start(this);
     }
 
 }
