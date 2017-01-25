@@ -1,12 +1,10 @@
 package hr.foi.varazdinevents;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.multidex.MultiDexApplication;
-
 import com.facebook.FacebookSdk;
 import com.orm.SugarContext;
+import timber.log.Timber;
 
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.ApplicationComponent;
@@ -15,8 +13,6 @@ import hr.foi.varazdinevents.injection.UserComponent;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 import hr.foi.varazdinevents.models.User;
-import timber.log.Timber;
-
 
 /**
  * Created by Antonio Martinović on 15.10.16.

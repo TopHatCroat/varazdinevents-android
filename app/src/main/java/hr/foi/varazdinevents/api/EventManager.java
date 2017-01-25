@@ -1,8 +1,9 @@
 package hr.foi.varazdinevents.api;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.orm.query.Condition;
 import com.orm.query.Select;
-
+import org.json.JSONObject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -277,4 +278,30 @@ public class EventManager {
         return tmp.isFavorite;
     }
 
+    public boolean setFavorite(Event event, boolean value){
+        Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
+        tmp.isFavorite = value;
+        tmp.save();
+        return tmp.isFavorite;
+    }
+
+    public Observable<JSONObject> setEventFavourite(final Event event, final boolean favouriteState) {
+        Observable<JSONObject> favouriteObservable;
+        String firebaseToken = FirebaseInstanceId.getInstance().getToken();
+        if(favouriteState) {
+            favouriteObservable = restService.favouriteEvent(event.getApiId(), firebaseToken);
+        } else {
+            favouriteObservable = restService.unfavouriteEvent(event.getApiId(), firebaseToken);
+        }
+
+        return favouriteObservable
+            .doOnNext(new Action1<JSONObject>() {
+                @Override
+                public void call(JSONObject json) {
+                    setFavorite(event, favouriteState);
+                }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
 }

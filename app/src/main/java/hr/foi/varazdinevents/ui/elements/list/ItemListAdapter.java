@@ -29,6 +29,12 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         this.items = new ArrayList<>();
     }
 
+    /**
+     * Creates view holder
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final ItemViewHolder itemViewHolder = viewHolderFactoryMap.get(viewType).createViewHolder(parent);
@@ -41,21 +47,38 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         return itemViewHolder;
     }
 
+    /**
+     * Binds item to the view holder
+     * @param holder new or existing view holder
+     * @param position item position
+     */
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.bind(items.get(holder.getAdapterPosition()));
     }
 
+    /**
+     * @return number of items in the view
+     */
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+    /**
+     * Determines the type of view that should be displayed for the item
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         return items.get(position).getType();
     }
 
+    /**
+     * Sets new items for adapter
+     * @param items new items
+     */
     @SuppressWarnings("unchecked")
     public void setItems(List<T> items){
         this.items.clear();
@@ -65,6 +88,11 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         notifyDataSetChanged();
     }
 
+    /**
+     * Called when user clicks on item, calles listener method on onClicked
+     * @param adapterPosition item position
+     * @param view animation target for the item
+     */
     @Override
     public void onItemClicked(int adapterPosition, View view) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && view != null) {
@@ -75,6 +103,11 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
 
     }
 
+    /**
+     * Called when item gets moved on the list
+     * @param fromPosition beginning position
+     * @param toPosition ending position
+     */
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
         return false;
@@ -92,37 +125,61 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
 //        return true;
     }
 
+    /**
+     * Called when item gets removed from the list
+     * @param position removed item position
+     */
     @Override
     public void onItemDismiss(int position) {
         items.remove(items.get(position));
         notifyItemRemoved(position);
     }
 
-    //next 3 are used manipulate models for animation
+    /**
+     * Triggers remove animation
+     * @param position removed item position
+     */
     public T removeItem(int position){
         final T event = items.remove(position);
         notifyItemRemoved(position);
         return event;
     }
 
+    /**
+     * Triggers add animation
+     * @param item new item
+     * @param position new item position
+     */
     public void addItem(T item, int position){
         items.add(position, item);
         notifyItemInserted(position);
     }
 
+    /**
+     * Triggers move animation
+     * @param fromPosition
+     * @param toPosition
+     */
     public void moveItem(int fromPosition, int toPosition){
         final T item = items.remove(fromPosition);
         items.add(toPosition, item);
         notifyItemMoved(fromPosition, toPosition);
     }
 
-
+    /**
+     * Animates the whole list of items
+     * @param items new items
+     */
     public void animateTo(List<T> items) {
         applyAndAnimateRemovals(items);
         applyAndAnimateAdditions(items);
         applyAndAnimateMovedItems(items);
     }
 
+    /**
+     * Iterates over the removed items and triggers their animations
+     * @param newEvents removed events
+     */
     private void applyAndAnimateRemovals(List<T> newEvents) {
         for(int i = items.size() - 1; i >= 0; i--){
             final T event = items.get(i);
@@ -132,6 +189,10 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         }
     }
 
+    /**
+     * Iterates over the added items and triggers their animations
+     * @param newEvents added events
+     */
     private void applyAndAnimateAdditions(List<T> newEvents){
         for(int i = 0, count = newEvents.size(); i < count; i++){
             final T event = newEvents.get(i);
@@ -141,6 +202,10 @@ public class ItemListAdapter<T extends Listable & Searchable> extends RecyclerVi
         }
     }
 
+    /**
+     * Iterates over the moved items and triggers their animations
+     * @param newEvents moved events
+     */
     private void applyAndAnimateMovedItems(List<T> newEvents){
         for(int toPosition = newEvents.size() - 1; toPosition >= 0; toPosition--){
             final T event = newEvents.get(toPosition);

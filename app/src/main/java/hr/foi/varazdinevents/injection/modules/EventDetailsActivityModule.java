@@ -5,6 +5,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.ActivityScope;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
@@ -34,8 +35,8 @@ public class EventDetailsActivityModule {
     }
 
     @Provides
-    EventDetailsPresenter provideEventDetailsPresenter(User user){
-        this.presenterLayer = new EventDetailsPresenter(user);
+    EventDetailsPresenter provideEventDetailsPresenter(EventManager eventManager, User user){
+        this.presenterLayer = new EventDetailsPresenter(eventManager, user);
         return this.presenterLayer;
     }
 

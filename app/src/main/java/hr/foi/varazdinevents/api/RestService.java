@@ -76,6 +76,11 @@ public interface RestService {
     @GET("firebase/add/{token}")
     Observable<JSONObject> sendFCMToken(@Path("token") String token);
 
+    @GET("firebase/favorite/{eventId}")
+    Observable<JSONObject> favouriteEvent(@Path("eventId") Integer apiId, @Query("token") String firebaseToken);
+
+    @GET("firebase/un-favorite/{eventId}")
+    Observable<JSONObject> unfavouriteEvent(@Path("eventId") Integer apiId, @Query("token") String firebaseToken);
     /**
      * API call for importing a new event
      * @param eventToken

@@ -53,6 +53,7 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         facebook = in.readString();
         offers = in.readString();
         category = in.readString();
+        isFavorite = in.readByte() != 0;
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -77,8 +78,6 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         parcel.writeInt(apiId);
         parcel.writeString(title);
         parcel.writeString(text);
-        //parcel.writeInt(date);
-        //parcel.writeInt(dateTo);
         parcel.writeLong(date != null ? date : 0);
         parcel.writeLong(dateTo != null ? dateTo : 0);
         parcel.writeString(host);
@@ -87,6 +86,7 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         parcel.writeString(facebook);
         parcel.writeString(offers);
         parcel.writeString(category);
+        parcel.writeByte((byte) (isFavorite ? 1 : 0));     //
     }
 
     @Override

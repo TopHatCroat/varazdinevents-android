@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -18,8 +17,6 @@ import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.CardView;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -30,6 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.orm.query.Condition;
+import com.orm.query.Select;
 import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +41,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
-import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.injection.modules.EventDetailsActivityModule;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
@@ -100,7 +99,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
     TextView text;
 
     @BindView(R.id.fab_detailed_favorite)
-    FloatingActionButton fab_detailed_favorite;
+    FloatingActionButton fabDetailedFavorite;
 
     @BindView(R.id.awesome_title)
     TextView awesomeTitle;
@@ -155,6 +154,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         });
 
         this.event = getIntent().getParcelableExtra(ARG_EVENT);
+        refreshEvent();
         toggleFavoriteIcon(this.event.isFavorite);
 
         collapsingToolbarLayout.setTitle(event.getTitle());
@@ -189,8 +189,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
 //        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
 //        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
-//        fab_detailed_favorite.setRippleColor(lightVibrantColor);
-//        fab_detailed_favorite.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
+//        fabDetailedFavorite.setRippleColor(lightVibrantColor);
+//        fabDetailedFavorite.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -284,8 +284,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 .setInterpolator(new DecelerateInterpolator(3.0f))
                 .setDuration(700)
                 .start();
-        fab_detailed_favorite.setTranslationX(ScreenUtils.dpToPx(200));
-        fab_detailed_favorite.animate()
+        fabDetailedFavorite.setTranslationX(ScreenUtils.dpToPx(200));
+        fabDetailedFavorite.animate()
                 .translationX(0)
                 .setStartDelay(300)
                 .setInterpolator(new DecelerateInterpolator(3.0f))
@@ -304,7 +304,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 .setInterpolator(new DecelerateInterpolator(3.0f))
                 .setDuration(500)
                 .start();
-        fab_detailed_favorite.setTranslationX(ScreenUtils.dpToPx(200));
+        fabDetailedFavorite.setTranslationX(ScreenUtils.dpToPx(200));
         contentHolder.setTranslationY(ScreenUtils.dpToPx(ScreenUtils.getScreenHeight(this) - ScreenUtils.dpToPx(380)));
     }
 
@@ -356,8 +356,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
      */
     @OnClick(R.id.fab_detailed_favorite)
     public void onFavoriteClicked() {
-        this.event.setFavorite(EventManager.toggleFavorite(this.event));
-        toggleFavoriteIcon(this.event.isFavorite);
+        presenter.itemFavorited( ! event.isFavorite());
+
     }
 
     /**
@@ -379,9 +379,9 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
      */
     public void toggleFavoriteIcon(boolean isFavorite) {
         if (isFavorite)
-            fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
+            fabDetailedFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp));
         else
-            fab_detailed_favorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
+            fabDetailedFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp));
     }
 
     /**
@@ -443,7 +443,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
             }
             super.onBackPressed();
         }
-
     }
 
     /**
@@ -458,5 +457,19 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         } else {
             shouldInvalidateAnimation = false;
         }
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    private void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public void refreshEvent() {
+        setEvent(Select.from(Event.class)
+                .where(Condition.prop("API_ID").eq(getEvent().getApiId()))
+                .first());
     }
 }

@@ -12,9 +12,9 @@ import java.util.List;
 import hr.foi.varazdinevents.util.ScreenUtils;
 
 /**
+ * Event animator
  * Created by Antonio Martinović on 15.01.17.
  */
-
 public class ItemAnimator extends DefaultItemAnimator {
     private int lastAddAnimatedItem = -2;
 
@@ -39,6 +39,11 @@ public class ItemAnimator extends DefaultItemAnimator {
         return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
     }
 
+    /**
+     * Calles enter animation
+     * @param viewHolder view of the added item
+     * @return
+     */
     @Override
     public boolean animateAdd(RecyclerView.ViewHolder viewHolder) {
         if (viewHolder.getLayoutPosition() > lastAddAnimatedItem) {
@@ -51,6 +56,10 @@ public class ItemAnimator extends DefaultItemAnimator {
         return false;
     }
 
+    /**
+     * Creates animation for entering
+     * @param holder
+     */
     private void runEnterAnimation(final ItemViewHolder holder) {
         final int screenHeight = ScreenUtils.getScreenHeight(holder.itemView.getContext());
         holder.itemView.setTranslationY(screenHeight);
