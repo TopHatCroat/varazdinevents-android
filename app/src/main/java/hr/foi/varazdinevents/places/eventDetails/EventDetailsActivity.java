@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.test.espresso.core.deps.guava.base.Strings;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.ContextCompat;
@@ -217,6 +218,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
         Date eventDate = new Date(event.getDate() - 3600000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
         this.date.setText(dateFormat.format(eventDate));
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -364,9 +366,11 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
      */
     @OnClick(R.id.event_details_facebook)
     public void onFacebookClicked() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(event.getFacebook()));
-        startActivity(intent);
+        if(!Strings.isNullOrEmpty(event.getFacebook())){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(event.getFacebook()));
+            startActivity(intent);
+        }
     }
 
     /**

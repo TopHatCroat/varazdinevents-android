@@ -248,7 +248,7 @@ public class EventManager {
     }
 
     /**
-     * Creates new event
+     * Gets new created event
      * @return newEvent
      */
     public Event getNewEvent() {

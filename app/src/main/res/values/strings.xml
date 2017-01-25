@@ -31,7 +31,7 @@
     <string name="title">Title</string>
     <string name="event_create_success">Successfuly created new event</string>
     <string name="event_create_failed">Error occured. Please try again later</string>
-    <string name="organisers">Organisers</string>
+    <string name="organisers">Organizers</string>
     <string name="new_event_description">New Event</string>
     <string name="category">Category</string>
     <string name="offers">Offers</string>
@@ -44,7 +44,7 @@
     <string name="end_time">End Time</string>
     <string name="end_date">End Date</string>
     <string name="create_new_event">Create new event</string>
-    <string name="facebook_app_id">772653122856607</string>
+    <string name="facebook_app_id" translatable="false">772653122856607</string>
 
     <string name="event_details_general_title">Općenito o događaju</string>
     <string name="event_details_general_description">Detalji događaja</string>
@@ -54,9 +54,9 @@
     <string name="pref_title_notifications">Notifications</string>
     <string name="pref_summary_user_details">User Details</string>
     <string name="pref_title_user_details">User Details</string>
-    <string name="defaultUsername">DefaultUsername</string>
-    <string name="defaultPassword">DefaultPassword</string>
-    <string name="defaultEmail">DefaultEmail</string>
+    <string name="defaultUsername" translatable="false">DefaultUsername</string>
+    <string name="defaultPassword" translatable="false">DefaultPassword</string>
+    <string name="defaultEmail" translatable="false">DefaultEmail</string>
     <string name="new_event_title">Kreiranje novog događaja</string>
     <string name="host_profile_general_description">Host Info</string>
     <string name="host_profile_general_title">Host Details</string>
@@ -71,8 +71,8 @@
     <string name="event_general_category">Category: </string>
     <string name="signup">Sign Up</string>
     <string name="pref_title_password_repeat">Repeat password</string>
-    <string name="defaultUserEmailPlaceholder">defaultUserEmailPlaceholder</string>
-    <string name="defaultUsernamePlaceHolder">defaultUsernamePlaceholder</string>
+    <string name="defaultUserEmailPlaceholder" translatable="false">defaultUserEmailPlaceholder</string>
+    <string name="defaultUsernamePlaceHolder" translatable="false">defaultUsernamePlaceholder</string>
     <string name="category_all">All Events</string>
     <string name="touch_to_set">Touch to set</string>
     <string name="network_not_accessible">Network unavailable</string>
@@ -103,7 +103,7 @@
     <string name="app_exit">Are you sure you want to exit?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="host_profile_title">defaultPlaceHolderHostProfileTitle</string>
+    <string name="host_profile_title" translatable="false">defaultPlaceHolderHostProfileTitle</string>
     <string name="host_profile_events_list">Incoming events</string>
     <string name="show_web">Show Web profile</string>
     <string name="callHost">Do you want to make a call?</string>

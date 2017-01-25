@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.test.espresso.core.deps.guava.base.Strings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -78,6 +79,7 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     private static final String ARG_EVENT = "arg_event";
     private GoogleMap mMap;
     private User host;
+    private String hostDescription;
     Double latitude, longitude;
     String locationTitle, locationCategory;
     @Inject
@@ -195,7 +197,10 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
 //        this.title.setText(user.getUsername());
         if (host.getDescription().equals("")) {
             this.text.setText("N/A");
-        } else this.text.setText(host.getDescription());
+        }
+        else{
+            this.text.setText(FontManager.parseHTML(host.getDescription()));
+        }
 
         if (host.getWorkingTime().equals("")) {
             this.workingTime.setText("N/A");
@@ -217,12 +222,6 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
             this.phone.setText("N/A");
         } else this.phone.setText(host.getPhone());
 
-
-//        this.workingTime.setText("0-24");
-//        this.address.setText(location);
-//        this.phone.setText("099 12345678");
-//        this.facebook.setMovementMethod(LinkMovementMethod.getInstance());
-//        this.web.setMovementMethod(LinkMovementMethod.getInstance());
 
         //Google map information
         String location = host.getAddress();
@@ -366,9 +365,11 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
      */
     @OnClick(R.id.host_profile_facebook)
     public void onFacebookClicked() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(host.getFacebook()));
-        startActivity(intent);
+        if(!Strings.isNullOrEmpty(host.getFacebook())) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(host.getFacebook()));
+            startActivity(intent);
+        }
     }
 
     /**
@@ -377,9 +378,11 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
      */
     @OnClick(R.id.host_profile_web)
     public void onWebClicked() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(host.getWeb()));
-        startActivity(intent);
+        if(!Strings.isNullOrEmpty(host.getWeb())) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(host.getWeb()));
+            startActivity(intent);
+        }
     }
 
     /**
@@ -388,23 +391,23 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
      */
     @OnClick(R.id.host_profile_phone)
     public void onPhoneClicked() {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.callHost)
-                .setCancelable(false)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + host.getPhone()));
-                        try{
-                            startActivity(intent);
+        if (!Strings.isNullOrEmpty(host.getPhone())) {
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.callHost)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:" + host.getPhone()));
+                            try {
+                                startActivity(intent);
+                            } catch (android.content.ActivityNotFoundException ex) {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.event_create_failed), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        catch (android.content.ActivityNotFoundException ex){
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.event_create_failed),Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.no, null)
-                .show();
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
+        }
     }
-
 }
