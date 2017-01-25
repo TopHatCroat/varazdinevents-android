@@ -8,8 +8,12 @@ import android.support.v4.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
+import hr.foi.varazdinevents.places.events.MainActivity;
+import timber.log.Timber;
 
 /**
  * Handles receiving push notifications by the Firebase API
@@ -28,7 +32,7 @@ public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (allowNotifications) {
-            Intent notificationIntent = new Intent(getApplicationContext(), EventDetailsActivity.class);
+            Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -37,6 +41,12 @@ public class MessagingService extends FirebaseMessagingService {
 
             PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0,
                     notificationIntent, 0);
+
+            for (Map.Entry<String, String> entry : remoteMessage.getData().entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                Timber.d( "key, " + key + " value " + value);
+            }
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
