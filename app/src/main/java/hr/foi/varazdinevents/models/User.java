@@ -38,8 +38,7 @@ public class User extends SugarRecord implements Parcelable{
         }
     };
 
-    public User() {
-    }
+    public User() {}
 
     public User(String username, String password) {
         this(username, null, password);
@@ -77,7 +76,6 @@ public class User extends SugarRecord implements Parcelable{
         this.web = in.readString();
         this.phone = in.readString();
         this.image = in.readString();
-
     }
 
     @Override

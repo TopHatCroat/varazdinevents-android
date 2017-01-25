@@ -78,7 +78,10 @@ public class UserManager {
                         user.setEmail(userResponse.email);
                         user.setApiId(userResponse.id);
                         user.setToken(userResponse.token);
-                        user.save();
+
+                        ArrayList<User> tempList = new ArrayList<User>();
+                        tempList.add(user);
+                        toDatabase(tempList);
                         return user;
                     }
                 })
@@ -239,6 +242,11 @@ public class UserManager {
                     .first();
             if(tmp == null) {
                 User.save(user);
+            } else {
+                tmp.setToken(user.getToken());
+                tmp.setApiId(user.getApiId());
+                tmp.setUsername(user.getUsername());
+                tmp.save();
             }
         }
     }
