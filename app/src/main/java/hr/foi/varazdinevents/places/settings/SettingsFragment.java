@@ -16,13 +16,16 @@ import hr.foi.varazdinevents.R;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by sargon on 11/11/16.
+ * Created by Valentin Magdić on 11/11/16.
  */
 
 public class SettingsFragment extends PreferenceFragment {
 //    public static final String PREF_LANGUAGE = "PREF_LANGUAGE";
 
-
+    /**
+     * Creates settings fragment which gets selected language
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

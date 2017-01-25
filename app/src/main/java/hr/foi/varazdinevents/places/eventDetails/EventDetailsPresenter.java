@@ -93,6 +93,12 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         favouriteStream.subscribe(favouriteObserver);
     }
 
+    /**
+     * Before this method is called, event details still contain html brackets.
+     * This method parses html code from events details into plain text.
+     * @param event
+     * @return Parsed text
+     */
     public Observable<Void> parseEventData(final Event event) {
         this.counter = 0;
         SupportMapFragment mapFragment = (SupportMapFragment) getViewLayer().getSupportFragmentManager()
@@ -144,6 +150,9 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         return null;
     }
 
+    /**
+     * Adds marker on google maps event location
+     */
     public void resolveMapPosition() {
         this.counter += 1;
         if (this.counter >= 2 && (getLatitude() != 0 && getLongitude() != 0)) {
@@ -155,6 +164,10 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         }
     }
 
+    /**
+     * Sets google map
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -177,6 +190,9 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         return parsedEventDescription;
     }
 
+    /**
+     * If users location permissions are allowed, sets position on the map
+     */
     public void setMap() {
         if (ActivityCompat.checkSelfPermission(getViewLayer(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -192,6 +208,10 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
         }
     }
 
+    /**
+     * Checks if network connection is available
+     * @return Network information
+     */
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getViewLayer().getSystemService(Context.CONNECTIVITY_SERVICE);

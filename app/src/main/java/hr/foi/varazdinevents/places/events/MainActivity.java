@@ -16,7 +16,14 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ProgressBar;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +44,9 @@ import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
 
 import static hr.foi.varazdinevents.util.Constants.LIST_STATE_KEY;
 
+/**
+ * Class for Main activity which shows a list of upcoming events
+ */
 public class MainActivity extends BaseNavigationActivity implements MainViewLayer, OnStartDragListener,
         SearchView.OnQueryTextListener {
 
@@ -64,7 +74,12 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     List<User> users = new ArrayList<>();
     boolean favoriteListChecked = false;
     private Parcelable listState;
+    CallbackManager callbackManager;
 
+    /**
+     * Creates "Main" activity, loads events into presenter
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +94,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
     }
 
+    /**
+     * Starts "Main" activity, attaches presenter view, loads events and users
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -94,6 +112,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         presenter.loadUsers();
     }
 
+    /**
+     * If list state is not empty, tries to get layout manager from recycler View
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -104,12 +125,19 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         }
     }
 
+    /**
+     * Detaches View from presenter
+     */
     @Override
     protected void onStop(){
         super.onStop();
         presenter.detachView();
     }
 
+    /**
+     * Shows loading animation
+     * @param loading
+     */
     public void showLoading(boolean loading) {
         if(loading) {
             swipeRefreshLayout.setRefreshing(true);
@@ -119,6 +147,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         }
     }
 
+    /**
+     * Shows a list of upcoming events on main screen
+     * @param events new events to show
+     */
     public void showEvents(List<Event> events) {
         setEvents(events);
         recyclerView.setHasFixedSize(true);
@@ -138,11 +170,20 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 //        recyclerView.setItemAnimator(new ItemAnimator());
     }
 
+    /**
+     * Registers on screen drag
+     * @param viewHolder
+     */
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         itemTouchHelper.startDrag(viewHolder);
     }
 
+    /**
+     * Shows input box if "Search" is clicked, sets listener for query change
+     * @param menu
+     * @return True
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -154,6 +195,11 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return true;
     }
 
+    /**
+     * Checks which category from the menu was clicked and calls method for category filtering
+     * @param menuItem
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         List<Event> filteredModelList;
@@ -195,6 +241,11 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return true;
     }
 
+    /**
+     * Calls method for event filtering based on inputted query
+     * @param query
+     * @return True
+     */
     @Override
     public boolean onQueryTextChange(String query) {
         final List<Event> filteredModelList = filter(query);
@@ -220,12 +271,19 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     }
 
+    /**
+     * Starts "Main" activity
+     * @param startingActivity
+     */
     public static void start(Context startingActivity) {
         Intent intent = new Intent(startingActivity, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startingActivity.startActivity(intent);
     }
 
+    /**
+     * Shows dialog for exiting the application if "back" is pressed
+     */
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -262,6 +320,11 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     public void setUser(User user) { this.user = user;}
 
+    /**
+     * Filters list of all events based on inputted query
+     * @param query
+     * @return Filtered list based on query (key word)
+     */
     private List<Event> filter(String query) {
         query = query.toLowerCase();
 
@@ -273,6 +336,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return filteredList;
     }
 
+    /**
+     * Shows all events without filters
+     * @return All events
+     */
     private List<Event> showAll(){
         final List<Event> filteredList = new ArrayList<>();
         for(Event event : this.events){
@@ -281,6 +348,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return filteredList;
     }
 
+    /**
+     * Filters all events which are favorited
+     * @return List of favorite events
+     */
     private List<Event> filterFavorite(){
         final List<Event> filteredList = new ArrayList<>();
         for(Event event : this.events){
@@ -290,6 +361,11 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return filteredList;
     }
 
+    /**
+     * Filters all events based on chosen category
+     * @param stringCategory
+     * @return List of events with specific category
+     */
     private List<Event> filterCategory(String stringCategory){
         final List<Event> filteredList = new ArrayList<>();
         for(Event event : this.events){
@@ -299,6 +375,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         return filteredList;
     }
 
+    /**
+     * Saves instance state
+     * @param state
+     */
     @Override
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
@@ -308,6 +388,10 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         state.putParcelable(LIST_STATE_KEY, listState);
     }
 
+    /**
+     * Restores instance state
+     * @param state
+     */
     @Override
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);

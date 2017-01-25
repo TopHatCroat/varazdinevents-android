@@ -14,6 +14,14 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity>{
         this.userManager = userManager;
     }
 
+    /**
+     * Checks if the entered information matches a pre defined regex
+     * If all entered information is valid, registers a new user
+     * @param username
+     * @param email
+     * @param password
+     * @param password2
+     */
     public void tryRegister (String username, String email, String password, String password2) {
 
         if (!email.matches("[a-zA-Z][a-zA-Z0-9.]{1,}[a-zA-Z0-9]{1}[@]{1}[a-zA-Z]{1}[a-zA-Z.-]{2,}[a-zA-Z]")) {

@@ -38,11 +38,19 @@ public class NoImageEventViewHolder extends ItemViewHolder {
 
     private Event event;
 
+    /**
+     * Basic event view holder without image
+     * @param parent
+     */
     public NoImageEventViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(ITEM_LAYOUT, parent, false));
         unbinder = ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * Gets and sets basic event details
+     * @param item data object
+     */
     @Override
     public void bind(Object item) {
         event = (Event) item;

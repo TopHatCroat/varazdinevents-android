@@ -44,6 +44,7 @@
     <string name="end_time">End Time</string>
     <string name="end_date">End Date</string>
     <string name="create_new_event">Create new event</string>
+    <string name="facebook_app_id">772653122856607</string>
 
     <string name="event_details_general_title">Općenito o događaju</string>
     <string name="event_details_general_description">Detalji događaja</string>
@@ -108,6 +109,9 @@
     <string name="callHost">Do you want to make a call?</string>
     <string name="show_facebook">Show Facebook profile</string>
     <string name="welcome">Welcome</string>
+    <string name="new_facebook_event">Import event</string>
+    <string name="facebook_input_id">Enter event ID</string>
+
     <string name="callSupport">Call Support</string>
 
     <string-array name="Language">

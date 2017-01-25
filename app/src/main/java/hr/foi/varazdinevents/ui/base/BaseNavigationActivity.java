@@ -21,6 +21,7 @@ import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.about.AboutActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
+import hr.foi.varazdinevents.places.facebook.FacebookActivity;
 import hr.foi.varazdinevents.places.login.LoginActivity;
 import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
@@ -39,6 +40,11 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
     @Inject
     User user;
 
+    /**
+     * Creates base navigation, action bar drawer
+     * Gets and sets drawers details
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +77,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * An open drawer will close on "back" button pressed
+     */
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -80,6 +89,11 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
         }
     }
 
+    /**
+     * Checks which item is selected in the drawer
+     * @param item
+     * @return True
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -102,6 +116,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 break;
             case R.id.menu_all_events:
                 MainActivity.start(this);
+                break;
+            case R.id.menu_facebook_import:
+                FacebookActivity.start(this);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

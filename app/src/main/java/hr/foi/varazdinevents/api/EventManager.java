@@ -3,9 +3,7 @@ package hr.foi.varazdinevents.api;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.orm.query.Condition;
 import com.orm.query.Select;
-
 import org.json.JSONObject;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -249,6 +247,10 @@ public class EventManager {
         }
     }
 
+    /**
+     * Creates new event
+     * @return newEvent
+     */
     public Event getNewEvent() {
         if(this.newEvent == null) {
             this.newEvent = new Event();
@@ -256,10 +258,19 @@ public class EventManager {
         return newEvent;
     }
 
+    /**
+     * Sets new event
+     * @param newEvent
+     */
     public void setNewEvent(Event newEvent) {
         this.newEvent = newEvent;
     }
 
+    /**
+     * Toggles favorite event on/off
+     * @param event
+     * @return Is the event favorited
+     */
     public static boolean toggleFavorite(Event event){
         Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
         tmp.isFavorite = !tmp.isFavorite;

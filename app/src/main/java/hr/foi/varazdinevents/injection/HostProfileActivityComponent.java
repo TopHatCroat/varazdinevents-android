@@ -2,6 +2,7 @@ package hr.foi.varazdinevents.injection;
 
 import dagger.Subcomponent;
 import hr.foi.varazdinevents.injection.modules.HostProfileActivityModule;
+import hr.foi.varazdinevents.places.facebook.FacebookActivity;
 import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 
 /**

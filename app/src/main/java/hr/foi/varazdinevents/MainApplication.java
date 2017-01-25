@@ -2,6 +2,7 @@ package hr.foi.varazdinevents;
 
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
+import com.facebook.FacebookSdk;
 import com.orm.SugarContext;
 import timber.log.Timber;
 
@@ -28,6 +29,7 @@ public class MainApplication extends MultiDexApplication {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        FacebookSdk.sdkInitialize(this);
 
         getApplicationComponent();
         createUserComponent();

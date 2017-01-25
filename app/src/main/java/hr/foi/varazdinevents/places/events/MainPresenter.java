@@ -16,6 +16,9 @@ import java.util.List;
  * Created by Antonio Martinović on 12.10.16.
  */
 
+/**
+ * Presenter for Main activity, contains additional methods for displaying events
+ */
 public class MainPresenter extends BasePresenter<MainActivity> implements ListListener<Event>{
     private EventManager eventManager;
     private UserManager userManager;
@@ -25,6 +28,9 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
         this.userManager = userManager;
     }
 
+    /**
+     * Gets and shows list of upcoming events
+     */
     public void loadEvents(){
         checkViewAttached();
         getViewLayer().showLoading(true);
@@ -54,15 +60,28 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
         eventStream.subscribe(eventObserver);
     }
 
+    /**
+     * Default method, starts "Event Details" activity if an event is clicked
+     * @param item object of item clicked
+     */
     public void onItemClick(Event item) {
         EventDetailsActivity.startWithEvent(item, getViewLayer());
     }
 
+    /**
+     * Starts "Event Details" activity with animated effects if an event is clicked
+     * @param item object of item clicked
+     * @param view animation target
+     */
     @Override
     public void onItemClick(Event item, View view) {
         getViewLayer().animateOut();
         EventDetailsActivity.startWithEventAnimated(item, getViewLayer(), view);
     }
+
+    /**
+     * Calls method which loads list of users
+     */
     public void loadUsers() {
 
         Observer<List<User>> hostObserver = new Observer<List<User>>() {

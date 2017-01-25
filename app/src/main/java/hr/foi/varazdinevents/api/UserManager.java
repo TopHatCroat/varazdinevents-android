@@ -105,12 +105,20 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Registers a new FCM token
+     * @param token
+     * @return True if successful, otherwise false
+     */
     public Observable<JSONObject> registerFCMToken(String token) {
         return restService.sendFCMToken(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Returns users from memory, database or network
+     */
     public Observable<List<User>> getUsers() {
         return Observable.concat(fromMemory(), fromDatabase(), fromNetwork())
                 .cache()
@@ -126,6 +134,9 @@ public class UserManager {
 
     }
 
+    /**
+     * Returns a list of users from memory
+     */
     private Observable<List<User>> fromMemory(){
         return Observable.just(users).doOnNext(new Action1<List<User>>() {
             @Override
@@ -135,6 +146,9 @@ public class UserManager {
         });
     }
 
+    /**
+     * Returns a list of users from the database
+     */
     private Observable<List<User>> fromDatabase() {
         return Observable.just(
                 User.listAll(User.class)
@@ -151,6 +165,9 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Returns a list of new users details from the network and saves them to the memory and database
+     */
     private Observable<List<User>> fromNetwork() {
         String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
@@ -190,6 +207,10 @@ public class UserManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Saves user details to memory
+     * @param users
+     */
     private void toMemory(List<User> users) {
         Timber.w("Saving to memory...");
 
@@ -205,6 +226,10 @@ public class UserManager {
         this.users = new ArrayList<User>(usersMap.values());
     }
 
+    /**
+     * Saves user details to the database
+     * @param users
+     */
     private void toDatabase(List<User> users) {
         Timber.w("Saving to database...");
         User tmp;
@@ -218,6 +243,9 @@ public class UserManager {
         }
     }
 
+    /**
+     * Logs out currently logged user
+     */
     public static void logout() {
         Iterator<User> users = SugarRecord.findAll(User.class);
         while(users.hasNext()) {
@@ -227,6 +255,9 @@ public class UserManager {
         }
     }
 
+    /**
+     * Returns currently logged user
+     */
     public static User getLoggedInUser() {
         List<User> users = User.find(User.class, "token != '' ");
         if (users.size() > 0) {
@@ -235,5 +266,17 @@ public class UserManager {
             }
         }
         return getStubUser("test");
+    }
+
+    /**
+     * Imports a new event from facebook
+     * @param enteredId
+     * @param userToken
+     * @param facebookToken
+     */
+    public Observable<JSONObject> importFacebookEvent(String enteredId, String userToken, String facebookToken) {
+        return restService.importEvent(enteredId, userToken, facebookToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

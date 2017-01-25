@@ -11,6 +11,7 @@ import hr.foi.varazdinevents.places.about.AboutActivity;
 /**
  * Created by Antonio Martinović on 22.01.17.
  */
+
 @Module
 public class AboutModule  {
     private AboutActivity activity;

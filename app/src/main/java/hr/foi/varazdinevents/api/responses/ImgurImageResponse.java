@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Antonio Martinović on 02.01.17.
  */
+
+/**
+ * API response for Imgur images
+ */
 public class ImgurImageResponse {
     public int ups;
     public int downs;
