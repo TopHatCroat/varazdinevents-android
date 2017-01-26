@@ -410,4 +410,15 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
                     .show();
         }
     }
+
+    /**
+     * Starts the "HostProfileActivity" activity
+     * @param startingActivity
+     */
+    public static void start(Context startingActivity, String user) {
+        Intent intent = new Intent(startingActivity, HostProfileActivity.class);
+        intent.putExtra("hostname", user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startingActivity.startActivity(intent);
+    }
 }

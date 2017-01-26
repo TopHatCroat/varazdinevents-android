@@ -22,6 +22,7 @@ import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.about.AboutActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.places.facebook.FacebookActivity;
+import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.places.login.LoginActivity;
 import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
@@ -105,6 +106,9 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 break;
             case R.id.menu_about:
                 AboutActivity.start(this);
+                break;
+            case R.id.menu_host:
+                HostProfileActivity.start(this, user.getUsername());
                 break;
             case R.id.menu_login:
                 LoginActivity.start(this);
