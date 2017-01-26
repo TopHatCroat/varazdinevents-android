@@ -157,9 +157,19 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         refreshEvent();
         toggleFavoriteIcon(this.event.isFavorite);
 
-        collapsingToolbarLayout.setTitle(event.getTitle());
+        if(event.getTitle().equals("")) {
+            collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
+        } else {
+            collapsingToolbarLayout.setTitle(event.getTitle());
+        }
+
         appBarLayout.addOnOffsetChangedListener(this);
-        toolbar.setTitle(event.getTitle());
+
+        if(event.getTitle().equals("")) {
+            toolbar.setTitle(getResources().getString(R.string.app_name));
+        } else {
+            toolbar.setTitle(event.getTitle());
+        }
 
         if(event.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
@@ -216,18 +226,42 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         presenter.attachView(this);
         showLoading(true);
 
-        Date eventDate = new Date(event.getDate() - 3600000);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        if (event.getDate().equals("")) {
+            this.date.setText("N/A");
+            this.time.setText("N/A");
+        } else {
+            Date eventDate = new Date(event.getDate() - 3600000);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-        this.date.setText(dateFormat.format(eventDate));
+            this.date.setText(dateFormat.format(eventDate));
 
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        this.time.setText(timeFormat.format(eventDate));
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            this.time.setText(timeFormat.format(eventDate));
+        }
 
-        this.title.setText(event.getTitle());
-        this.host.setText(event.getHost());
-        this.category.setText(event.getCategory());
-        this.offers.setText(event.getOffers());
+        if(event.getTitle().equals("")) {
+            this.title.setText("N/A");
+        } else {
+            this.title.setText(event.getTitle());
+        }
+
+        if(event.getHost().equals("")) {
+            this.host.setText("N/A");
+        } else {
+            this.host.setText(event.getHost());
+        }
+
+        if(event.getCategory().equals("")) {
+            this.category.setText("N/A");
+        } else {
+            this.category.setText(event.getCategory());
+        }
+
+        if(event.getOffers().equals("")) {
+            this.offers.setText("N/A");
+        } else {
+            this.offers.setText(event.getOffers());
+        }
 
         Observer<Void> mapObserver = new Observer<Void>() {
             @Override
