@@ -127,7 +127,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="20dp"
                                     android:id="@+id/cancel_button"
-                                    android:background="@color/colorPrimary"
+                                    android:background="@color/cancel_grey"
+                                    android:textColor="@color/white"
                                     android:text="@string/mdtp_cancel"
                                     android:textAllCaps="false"
                                     style="@style/white_title"/>

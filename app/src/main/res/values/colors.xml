@@ -16,4 +16,5 @@
     <color name="primary_text_color">#4A4A4A</color>
     <color name="subtitle_text_color">#555555</color>
     <color name="divider">#80000000</color>
+    <color name="cancel_grey">#808080</color>
 </resources>

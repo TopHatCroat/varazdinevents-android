@@ -7,31 +7,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.InputType;
-import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.util.Locale;
-
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
-import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.fcm.MessagingService;
 import hr.foi.varazdinevents.injection.modules.SettingsActivityModule;
 import hr.foi.varazdinevents.models.User;
-
 import hr.foi.varazdinevents.places.events.MainActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
 import hr.foi.varazdinevents.ui.base.ViewLayer;

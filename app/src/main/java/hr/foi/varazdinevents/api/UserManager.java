@@ -236,14 +236,14 @@ public class UserManager {
     private void toDatabase(List<User> users) {
         Timber.w("Saving to database...");
         User tmp;
-        for (User user : this.users) {
+        for (User user : users) {
             tmp = Select.from(User.class)
                     .where(Condition.prop("API_ID").eq(user.apiId))
                     .first();
             if(tmp == null) {
                 User.save(user);
             } else {
-                tmp.setToken(user.getToken());
+                if( ! Strings.isNullOrEmpty(user.getToken())) tmp.setToken(user.getToken());
                 tmp.setApiId(user.getApiId());
                 tmp.setUsername(user.getUsername());
                 tmp.save();

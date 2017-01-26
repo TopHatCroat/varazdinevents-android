@@ -150,12 +150,19 @@ public class HostProfileActivity extends BaseNavigationActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String hostname = getIntent().getStringExtra("hostname");
-        this.host = Select.from(User.class)
-                .where(Condition.prop("USERNAME").eq(hostname))
-                .first();
 
-        collapsingToolbarLayout.setTitle(host.getUsername());
+        if(hostname.equals(user.getUsername())) {
+            this.host = Select.from(User.class)
+                    .where(Condition.prop("API_ID").eq(user.getApiId()))
+                    .first();
+        } else {
+            this.host = Select.from(User.class)
+                    .where(Condition.prop("USERNAME").eq(hostname))
+                    .first();
+        }
+
         toolbar.setTitle(host.getUsername());
+        collapsingToolbarLayout.setTitle(host.getUsername());
 
         if (host.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
