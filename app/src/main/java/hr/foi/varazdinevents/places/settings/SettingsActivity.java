@@ -103,6 +103,7 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
 
     public static void start(Context startingActivity) {
         Intent intent = new Intent(startingActivity, SettingsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startingActivity.startActivity(intent);
     }
 
@@ -166,6 +167,8 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        SettingsActivity.start(this);
     }
 
     /**
@@ -243,6 +246,7 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
     @Override
     public void onBackPressed() {
         MainActivity.start(this);
+        finish();
     }
 
 }

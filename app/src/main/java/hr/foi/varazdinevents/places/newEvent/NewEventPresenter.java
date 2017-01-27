@@ -49,7 +49,7 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
             @Override
             public void onCompleted() {
                 getViewLayer().showBasicError(getViewLayer().getString(R.string.event_create_success));
-                getViewLayer().onBackPressed();
+                getViewLayer().finish();
             }
 
             @Override
@@ -73,7 +73,7 @@ public class NewEventPresenter extends BasePresenter<NewEventActivity> {
      * if successful
      * @param event event to create
      */
-    private void createEvent(Event event) {
+    public void createEvent(Event event) {
         Observer<ErrorResponseComplete> eventObserver = new Observer<ErrorResponseComplete>() {
             @Override
             public void onNext(ErrorResponseComplete events) {

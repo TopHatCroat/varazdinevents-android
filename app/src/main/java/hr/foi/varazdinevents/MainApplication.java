@@ -1,9 +1,15 @@
 package hr.foi.varazdinevents;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.multidex.MultiDexApplication;
 import com.facebook.FacebookSdk;
 import com.orm.SugarContext;
+
+import java.util.Locale;
+
+import hr.foi.varazdinevents.util.SharedPrefs;
 import timber.log.Timber;
 
 import hr.foi.varazdinevents.api.UserManager;
@@ -13,6 +19,8 @@ import hr.foi.varazdinevents.injection.UserComponent;
 import hr.foi.varazdinevents.injection.modules.ApplicationModule;
 import hr.foi.varazdinevents.injection.modules.UserModule;
 import hr.foi.varazdinevents.models.User;
+
+import static hr.foi.varazdinevents.util.Constants.PREF_LANG_KEY;
 
 /**
  * Created by Antonio Martinović on 15.10.16.
@@ -33,6 +41,13 @@ public class MainApplication extends MultiDexApplication {
 
         getApplicationComponent();
         createUserComponent();
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+
+        Locale myLocale = new Locale(prefs.getString(PREF_LANG_KEY, "en"));
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
     @Override
