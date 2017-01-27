@@ -68,13 +68,13 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
     @BindView(R.id.text_new_event)
     EditText text;
     @BindView(R.id.start_date_new_event)
-    EditText startDate;
+    TextView startDate;
     @BindView(R.id.start_time_new_event)
-    EditText startTime;
+    TextView startTime;
     @BindView(R.id.end_date_new_event)
-    EditText endDate;
+    TextView endDate;
     @BindView(R.id.end_time_new_event)
-    EditText endTime;
+    TextView endTime;
     @BindView(R.id.official_link_new_event)
     EditText officialLink;
     @BindView(R.id.image_new_event)
@@ -221,11 +221,15 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
 
     @OnClick(R.id.create_new_event)
     public void onClickCreate() {
-        showLoading(true);
-//        if(dataValid()) {
+        if(dataValid()) {
+            showLoading(true);
             eventManager.getNewEvent().setHost(user.getApiId().toString());
-            presenter.uploadImage(eventManager.getNewEvent(), chosenImage);
-//        }
+            if(chosenImage == null) {
+                presenter.createEvent(eventManager.getNewEvent());
+            } else {
+                presenter.uploadImage(eventManager.getNewEvent(), chosenImage);
+            }
+        }
     }
 
     /**
@@ -233,7 +237,7 @@ public class NewEventActivity extends BaseNavigationActivity implements TimePick
      * @return True if data is valid, otherwise false
      */
     private boolean dataValid() {
-        List<EditText> editTexts = Arrays.asList(title, text, startDate, startTime, endDate, endTime);
+        List<TextView> editTexts = Arrays.asList(title, text, startDate, startTime, endDate, endTime);
 
         boolean isValid = true;
         for (TextView et : editTexts) {

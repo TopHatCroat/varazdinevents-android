@@ -115,7 +115,7 @@
                                     android:text="@string/start_date"
                                     android:id="@+id/start_date_new_event_description" />
 
-                                <EditText
+                                <TextView
                                     android:inputType="none"
                                     style="@style/new_event_input"
                                     android:layout_width="match_parent"
@@ -139,7 +139,7 @@
                                     android:text="@string/start_time"
                                     android:id="@+id/start_time_new_event_description" />
 
-                                <EditText
+                                <TextView
                                     android:inputType="none"
                                     style="@style/new_event_input"
                                     android:gravity="center"
@@ -163,7 +163,7 @@
                                     android:text="@string/end_date"
                                     android:id="@+id/end_date_new_event_description" />
 
-                                <EditText
+                                <TextView
                                     android:inputType="none"
                                     style="@style/new_event_input"
                                     android:gravity="center"
@@ -188,7 +188,7 @@
                                     android:text="@string/end_time"
                                     android:id="@+id/end_time_new_event_description" />
 
-                                <EditText
+                                <TextView
                                     android:inputType="none"
                                     style="@style/new_event_input"
                                     android:gravity="center"
@@ -269,7 +269,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="@dimen/fab_clear_height" >
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -298,20 +299,21 @@
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
 
-                        <android.support.design.widget.FloatingActionButton
-                            android:visibility="visible"
-                            android:id="@+id/create_new_event"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|end"
-                            android:layout_margin="@dimen/fab_margin"
-                            android:src="@drawable/ic_check_white_36dp"/>
+
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
 
                 </android.support.v4.widget.NestedScrollView>
             </LinearLayout>
         </ScrollView>
+        <android.support.design.widget.FloatingActionButton
+            android:visibility="visible"
+            android:id="@+id/create_new_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_check_white_36dp"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

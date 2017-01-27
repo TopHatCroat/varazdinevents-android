@@ -24,4 +24,5 @@
     <dimen name="large_layout_side_padding">0dp</dimen>
     <dimen name="large_layout_top_padding">0dp</dimen>
     <dimen name="fab_margin_total">20dp</dimen>
+    <dimen name="fab_clear_height">64dp</dimen>
 </resources>
