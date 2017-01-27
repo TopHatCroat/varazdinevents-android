@@ -36,6 +36,7 @@
         android:title="@string/category_party" />
     <item
         android:id="@+id/action_other"
-        android:title="@string/category_other" />
+        android:title="@string/category_other"
+        android:layout_width="wrap_content" />
 
 </menu>
