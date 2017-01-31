@@ -38,11 +38,11 @@ public class SearchText {
     public void searchText() throws Exception{
         onView(withId(R.id.action_search))
                 .perform(click());
-//
-//        onView(withId(R.id.action_search))
-//                .perform(typeText(stringToBeTyped));
-//
-//        onView(withId(R.id.action_search))
-//                .check(matches(withText(stringToBeTyped)));
+
+        onView(withId(R.id.action_search))
+                .perform(typeText(stringToBeTyped));
+
+        onView(withId(R.id.action_search))
+                .check(matches(withText(stringToBeTyped)));
     }
 }

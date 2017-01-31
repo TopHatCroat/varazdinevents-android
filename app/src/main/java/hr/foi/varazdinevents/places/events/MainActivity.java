@@ -209,6 +209,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
                 filteredModelList = showAll();
                 break;
             case R.id.action_favorite:
+                showEvents(presenter.refreshEvents());
                 filteredModelList = filterFavorite();
                 break;
             case R.id.action_theatreAndMovie:

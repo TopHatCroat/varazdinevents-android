@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -145,7 +146,7 @@ public class EventManager {
     private Observable<List<Event>> fromDatabase() {
         return Observable.just(
                 Select.from(Event.class)
-                        .where(Condition.prop("DATE_TO")
+                        .where(Condition.prop("DATE")
                         .gt(System.currentTimeMillis()))
                         .list()
                 )
@@ -200,7 +201,6 @@ public class EventManager {
                    @Override
                    public void call(List<Event> events) {
                        Timber.w("Loading from REST...");
-                       toMemory(events);
                        toDatabase(events);
                    }
                })
@@ -220,7 +220,7 @@ public class EventManager {
             eventsMap.put(event.apiId, event);
         }
         for (Event event : events) {
-            if(!eventsMap.containsKey(event.apiId) && event.getDateTo() > System.currentTimeMillis())
+            if(!eventsMap.containsKey(event.apiId) && event.getDate() > System.currentTimeMillis())
                 eventsMap.put(event.apiId, event);
         }
 
@@ -282,6 +282,7 @@ public class EventManager {
         Event tmp = Select.from(Event.class).where(Condition.prop("API_ID").eq(event.getApiId())).first();
         tmp.isFavorite = value;
         tmp.save();
+        toMemory(Arrays.asList(event));
         return tmp.isFavorite;
     }
 

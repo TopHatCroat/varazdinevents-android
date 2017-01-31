@@ -11,6 +11,10 @@ import hr.foi.varazdinevents.ui.base.BasePresenter;
 
 import rx.Observer;
 import android.view.View;
+
+import com.orm.query.Condition;
+import com.orm.query.Select;
+
 import java.util.List;
 /**
  * Created by Antonio Martinović on 12.10.16.
@@ -99,5 +103,12 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
 
         rx.Observable<List<User>> hostStream = userManager.getUsers();
         hostStream.subscribe(hostObserver);
+    }
+
+    public List<Event> refreshEvents() {
+        return Select.from(Event.class)
+                .where(Condition.prop("DATE")
+                .gt(System.currentTimeMillis()))
+                .list();
     }
 }
