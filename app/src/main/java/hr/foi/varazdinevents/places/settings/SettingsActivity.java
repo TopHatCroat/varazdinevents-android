@@ -246,7 +246,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
     @Override
     public void onBackPressed() {
         MainActivity.start(this);
-        finish();
     }
 
 }
