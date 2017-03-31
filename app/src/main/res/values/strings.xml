@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Varazdin Events</string>
-    <string name="nav_header_title">VarazdinEvents</string>
+    <string name="app_name">Croatia Events</string>
+    <string name="nav_header_title">CroatiaEvents</string>
     <string name="nav_header_info">info@varazdinevents.cf</string>
     <string name="navigation_drawer_open">Open drawer</string>
     <string name="navigation_drawer_close">Close drawer</string>
@@ -83,7 +83,7 @@
     <string name="host_phone">Phone: </string>
     <string name="show_event">Show event</string>
     <string name="error_display">Error displaying something</string>
-    <string name="about_app">About VarazdinEvents</string>
+    <string name="about_app">About CroatiaEvents</string>
     <string name="about_app_text_1">
         \tOva inicijativa nastala je davnog 10. listopada 2014. godine osnivanjem Facebook stranice „Studentski život Varaždina“ gdje smo nastojali objediniti sva događanja
         s područja grada Varaždina te ih približiti studentskoj populaciji, ali i svima onima koji su bili zainteresirani sadržajem koji pružamo.

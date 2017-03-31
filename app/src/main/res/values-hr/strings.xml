@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Varazdin Events</string>
-    <string name="nav_header_title">VarazdinEvents</string>
+    <string name="app_name">Croatia Events</string>
+    <string name="nav_header_title">CroatiaEvents</string>
     <string name="nav_header_info">info@varazdinevents.cf</string>
     <string name="navigation_drawer_open">Otvori ladicu</string>
     <string name="navigation_drawer_close">Zatvori ladicu</string>
@@ -104,7 +104,7 @@
     <string name="title">Naslov</string>
     <string name="welcome">Dobrodošli</string>
     <string name="yes">Da</string>
-    <string name="about_app">O VarazdinEvents</string>
+    <string name="about_app">O CroatiaEvents</string>
     <string name="facebook_input_id">Upišite ID događaja</string>
     <string name="length">Duljina</string>
     <string name="touch_to_set">Pritisnite za prikaz</string>

@@ -283,27 +283,6 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         startingActivity.startActivity(intent);
     }
 
-    /**
-     * Shows dialog for exiting the application if "back" is pressed
-     */
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.app_exit)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            MainActivity.this.finish();
-                        }
-                    })
-                    .setNegativeButton(R.string.no, null)
-                    .show();
-        }
-    }
-
     @Override
     protected User getUser() {
         return user;
