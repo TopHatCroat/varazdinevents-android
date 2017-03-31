@@ -43,10 +43,8 @@
             android:name=".places.register.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".places.settings.SettingsActivity" />
-        <activity android:name=".places.newEvent.NewEventActivity" />
         <activity android:name=".places.eventDetails.EventDetailsActivity" />
         <activity android:name=".places.hostProfile.HostProfileActivity" />
-        <activity android:name=".places.facebook.FacebookActivity" />
 
         <service android:name=".fcm.InstanceIdService">
             <intent-filter>
@@ -77,11 +75,7 @@
         <provider
             android:authorities="com.facebook.app.FacebookContentProvider772653122856607"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:exported="true" />
     </application>
 
 </manifest>

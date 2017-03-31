@@ -1,41 +1,20 @@
 package hr.foi.varazdinevents.places.login;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
+
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.injection.modules.LoginActivityModule;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.events.MainActivity;
-import hr.foi.varazdinevents.places.register.RegisterActivity;
 import hr.foi.varazdinevents.ui.base.BaseActivity;
-import hr.foi.varazdinevents.util.SharedPrefs;
 
 /**
  * Created by Antonio Martinović on 09.11.16.
@@ -138,14 +117,6 @@ public class LoginActivity extends BaseActivity implements LoginViewLayer {
         String user_pass = password.getText().toString();
         showLoading(true);
         presenter.tryLogin(user_username, user_pass);
-    }
-
-    /**
-     * If the sign up button is clicked, starts new activity for registration
-     */
-    @OnClick(R.id.signup_button)
-    public void onSignUpButtonClicked() {
-        RegisterActivity.start(this);
     }
 
     /**

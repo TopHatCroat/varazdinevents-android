@@ -119,18 +119,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
             String s = sharedPreferences.getString(PREF_LANG_KEY, "");
             changeLang(s);
         }
-        if(key.equals(PREF_USERNAME_KEY)){
-            String username = sharedPreferences.getString(PREF_USERNAME_KEY, "");
-            updateUserDetails(username, user.getPassword(), user.getEmail());
-        }
-        if(key.equals(PREF_PASSWORD_KEY)){
-            String password = sharedPreferences.getString(PREF_PASSWORD_KEY, "");
-            updateUserDetails(user.getUsername(), password, user.getEmail());
-        }
-        if(key.equals(PREF_EMAIL_KEY)){
-            String email = sharedPreferences.getString(PREF_EMAIL_KEY, "");
-            updateUserDetails(user.getUsername(), user.getPassword(), email);
-        }
         if(key.equals(PREF_NOTIFICATIONS_KEY)){
             MessagingService.allowNotifications = !MessagingService.allowNotifications;
         }
@@ -172,30 +160,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
     }
 
     /**
-     * Updates entered user's details
-     * @param username
-     * @param password
-     * @param email
-     */
-    public void updateUserDetails(String username, String password, String email){
-        if (!email.matches("[a-zA-Z][a-zA-Z0-9.]{1,}[a-zA-Z0-9]{1}[@]{1}[a-zA-Z]{1}[a-zA-Z.-]{2,}[a-zA-Z]")) {
-            alertView("Error", "Incorrect email!");
-        }
-        else if(username.length()==0){
-            alertView("Error", "Incorrect username!");
-        }
-//          +pass regex?
-        else{
-            User user = new User(null, username, email, password, null, null, null, null, null, null, null, null);
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setEmail(email);
-            user.save();
-            alertView("Success", "Successfully updated!");
-        }
-    }
-
-    /**
      * Prompts dialog with received parameters
      * @param title
      * @param message
@@ -218,31 +182,6 @@ public class SettingsActivity extends BaseActivity implements ViewLayer, SharedP
 //        test();
 //    }
 
-    String m_Text = "";
-    public void test(){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                m_Text = input.getText().toString();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-    }
     @Override
     public void onBackPressed() {
         MainActivity.start(this);

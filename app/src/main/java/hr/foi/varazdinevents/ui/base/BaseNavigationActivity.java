@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.common.base.Strings;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -21,10 +20,7 @@ import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.about.AboutActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
-import hr.foi.varazdinevents.places.facebook.FacebookActivity;
-import hr.foi.varazdinevents.places.hostProfile.HostProfileActivity;
 import hr.foi.varazdinevents.places.login.LoginActivity;
-import hr.foi.varazdinevents.places.newEvent.NewEventActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
 
 /**
@@ -65,13 +61,6 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
                 email.setText(user.getUsername());
             }
 
-            if (!Strings.isNullOrEmpty(user.getToken())) {
-                navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(true);
-                navigationView.getMenu().findItem(R.id.menu_logout).setVisible(true);
-            } else {
-                navigationView.getMenu().findItem(R.id.organizers_menu_option).setVisible(false);
-                navigationView.getMenu().findItem(R.id.menu_login).setVisible(true);
-            }
         }
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -101,28 +90,19 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
             case R.id.menu_settings:
                 SettingsActivity.start(this);
                 break;
-            case R.id.menu_create_event:
-                NewEventActivity.start(this);
-                break;
             case R.id.menu_about:
                 AboutActivity.start(this);
                 break;
-            case R.id.menu_host:
-                HostProfileActivity.start(this, user.getUsername());
-                break;
-            case R.id.menu_login:
-                LoginActivity.start(this);
-                break;
-            case R.id.menu_logout:
-                UserManager.logout();
-                MainApplication.get(this).createUserComponent(UserManager.getStubUser("test"));
-                MainActivity.start(this);
-                break;
+//            case R.id.menu_login:
+//                LoginActivity.start(this);
+//                break;
+//            case R.id.menu_logout:
+//                UserManager.logout();
+//                MainApplication.get(this).createUserComponent(UserManager.getStubUser("test"));
+//                MainActivity.start(this);
+//                break;
             case R.id.menu_all_events:
                 MainActivity.start(this);
-                break;
-            case R.id.menu_facebook_import:
-                FacebookActivity.start(this);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
