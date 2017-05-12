@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="256dp"
+    android:layout_height="wrap_content"
+    android:paddingTop="24dp"
+    android:paddingRight="24dp"
+    android:paddingLeft="24dp"
+    android:paddingBottom="20dp" >
+
+    <LinearLayout
+        android:id="@+id/content_pick_location_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/title_pick_location_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/pick_location"
+            android:layout_marginBottom="30dp"
+            style="@style/AppTheme.RegularFont18" />
+
+        <TextView
+            android:id="@+id/message_cancelable_ok_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/gimme_location"
+            android:layout_marginBottom="30dp"
+            style="@style/AppTheme.RegularFont14" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end" >
+
+            <TextView
+                android:id="@+id/manual_pick_location_dialog"
+                style="@style/AppTheme.MediumFont14.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/manual_CAP"/>
+
+            <TextView
+                android:id="@+id/enable_pick_location_dialog"
+                style="@style/AppTheme.MediumFont14.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/allow_CAP"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_pick_location_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
+
+</FrameLayout>

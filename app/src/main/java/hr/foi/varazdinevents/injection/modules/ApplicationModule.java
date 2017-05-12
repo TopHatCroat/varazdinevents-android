@@ -1,15 +1,11 @@
 package hr.foi.varazdinevents.injection.modules;
 
-import android.transition.Fade;
-import android.transition.Slide;
+import javax.inject.Singleton;
 
-import dagger.Provides;
 import dagger.Module;
+import dagger.Provides;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.util.SharedPrefs;
-
-import javax.annotation.Nullable;
-import javax.inject.Singleton;
 
 /**
  * Contains methods for instantiating classes that get injected into activities

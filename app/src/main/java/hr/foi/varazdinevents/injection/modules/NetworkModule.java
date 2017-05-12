@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import hr.foi.varazdinevents.api.CityManager;
 import hr.foi.varazdinevents.api.ImgurService;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.api.RestService;

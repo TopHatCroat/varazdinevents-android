@@ -17,8 +17,6 @@ public class User extends SugarRecord implements Parcelable{
     public Integer apiId;
     public String username;
     public String email;
-    @Deprecated
-    public String password;
     public String token;
     public String description;
     public String workingTime;
@@ -45,14 +43,13 @@ public class User extends SugarRecord implements Parcelable{
     }
 
     public User(String username, String email, String password) {
-        this(0, username, email, password, null, null, null, null, null, null, null, null);
+        this(0, username, email, password, null, null, null, null, null, null, null);
     }
 
-    public User(Integer apiId, String username, String email, String password, String token, String description, String workingTime, String address, String facebook, String web, String phone, String image) {
+    public User(Integer apiId, String username, String email, String token, String description, String workingTime, String address, String facebook, String web, String phone, String image) {
         this.apiId = apiId;
         this.username = username;
         this.email = email;
-        this.password = password;
         this.token = token;
         this.description = description;
         this.workingTime = workingTime;
@@ -67,7 +64,6 @@ public class User extends SugarRecord implements Parcelable{
         this.apiId = in.readInt();
         this.username = in.readString();
         this.email = in.readString();
-        this.password = in.readString();
         this.token = in.readString();
         this.description = in.readString();
         this.workingTime = in.readString();
@@ -88,7 +84,6 @@ public class User extends SugarRecord implements Parcelable{
         dest.writeInt(this.apiId);
         dest.writeString(this.username);
         dest.writeString(this.email);
-        dest.writeString(this.password);
         dest.writeString(this.token);
         dest.writeString(this.description);
         dest.writeString(this.workingTime);
@@ -129,16 +124,6 @@ public class User extends SugarRecord implements Parcelable{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Deprecated
-    public String getPassword() {
-        return password;
-    }
-
-    @Deprecated
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getToken() {

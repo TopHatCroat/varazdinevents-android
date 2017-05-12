@@ -31,12 +31,14 @@ import android.widget.TextView;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import hr.foi.varazdinevents.MainApplication;
@@ -63,13 +65,10 @@ import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATI
  */
 public class EventDetailsActivity extends BaseNavigationActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final String ARG_EVENT = "arg_event";
-    private Event event;
-
     @Inject
     User user;
     @Inject
     EventDetailsPresenter presenter;
-
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
     @BindView(R.id.collapsingToolbarLayout)
@@ -97,10 +96,8 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
     TextView offers;
     @BindView(R.id.event_details_text)
     TextView text;
-
     @BindView(R.id.fab_detailed_favorite)
     FloatingActionButton fabDetailedFavorite;
-
     @BindView(R.id.awesome_title)
     TextView awesomeTitle;
     @BindView(R.id.awesome_calendar)
@@ -113,17 +110,53 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
     TextView awesomeHost;
     @BindView(R.id.awesome_rocket)
     TextView awesomeRocket;
-
     @BindView(R.id.event_details_map)
     View mapContainer;
-
+    private Event event;
     private boolean shouldInvalidateAnimation = false;
+
+    /**
+     * Creates new intent, starts "Event Details" activity
+     *
+     * @param event
+     * @param startingActivity
+     */
+    public static void startWithEvent(Event event, Context startingActivity) {
+        Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
+        intent.putExtra(ARG_EVENT, event);
+        startingActivity.startActivity(intent);
+    }
+
+    /**
+     * Shows integrated animations on transition to event details
+     *
+     * @param event
+     * @param startingActivity
+     * @param view
+     */
+    @TargetApi(21)
+    public static void startWithEventAnimated(Event event, MainActivity startingActivity, View view) {
+        Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
+        intent.putExtra(ARG_EVENT, event);
+        View decor = startingActivity.getWindow().getDecorView();
+        View statusBar = decor.findViewById(android.R.id.statusBarBackground);
+        View navBar = decor.findViewById(android.R.id.navigationBarBackground);
+
+        Pair<View, String> p1 = Pair.create(view, "event_image_anim_target");
+        Pair<View, String> p2 = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> p3 = Pair.create(navBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(startingActivity, p2, p3, p1);
+        startingActivity.startActivity(intent, options.toBundle());
+    }
 
     /**
      * Creates "Event Details" activity.
      * This method sets the decor, checks if the selected event is favorited,
      * sets the toolbar title, grabs event image for toolbar,
      * creates transition animations and pre loads needed icons.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -157,7 +190,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         refreshEvent();
         toggleFavoriteIcon(this.event.isFavorite);
 
-        if(event.getTitle().equals("")) {
+        if (event.getTitle().equals("")) {
             collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
         } else {
             collapsingToolbarLayout.setTitle(event.getTitle());
@@ -165,13 +198,13 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
         appBarLayout.addOnOffsetChangedListener(this);
 
-        if(event.getTitle().equals("")) {
+        if (event.getTitle().equals("")) {
             toolbar.setTitle(getResources().getString(R.string.app_name));
         } else {
             toolbar.setTitle(event.getTitle());
         }
 
-        if(event.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
+        if (event.getType() != Constants.EVENTS_NO_IMAGE_CARD) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
             int screenSize = ScreenUtils.getScreenWidth(this);
@@ -239,25 +272,25 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
             this.time.setText(timeFormat.format(eventDate));
         }
 
-        if(event.getTitle().equals("")) {
+        if (event.getTitle().equals("")) {
             this.title.setText("N/A");
         } else {
             this.title.setText(event.getTitle());
         }
 
-        if(event.getHost().equals("")) {
+        if (event.getHost().equals("")) {
             this.host.setText("N/A");
         } else {
             this.host.setText(event.getHost());
         }
 
-        if(event.getCategory().equals("")) {
+        if (event.getCategory().equals("")) {
             this.category.setText("N/A");
         } else {
             this.category.setText(event.getCategory());
         }
 
-        if(event.getOffers().equals("")) {
+        if (event.getOffers().equals("")) {
             this.offers.setText("N/A");
         } else {
             this.offers.setText(event.getOffers());
@@ -271,14 +304,14 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
             @Override
             public void onError(Throwable e) {
                 showBasicError(getString(R.string.error_display));
-        }
+            }
 
-        @Override
-        public void onNext(Void aVoid) {
-            presenter.resolveMapPosition();
-            text.setText(presenter.getParsedEventDescription());
-            showLoading(false);
-        }
+            @Override
+            public void onNext(Void aVoid) {
+                presenter.resolveMapPosition();
+                text.setText(presenter.getParsedEventDescription());
+                showLoading(false);
+            }
         };
 
         rx.Observable<Void> eventStream = presenter.parseEventData(event);
@@ -296,10 +329,11 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     /**
      * Check which transition animation to load
+     *
      * @param loading
      */
     public void showLoading(boolean loading) {
-        if(loading) {
+        if (loading) {
             animateOut();
         } else {
             animateIn();
@@ -342,40 +376,6 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
         contentHolder.setTranslationY(ScreenUtils.dpToPx(ScreenUtils.getScreenHeight(this) - ScreenUtils.dpToPx(380)));
     }
 
-    /**
-     * Creates new intent, starts "Event Details" activity
-     * @param event
-     * @param startingActivity
-     */
-    public static void startWithEvent(Event event, Context startingActivity) {
-        Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
-        intent.putExtra(ARG_EVENT, event);
-        startingActivity.startActivity(intent);
-    }
-
-    /**
-     * Shows integrated animations on transition to event details
-     * @param event
-     * @param startingActivity
-     * @param view
-     */
-    @TargetApi(21)
-    public static void startWithEventAnimated(Event event, MainActivity startingActivity, View view) {
-        Intent intent = new Intent(startingActivity, EventDetailsActivity.class);
-        intent.putExtra(ARG_EVENT, event);
-        View decor = startingActivity.getWindow().getDecorView();
-        View statusBar = decor.findViewById(android.R.id.statusBarBackground);
-        View navBar = decor.findViewById(android.R.id.navigationBarBackground);
-
-        Pair<View, String> p1 = Pair.create(view, "event_image_anim_target");
-        Pair<View, String> p2 = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
-        Pair<View, String> p3 = Pair.create(navBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
-
-        ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(startingActivity, p2, p3, p1);
-        startingActivity.startActivity(intent, options.toBundle());
-    }
-
     @Override
     public void setupActivityComponent() {
         MainApplication.get(this).getUserComponent()
@@ -390,7 +390,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
      */
     @OnClick(R.id.fab_detailed_favorite)
     public void onFavoriteClicked() {
-        presenter.itemFavorited( ! event.isFavorite());
+        presenter.itemFavorited(!event.isFavorite());
 
     }
 
@@ -400,7 +400,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
      */
     @OnClick(R.id.event_details_facebook)
     public void onFacebookClicked() {
-        if(!Strings.isNullOrEmpty(event.getFacebook())){
+        if (!Strings.isNullOrEmpty(event.getFacebook())) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(event.getFacebook()));
             startActivity(intent);
@@ -409,6 +409,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     /**
      * Toggles event's heart shaped icon on and off, changes icon layout
+     *
      * @param isFavorite
      */
     public void toggleFavoriteIcon(boolean isFavorite) {
@@ -420,6 +421,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     /**
      * Starts new (Host Profile) activity if the underlined Host text in event's details is clicked.
+     *
      * @param view
      */
     @OnClick(R.id.event_details_host)
@@ -432,6 +434,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     /**
      * Checks permissions to show location on map
+     *
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -469,7 +472,7 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
                 contentHolder.startAnimation(slideDownAnimation);
             }
 
-            if(shouldInvalidateAnimation) {
+            if (shouldInvalidateAnimation) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     image.setVisibility(View.INVISIBLE);
                     getWindow().setSharedElementReturnTransition(null);
@@ -481,12 +484,13 @@ public class EventDetailsActivity extends BaseNavigationActivity implements AppB
 
     /**
      * Changes flag if vertical offset is lower than -5
+     *
      * @param appBarLayout
      * @param verticalOffset
      */
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        if(verticalOffset < -5) {
+        if (verticalOffset < -5) {
             shouldInvalidateAnimation = true;
         } else {
             shouldInvalidateAnimation = false;

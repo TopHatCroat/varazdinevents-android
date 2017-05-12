@@ -1,7 +1,9 @@
 package hr.foi.varazdinevents.places.events;
 
 import hr.foi.varazdinevents.R;
+import hr.foi.varazdinevents.api.CityManager;
 import hr.foi.varazdinevents.api.UserManager;
+import hr.foi.varazdinevents.models.City;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.elements.list.ListListener;
@@ -23,13 +25,38 @@ import java.util.List;
 /**
  * Presenter for Main activity, contains additional methods for displaying events
  */
-public class MainPresenter extends BasePresenter<MainActivity> implements ListListener<Event>{
+public class MainPresenter extends BasePresenter<MainActivity> implements ListListener<Event> {
+    private final CityManager cityManager;
     private EventManager eventManager;
     private UserManager userManager;
 
-    public MainPresenter(EventManager eventManager, UserManager userManager) {
+    public MainPresenter(EventManager eventManager, UserManager userManager, CityManager cityManager) {
         this.eventManager = eventManager;
         this.userManager = userManager;
+        this.cityManager = cityManager;
+    }
+
+    public void loadCities() {
+        Observer<List<City>> eventObserver = new Observer<List<City>>() {
+            @Override
+            public void onNext(List<City> cities) {
+                getViewLayer().showLocationPicker(cities);
+            }
+
+            @Override
+            public void onCompleted() {}
+
+            @Override
+            public void onError(Throwable e) {
+                if(isViewAttached()) {
+                    getViewLayer().showLoading(false);
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+                }
+            }
+        };
+
+        rx.Observable<List<City>> cityStream = cityManager.getCities();
+        cityStream.subscribe(eventObserver);
     }
 
     /**

@@ -276,15 +276,4 @@ public class UserManager {
         return getStubUser("test");
     }
 
-    /**
-     * Imports a new event from facebook
-     * @param enteredId
-     * @param userToken
-     * @param facebookToken
-     */
-    public Observable<JSONObject> importFacebookEvent(String enteredId, String userToken, String facebookToken) {
-        return restService.importEvent(enteredId, userToken, facebookToken)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
 }

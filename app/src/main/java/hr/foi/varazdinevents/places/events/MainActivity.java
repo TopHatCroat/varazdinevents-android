@@ -1,12 +1,19 @@
 package hr.foi.varazdinevents.places.events;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.view.GravityCompat;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -17,14 +24,12 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,22 +39,24 @@ import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.injection.modules.MainActivityModule;
+import hr.foi.varazdinevents.models.City;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
-import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
-import hr.foi.varazdinevents.ui.elements.list.ItemAnimator;
 import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+import hr.foi.varazdinevents.util.Helpers;
+import hr.foi.varazdinevents.util.SharedPrefs;
 
 import static hr.foi.varazdinevents.util.Constants.LIST_STATE_KEY;
+import static hr.foi.varazdinevents.util.Constants.PERMISSION_ACCESS_FINE_LOCATION_REQUEST;
 
 /**
  * Class for Main activity which shows a list of upcoming events
  */
 public class MainActivity extends BaseNavigationActivity implements MainViewLayer, OnStartDragListener,
-        SearchView.OnQueryTextListener {
+        SearchView.OnQueryTextListener, PickLocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @Inject
     MainPresenter presenter;
@@ -77,6 +84,11 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     private Parcelable listState;
     CallbackManager callbackManager;
 
+    PickLocationDialog pickLocationDialog;
+    private List<City> cities;
+    private LocationManager locationManager;
+    private GoogleApiClient googleApiClient;
+
     /**
      * Creates "Main" activity, loads events into presenter
      * @param savedInstanceState
@@ -93,6 +105,16 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         });
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+        new SharedPrefs(this);
+
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
 
     /**
@@ -105,12 +127,25 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
             recyclerView.getLayoutManager().onRestoreInstanceState(listState);
         }
         presenter.attachView(this);
+        presenter.loadCities();
+
+        int city = SharedPrefs.read("city", -1);
+        if(city == -1) {
+            pickLocationDialog = new PickLocationDialog(this, false, null);
+            pickLocationDialog.setListener(this);
+            pickLocationDialog.show();
+        } else {
+            initLoad();
+        }
+        presenter.loadUsers();
+    }
+
+    private void initLoad() {
         if (this.events.isEmpty()){
             presenter.loadEvents();
         } else {
             animateIn();
         }
-        presenter.loadUsers();
     }
 
     /**
@@ -131,6 +166,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
      */
     @Override
     protected void onStop(){
+        googleApiClient.disconnect();
         super.onStop();
         presenter.detachView();
     }
@@ -383,5 +419,101 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     public void animateIn() {
 //        recyclerView.setAlpha(1f);
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        Double minDist = Double.MAX_VALUE;
+        int pos = -1;
+
+        for (int i = 0; i < cities.size(); i++) {
+            double distance = Helpers.distance(location.getLatitude(), cities.get(i).getLatitude(),
+                    location.getLongitude(), cities.get(i).getLongitude());
+
+            if(distance < minDist){
+                minDist = distance;
+                pos = i;
+            }
+        }
+
+        SharedPrefs.write("city", cities.get(pos).getApiId());
+        initLoad();
+    }
+
+    @Override
+    public void setManual() {
+        String[] stockArr = new String[cities.size()];
+        for(int i = 0; i < cities.size(); i++) {
+            stockArr[i] = cities.get(i).getTitle();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.pick_location)
+                .setItems(stockArr, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPrefs.write("city", cities.get(which).getApiId());
+                        dialog.dismiss();
+                        initLoad();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void requestPermission() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSION_ACCESS_FINE_LOCATION_REQUEST);
+        } else {
+            googleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_ACCESS_FINE_LOCATION_REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    requestPermission();
+                } else {
+                    showBasicError("No party for you");
+                }
+                return;
+            }
+        }
+    }
+
+    public void showLocationPicker(List<City> cities) {
+        this.cities = cities;
+        if(pickLocationDialog != null)
+            pickLocationDialog.setLoading(false);
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        pickLocationDialog.dismiss();
+        setLocation(lastLocation);
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

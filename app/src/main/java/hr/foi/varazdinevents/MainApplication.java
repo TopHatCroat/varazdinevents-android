@@ -9,7 +9,6 @@ import com.orm.SugarContext;
 
 import java.util.Locale;
 
-import hr.foi.varazdinevents.util.SharedPrefs;
 import timber.log.Timber;
 
 import hr.foi.varazdinevents.api.UserManager;

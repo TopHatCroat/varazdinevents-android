@@ -1,11 +1,13 @@
 package hr.foi.varazdinevents.ui.base;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -14,14 +16,12 @@ import com.google.common.base.Strings;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
-import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.about.AboutActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
-import hr.foi.varazdinevents.places.login.LoginActivity;
 import hr.foi.varazdinevents.places.settings.SettingsActivity;
+import hr.foi.varazdinevents.util.SharedPrefs;
 
 /**
  * An activity with navigation features should extend this class which
@@ -115,4 +115,5 @@ public abstract class BaseNavigationActivity extends BaseActivity implements Nav
      */
     @Deprecated
     protected abstract User getUser();
+
 }

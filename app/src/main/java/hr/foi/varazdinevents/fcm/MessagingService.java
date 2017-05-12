@@ -11,7 +11,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import hr.foi.varazdinevents.models.Event;
-import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.places.events.MainActivity;
 import timber.log.Timber;
 

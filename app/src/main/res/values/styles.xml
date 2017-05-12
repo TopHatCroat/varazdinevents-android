@@ -94,4 +94,83 @@
         <item name="android:layout_marginBottom">3dp</item>
     </style>
 
+    <style name="AppTheme.RegularFont18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:textColorHint">@color/secondary_text_color</item>
+    </style>
+
+    <style name="AppTheme.RegularFont18.Inverse" parent="AppTheme.RegularFont18">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme.RegularFont18.Title" parent="AppTheme.RegularFont18">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="AppTheme.RegularFont18.DialogTitle" parent="AppTheme.RegularFont18">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="AppTheme.RegularFont14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="AppTheme.RegularFont14.Strong" parent="AppTheme.RegularFont14">
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="AppTheme.RegularFont16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="AppTheme.RegularFont14.Smaller" parent="AppTheme.RegularFont14">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AppTheme.MediumFont14">
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="AppTheme.MediumFont14.Inverse" parent="AppTheme.MediumFont14">
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="AppTheme.MediumFont14.Accent" parent="AppTheme.MediumFont14">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Divider">
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#1a000000</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
+    <style name="AppTheme.MainLogo">
+        <item name="android:layout_width">184dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="AppTheme.Button.Blue" parent="AppTheme.Button">
+        <item name="android:background">@drawable/important_button</item>
+    </style>
+
+    <style name="AppTheme.Button.Light" parent="AppTheme.Button">
+        <item name="android:background">@drawable/white_button</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <style name="AppTheme.Toolbar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
 </resources>

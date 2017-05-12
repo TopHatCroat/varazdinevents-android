@@ -5,7 +5,6 @@ import com.orm.query.Condition;
 import com.orm.query.Select;
 import org.json.JSONObject;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,10 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import hr.foi.varazdinevents.api.responses.ErrorResponseComplete;
 import hr.foi.varazdinevents.api.responses.EventResponse;
 import hr.foi.varazdinevents.api.responses.ImgurResponse;
-import hr.foi.varazdinevents.api.responses.NewEventPojo;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.util.SharedPrefs;
@@ -43,9 +40,7 @@ public class EventManager {
     private final User user;
     private final RestService restService;
     private final ImgurService imgurService;
-
-    private Event newEvent;
-
+    
     private List<Event> events;
 
     /**
@@ -75,31 +70,6 @@ public class EventManager {
                         return EventManager.this.events;
                     }
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Creates an event by sending event data to the API
-     * @param event to create
-     * @return error code and description if any
-     */
-    public Observable<ErrorResponseComplete> createEvent(Event event) {
-        NewEventPojo createEvent = new NewEventPojo();
-        createEvent.title = event.getTitle();
-        createEvent.text = event.getText();
-        createEvent.date = event.getDate() / 1000;
-        createEvent.time = new SimpleDateFormat("HH:mm:ss").format(event.date);
-        createEvent.dateTo = event.getDateTo() / 1000;
-        createEvent.timeTo = new SimpleDateFormat("HH:mm:ss").format(event.dateTo);
-        createEvent.host = event.getHost();
-        createEvent.officialLink = event.getOfficialLink();
-        createEvent.image = event.getImage();
-        createEvent.facebook = event.getFacebook();
-        createEvent.offers = event.getOffers();
-        createEvent.category = event.getCategory();
-
-        return restService.createEvent(this.user.getToken(), createEvent)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -168,7 +138,11 @@ public class EventManager {
     private Observable<List<Event>> fromNetwork() {
         String lastUpdateValue = String.valueOf(SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0));
 
-        return restService.getEvents(lastUpdateValue)
+        int cityId = SharedPrefs.read("city", 1);
+
+//        return restService.getEvents(lastUpdateValue)
+
+        return restService.getEventsByCity(cityId)
                 .map(new Func1<EventResponse[], List<Event>>() {
                     @Override
                     public List<Event> call(EventResponse[] eventResponses) {
@@ -245,25 +219,6 @@ public class EventManager {
                 tmp.save();
             }
         }
-    }
-
-    /**
-     * Gets new created event
-     * @return newEvent
-     */
-    public Event getNewEvent() {
-        if(this.newEvent == null) {
-            this.newEvent = new Event();
-        }
-        return newEvent;
-    }
-
-    /**
-     * Sets new event
-     * @param newEvent
-     */
-    public void setNewEvent(Event newEvent) {
-        this.newEvent = newEvent;
     }
 
     /**

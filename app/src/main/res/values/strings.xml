@@ -113,6 +113,11 @@
     <string name="facebook_input_id">Enter event ID</string>
 
     <string name="callSupport">Call Support</string>
+    <string name="allow_location_CAP">ALLOW LOCATION</string>
+    <string name="allow_CAP">ALLOW</string>
+    <string name="gimme_location">Please allow locations to automatically selecting a city. You can also set it manually.</string>
+    <string name="manual_CAP">PICK MANUALY</string>
+    <string name="pick_location">PICK CITY</string>
 
     <string-array name="Language">
         <item>English</item>
