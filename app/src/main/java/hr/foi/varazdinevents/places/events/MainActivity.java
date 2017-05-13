@@ -7,12 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,7 +31,9 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import hr.foi.varazdinevents.MainApplication;
 import hr.foi.varazdinevents.R;
@@ -43,9 +43,9 @@ import hr.foi.varazdinevents.models.City;
 import hr.foi.varazdinevents.models.Event;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.ui.base.BaseNavigationActivity;
-import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.ui.elements.OnStartDragListener;
 import hr.foi.varazdinevents.ui.elements.SimpleItemTouchHelperCallback;
+import hr.foi.varazdinevents.ui.elements.list.ItemListAdapter;
 import hr.foi.varazdinevents.util.Helpers;
 import hr.foi.varazdinevents.util.SharedPrefs;
 
@@ -81,16 +81,27 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     List<Event> events = new ArrayList<>();
     List<User> users = new ArrayList<>();
     boolean favoriteListChecked = false;
-    private Parcelable listState;
     CallbackManager callbackManager;
-
     PickLocationDialog pickLocationDialog;
+    private Parcelable listState;
     private List<City> cities;
     private LocationManager locationManager;
     private GoogleApiClient googleApiClient;
 
     /**
+     * Starts "Main" activity
+     *
+     * @param startingActivity
+     */
+    public static void start(Context startingActivity) {
+        Intent intent = new Intent(startingActivity, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startingActivity.startActivity(intent);
+    }
+
+    /**
      * Creates "Main" activity, loads events into presenter
+     *
      * @param savedInstanceState
      */
     @Override
@@ -130,7 +141,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         presenter.loadCities();
 
         int city = SharedPrefs.read("city", -1);
-        if(city == -1) {
+        if (city == -1) {
             pickLocationDialog = new PickLocationDialog(this, false, null);
             pickLocationDialog.setListener(this);
             pickLocationDialog.show();
@@ -141,7 +152,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     }
 
     private void initLoad() {
-        if (this.events.isEmpty()){
+        if (this.events.isEmpty()) {
             presenter.loadEvents();
         } else {
             animateIn();
@@ -157,7 +168,8 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         if (listState != null) {
             try {
                 recyclerView.getLayoutManager().onRestoreInstanceState(listState);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -165,7 +177,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
      * Detaches View from presenter
      */
     @Override
-    protected void onStop(){
+    protected void onStop() {
         googleApiClient.disconnect();
         super.onStop();
         presenter.detachView();
@@ -173,10 +185,11 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Shows loading animation
+     *
      * @param loading
      */
     public void showLoading(boolean loading) {
-        if(loading) {
+        if (loading) {
             swipeRefreshLayout.setRefreshing(true);
         } else {
             swipeRefreshLayout.setRefreshing(false);
@@ -186,6 +199,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Shows a list of upcoming events on main screen
+     *
      * @param events new events to show
      */
     public void showEvents(List<Event> events) {
@@ -194,7 +208,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             recyclerView.setLayoutManager(gridLayoutManager);
-        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setLayoutManager(linearLayoutManager);
         }
 
@@ -209,6 +223,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Registers on screen drag
+     *
      * @param viewHolder
      */
     @Override
@@ -218,6 +233,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Shows input box if "Search" is clicked, sets listener for query change
+     *
      * @param menu
      * @return True
      */
@@ -234,13 +250,17 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Checks which category from the menu was clicked and calls method for category filtering
+     *
      * @param menuItem
      * @return
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        List<Event> filteredModelList;
+        List<Event> filteredModelList = null;
         switch (menuItem.getItemId()) {
+            case R.id.action_location:
+                setManual();
+                break;
             case R.id.action_all:
                 filteredModelList = showAll();
                 break;
@@ -272,15 +292,19 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
             case R.id.action_other:
                 filteredModelList = filterCategory("Ostalo");
                 break;
-            default: filteredModelList = null;
+            default:
+                filteredModelList = null;
         }
-        eventListAdapter.animateTo(filteredModelList);
-        recyclerView.scrollToPosition(0);
+        if (filteredModelList != null) {
+            eventListAdapter.animateTo(filteredModelList);
+            recyclerView.scrollToPosition(0);
+        }
         return true;
     }
 
     /**
      * Calls method for event filtering based on inputted query
+     *
      * @param query
      * @return True
      */
@@ -304,24 +328,18 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     public void setupActivityComponent() {
         MainApplication.get(this).getUserComponent()
-                    .plus(new MainActivityModule(this))
-                    .inject(this);
+                .plus(new MainActivityModule(this))
+                .inject(this);
 
-    }
-
-    /**
-     * Starts "Main" activity
-     * @param startingActivity
-     */
-    public static void start(Context startingActivity) {
-        Intent intent = new Intent(startingActivity, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startingActivity.startActivity(intent);
     }
 
     @Override
     protected User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Event> getEvents() {
@@ -332,10 +350,9 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         this.events = events;
     }
 
-    public void setUser(User user) { this.user = user;}
-
     /**
      * Filters list of all events based on inputted query
+     *
      * @param query
      * @return Filtered list based on query (key word)
      */
@@ -343,8 +360,8 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
         query = query.toLowerCase();
 
         final List<Event> filteredList = new ArrayList<>();
-        for(Event event : this.events){
-            if(event.isMatching(query))
+        for (Event event : this.events) {
+            if (event.isMatching(query))
                 filteredList.add(event);
         }
         return filteredList;
@@ -352,11 +369,12 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Shows all events without filters
+     *
      * @return All events
      */
-    private List<Event> showAll(){
+    private List<Event> showAll() {
         final List<Event> filteredList = new ArrayList<>();
-        for(Event event : this.events){
+        for (Event event : this.events) {
             filteredList.add(event);
         }
         return filteredList;
@@ -364,12 +382,13 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Filters all events which are favorited
+     *
      * @return List of favorite events
      */
-    private List<Event> filterFavorite(){
+    private List<Event> filterFavorite() {
         final List<Event> filteredList = new ArrayList<>();
-        for(Event event : this.events){
-            if(event.isFavorite)
+        for (Event event : this.events) {
+            if (event.isFavorite)
                 filteredList.add(event);
         }
         return filteredList;
@@ -377,13 +396,14 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Filters all events based on chosen category
+     *
      * @param stringCategory
      * @return List of events with specific category
      */
-    private List<Event> filterCategory(String stringCategory){
+    private List<Event> filterCategory(String stringCategory) {
         final List<Event> filteredList = new ArrayList<>();
-        for(Event event : this.events){
-            if(event.category.equals(stringCategory))
+        for (Event event : this.events) {
+            if (event.category.equals(stringCategory))
                 filteredList.add(event);
         }
         return filteredList;
@@ -391,6 +411,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Saves instance state
+     *
      * @param state
      */
     @Override
@@ -404,6 +425,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     /**
      * Restores instance state
+     *
      * @param state
      */
     @Override
@@ -430,7 +452,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
             double distance = Helpers.distance(location.getLatitude(), cities.get(i).getLatitude(),
                     location.getLongitude(), cities.get(i).getLongitude());
 
-            if(distance < minDist){
+            if (distance < minDist) {
                 minDist = distance;
                 pos = i;
             }
@@ -443,7 +465,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
     @Override
     public void setManual() {
         String[] stockArr = new String[cities.size()];
-        for(int i = 0; i < cities.size(); i++) {
+        for (int i = 0; i < cities.size(); i++) {
             stockArr[i] = cities.get(i).getTitle();
         }
 
@@ -453,7 +475,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPrefs.write("city", cities.get(which).getApiId());
                         dialog.dismiss();
-                        initLoad();
+                        presenter.loadEvents();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -491,7 +513,7 @@ public class MainActivity extends BaseNavigationActivity implements MainViewLaye
 
     public void showLocationPicker(List<City> cities) {
         this.cities = cities;
-        if(pickLocationDialog != null)
+        if (pickLocationDialog != null)
             pickLocationDialog.setLoading(false);
     }
 
