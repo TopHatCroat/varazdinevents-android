@@ -2,8 +2,10 @@ package hr.foi.varazdinevents.places.events;
 
 import hr.foi.varazdinevents.R;
 import hr.foi.varazdinevents.api.CityManager;
+import hr.foi.varazdinevents.api.FestivalManager;
 import hr.foi.varazdinevents.api.UserManager;
 import hr.foi.varazdinevents.models.City;
+import hr.foi.varazdinevents.models.Festival;
 import hr.foi.varazdinevents.models.User;
 import hr.foi.varazdinevents.places.eventDetails.EventDetailsActivity;
 import hr.foi.varazdinevents.ui.elements.list.ListListener;
@@ -27,13 +29,15 @@ import java.util.List;
  */
 public class MainPresenter extends BasePresenter<MainActivity> implements ListListener<Event> {
     private final CityManager cityManager;
+    private final FestivalManager festivalManager;
     private EventManager eventManager;
     private UserManager userManager;
 
-    public MainPresenter(EventManager eventManager, UserManager userManager, CityManager cityManager) {
+    public MainPresenter(EventManager eventManager, UserManager userManager, CityManager cityManager, FestivalManager festivalManager) {
         this.eventManager = eventManager;
         this.userManager = userManager;
         this.cityManager = cityManager;
+        this.festivalManager = festivalManager;
     }
 
     public void loadCities() {
@@ -69,8 +73,7 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
         Observer<List<Event>> eventObserver = new Observer<List<Event>>() {
             @Override
             public void onNext(List<Event> events) {
-                getViewLayer().showEvents(events);
-                getViewLayer().showLoading(false);
+                loadFestivals(events);
             }
 
             @Override
@@ -89,6 +92,33 @@ public class MainPresenter extends BasePresenter<MainActivity> implements ListLi
 
         rx.Observable<List<Event>> eventStream = eventManager.getEvents();
         eventStream.subscribe(eventObserver);
+    }
+
+    private void loadFestivals(final List<Event> events) {
+
+        Observer<List<Festival>> festivalObserver = new Observer<List<Festival>>() {
+            @Override
+            public void onNext(List<Festival> festivals) {
+                getViewLayer().showEvents(events);
+                getViewLayer().showLoading(false);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if(isViewAttached()) {
+                    getViewLayer().showLoading(false);
+                    getViewLayer().showBasicError(getViewLayer().getString(R.string.network_not_accessible));
+                }
+            }
+        };
+
+        rx.Observable<List<Festival>> eventStream = festivalManager.getFestivals();
+        eventStream.subscribe(festivalObserver);
     }
 
     /**

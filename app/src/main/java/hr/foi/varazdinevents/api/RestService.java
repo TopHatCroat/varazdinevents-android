@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import hr.foi.varazdinevents.api.responses.CityResponseComplete;
 import hr.foi.varazdinevents.api.responses.EventResponse;
+import hr.foi.varazdinevents.api.responses.FestivalResponseComplete;
 import hr.foi.varazdinevents.api.responses.UserResponse;
 import hr.foi.varazdinevents.api.responses.UserResponseComplete;
 import retrofit2.http.Field;
@@ -81,4 +82,7 @@ public interface RestService {
 
     @GET("cities")
     Observable<CityResponseComplete> getCities();
+
+    @GET("festival")
+    Observable<FestivalResponseComplete> getFestivals();
 }

@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import hr.foi.varazdinevents.api.CityManager;
+import hr.foi.varazdinevents.api.FestivalManager;
 import hr.foi.varazdinevents.api.ImgurService;
 import hr.foi.varazdinevents.api.EventManager;
 import hr.foi.varazdinevents.api.RestService;
@@ -43,5 +44,11 @@ public class UserModule {
     @UserScope
     public CityManager provideCityManager(User user, @Named("vzservice") RestService restService, SharedPrefs sharedPrefs) {
         return new CityManager(user, restService, sharedPrefs);
+    }
+
+    @Provides
+    @UserScope
+    public FestivalManager provideFestivalManager(User user, @Named("vzservice") RestService restService, SharedPrefs sharedPrefs) {
+        return new FestivalManager(user, restService, sharedPrefs);
     }
 }
