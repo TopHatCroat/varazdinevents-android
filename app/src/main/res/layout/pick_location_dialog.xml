@@ -20,7 +20,7 @@
             android:id="@+id/title_pick_location_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/pick_location"
+            android:text="@string/pick_location"
             android:layout_marginBottom="30dp"
             style="@style/AppTheme.RegularFont18" />
 
@@ -28,7 +28,7 @@
             android:id="@+id/message_cancelable_ok_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/gimme_location"
+            android:text="@string/gimme_location"
             android:layout_marginBottom="30dp"
             style="@style/AppTheme.RegularFont14" />
 

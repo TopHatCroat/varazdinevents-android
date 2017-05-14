@@ -162,6 +162,10 @@ public class EventManager {
                             event.setCategory(eventResponse.category);
                             event.setDateUpdated(eventResponse.lastUpdate);
                             if(eventResponse.hostApiId != null) event.setHostApiId(eventResponse.hostApiId);
+                            event.setLongitude(eventResponse.longitude);
+                            event.setLatitude(eventResponse.latitude);
+                            event.setAddress(eventResponse.address);
+                            event.setFestivalId(eventResponse.festivalId);
                             events.add(event);
 
                             int lastUpdate = SharedPrefs.read(LAST_UPDATE_TIME_KEY, 0);

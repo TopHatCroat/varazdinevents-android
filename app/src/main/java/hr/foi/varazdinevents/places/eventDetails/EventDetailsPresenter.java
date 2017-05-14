@@ -123,19 +123,25 @@ public class EventDetailsPresenter extends BasePresenter<EventDetailsActivity> i
                 .first();
         List<Address> addressList;
         if(isOnline()) {
-            try {
-                String location = this.hostData.getAddress();
-                Geocoder geocoder = new Geocoder(getViewLayer());
-                addressList = geocoder.getFromLocationName(location, 1);
-                if (addressList.size() != 0) {
-                    Address address = addressList.get(0);
-                    this.latitude = address.getLatitude();
-                    this.longitude = address.getLongitude();
-                } else {
-                    this.latitude = 46.307819;
-                    this.longitude = 16.338159;
+            if((event.getLatitude() == null && event.getLongitude() != null)
+                    || (!event.getLatitude().equals(0.0) && !event.getLongitude().equals(0.0))) {
+                this.latitude = event.getLatitude();
+                this.longitude = event.getLongitude();
+            } else {
+                try {
+                    String location = this.hostData.getAddress();
+                    Geocoder geocoder = new Geocoder(getViewLayer());
+                    addressList = geocoder.getFromLocationName(location, 1);
+                    if (addressList.size() != 0) {
+                        Address address = addressList.get(0);
+                        this.latitude = address.getLatitude();
+                        this.longitude = address.getLongitude();
+                    } else {
+                        this.latitude = 46.307819;
+                        this.longitude = 16.338159;
+                    }
+                } catch (Exception e) {
                 }
-            } catch (Exception e) {
             }
         }
         Date eventDate = new Date(event.getDate() - 3600000);

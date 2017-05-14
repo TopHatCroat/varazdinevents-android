@@ -27,4 +27,9 @@ public class EventResponse {
     public Integer lastUpdate;
     @SerializedName("author")
     public Integer hostApiId;
+    public Double longitude;
+    public Double latitude;
+    public String address;
+    @SerializedName("festival_id")
+    public Integer festivalId;
 }

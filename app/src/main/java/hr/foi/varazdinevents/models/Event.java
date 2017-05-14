@@ -38,6 +38,10 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     public boolean isFavorite = false;
 
     public boolean isNotified = false;
+    private Double longitude;
+    private Double latitude;
+    private String address;
+    private Integer festivalId;
 
     public Event(){}
 
@@ -54,6 +58,10 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         offers = in.readString();
         category = in.readString();
         isFavorite = in.readByte() != 0;
+        longitude = in.readDouble();
+        latitude = in.readDouble();
+        address = in.readString();
+        festivalId = in.readInt();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -87,6 +95,10 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
         parcel.writeString(offers);
         parcel.writeString(category);
         parcel.writeByte((byte) (isFavorite ? 1 : 0));     //
+        parcel.writeDouble(longitude != null ? longitude : 0.0);
+        parcel.writeDouble(latitude != null ? latitude : 0.0);
+        parcel.writeString(address);
+        parcel.writeInt(festivalId != null ? festivalId : -1);
     }
 
     @Override
@@ -236,5 +248,37 @@ public class Event extends SugarRecord implements Listable<Event>, Searchable, P
     @Override
     public int compareTo(Event event) {
         return event.date > this.date ? -1 : 1;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setFestivalId(Integer festivalId) {
+        this.festivalId = festivalId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Integer getFestivalId() {
+        return festivalId;
     }
 }
